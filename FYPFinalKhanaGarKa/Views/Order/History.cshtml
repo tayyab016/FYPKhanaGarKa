@@ -1,0 +1,70 @@
+﻿@model IEnumerable<FYPFinalKhanaGarKa.Models.Orders>
+@{
+    ViewData["Title"] = "History";
+}
+
+@section Styles{
+    <link href="~/css/order-online.css" rel="stylesheet" />
+}
+
+@Html.Partial("_PageTitlePartial", ViewData["Title"])
+<!-- Content Start -->
+<main class="main-content">
+
+    <!-- Content Start -->
+    <section class="cfo-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 account-cfoinfo clearfix">
+                    <div class="cfoaccount">
+                        <ul class="list-unstyled">
+                            <li>
+                                <a href="/Home/ModifyDetails"><i class="fa fa-home" aria-hidden="true"></i>My Account</a>
+                            </li>
+                            <li><a href="#"><i class="fa fa-history" aria-hidden="true"></i> Order History</a></li>
+                        </ul>
+                    </div>
+                    <!-- END OF Myaccount menu  -->
+                    <!-- End of account cfoInfo -->
+                </div>
+                <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+                    <div class="contact-details order-history">
+                        <h2>My order history</h2>
+                        <div class="account-table">
+                            <table class="table table-striped">
+                                <tbody>
+                                    <tr class="orderh-title">
+                                        <th>Order id</th>
+                                        <th>Date</th>
+                                        <th>Total amount</th>
+                                        <th class="pay-th">Payment type</th>
+                                        <th class="file-th">View</th>
+                                    </tr>
+                                    @if (Model != null && Model.Count() > 0)
+                                    {
+                                        @foreach (var orders in Model)
+                                        {
+                                            <tr class="orderdata-title">
+                                                <td>@orders.OrderId</td>
+                                                <td>@orders.OrderDate</td>
+                                                <td>Rs:189</td>
+                                                <td class="pay">Cash</td>
+                                                <td class="file-view"><a href="/Order/Details/@orders.OrderId"><i class="fa fa-file"></i></a></td>
+                                            </tr>
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <!-- END OF CONTACT DETAILS SECTION -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main container end -->
+</main>
+<!-- Content End -->

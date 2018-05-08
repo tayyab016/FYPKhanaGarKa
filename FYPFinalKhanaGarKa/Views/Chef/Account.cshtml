@@ -1,0 +1,228 @@
+﻿@model FYPFinalKhanaGarKa.Models.MenuOfferViewModel
+@{
+    ViewData["Title"] = "Account";
+}
+@section Styles{
+    <link href="~/css/order-online.css" rel="stylesheet" />
+}
+@Html.Partial("_PageTitlePartial", ViewData["Title"])
+<!-- Content Start -->
+<main class="main-content">
+
+    <!-- Content Start -->
+    <!-- Start order-online-->
+    <div id="order-online">
+        <div class="container">
+            <!-- start order online header top -->
+            <div class="row order-online-top-header margin-right-zero">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 zero-pad">
+                    <div class="orderonline-search clearfix">
+                        <div class="openclose-message">
+                            <p>My Rating. &nbsp; &nbsp; 
+                            <span>
+                                 @for (int i = 0; i < 2; i++)
+                                  {
+                                     <span style="color: #ED1C3B;"><i class="fa fa-star"></i></span>
+                                  }
+                                  @for (int i = 0; i < 5 - 2; i++)
+                                   {
+                                      <span style="color: #CCCCCC;"><i class="fa fa-star"></i></span>
+                                   }
+                                      <span class="review">
+                                        (<span>35</span>)
+                                      </span>
+                             </span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end order online header top -->
+
+            <div class="order-inner-content">
+                <div class="row">
+                    <!-- start category content all -->
+                    <div class="col-md-12">
+                        <div class="ui-order-online-left-side">
+                            <div class="row order-online-tab-nav" id="order-online-tab-nav">
+                                <div class="col-md-12">
+                                    <ul class="list-inline list-unstyled">
+                                        <li class="active">
+                                            <a href="#" class="orderOnlineTab" id="orderonlineMenuTab"> Menu</a>
+                                        </li>
+                                        <li>
+                                            <a href="#" class="orderOnlineTab" id="orderonlineOfferTab"> Offer</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div id="left-content">
+                                <div class="orderonline-menu row" id="Menu">
+                                    <!-- start category inner content all -->
+                                    <div class="col-md-12 col-sm-12">
+                                        <a asp-controller="Chef" asp-action="Menu" class="btn btn-success pull-right add-dish-offer-btn">Add Dish</a>
+                                        <span class="clearfix"></span>
+                                        <!-- start category single content -->
+                                        <div class="category-dish-content">
+
+                                            <div class="row">
+                                                <div class="clearfix"></div>
+                                                @if (Model.Menus.Count() > 0 && Model.Menus != null)
+                                                {
+                                                    @foreach (var menus in Model.Menus)
+                                                    {
+                                                        <div class="col-md-12">
+                                                            <div class="dish-content" data-name="@menus.DishName" data-price="@menus.Price">
+                                                                <div class="row" style="transition: all 0.50s ease-in-out">
+                                                                    <div class="col-md-3 dish-img">
+                                                                        @if (menus.ImgUrl == null) { menus.ImgUrl = "/img/foodimg/menuitem.jpg"; }
+                                                                        <img class="img img-responsive img-thumbnail" alt="Image" src="@menus.ImgUrl" />
+                                                                    </div>
+                                                                    <div class="col-md-6">
+                                                                        <div class="dish-name">@menus.DishName &nbsp; &nbsp; 
+                                                                        @if (menus.Status)
+                                                                        {
+                                                                            <span class="label label-warning">&nbsp; Avalible &nbsp;</span>
+
+                                                                        }
+                                                                        else if (!menus.Status)
+                                                                        {
+                                                                            <span class="label label-danger">&nbsp; Unavalible &nbsp;</span>
+
+                                                                        }
+                                                                        </div>
+                                                                        <p>@menus.Description</p>
+                                                                    </div>
+                                                                    <div class="col-md-3">
+                                                                        <div class="dish-right-content">
+                                                                            <div class="dish-price">@menus.Price pkr</div>
+                                                                            <div class="text-right pull-right btn-remove">
+                                                                                <a asp-controller="Chef" asp-action="EditMenu" asp-route-id="@menus.MenuId" class="btn btn-danger btn-xs">Edit</a>
+                                                                            </div>
+                                                                            <div class="clearfix"></div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!-- /.dish-content -->
+                                                        </div>
+                                                        <!-- /.col-md-12 -->
+                                                    }
+                                                }else
+                                                {
+                                                        <div>
+                                                            <h4 class="text-capitalize text-center">Empty Menu</h4>
+                                                            <p class="text-capitalize text-center">Please, add some dishis to your menu.</p>
+                                                        </div>
+                                                }
+                                            </div>
+
+                                        </div>
+                                        <!-- end category single content -->
+                                    </div>
+                                    <!-- end category inner content all -->
+                                </div>
+                                <!-- end orderonline-menu -->
+                                <!-- offer content -->
+                                <div class="orderonline-offer row" id="Offer">
+                                    <!-- start category inner content all -->
+                                    <div class="col-md-12 col-sm-12">
+                                        <a asp-controller="Chef" asp-action="Offer" class="btn btn-success pull-right add-dish-offer-btn">Add Offer</a>
+
+                                        <span class="clearfix"></span>
+                                        <!-- start category single content -->
+                                        <div class="category-dish-content">
+                                            <div class="row">
+                                                <div class="clearfix"></div>
+                                                @if (Model.Offers.Count() > 0 && Model.Offers != null)
+                                                {
+                                                    @foreach (var offers in Model.Offers)
+                                                    {
+                                                        <div class="col-md-12">
+                                                            <div class="dish-content" data-name="@offers.OfferName" data-price="@offers.Price">
+                                                                <div class="row" style="transition: all 0.50s ease-in-out">
+                                                                    <div class="col-md-3 dish-img">
+                                                                        @if (offers.ImgUrl == null) { offers.ImgUrl = "/img/foodimg/menuitem.jpg"; }
+                                                                        <img class="img img-responsive img-thumbnail" alt="Image" src="@offers.ImgUrl" />
+                                                                    </div>
+                                                                    <div class="col-md-6">
+                                                                        <div class="dish-name">@offers.OfferName</div>
+                                                                        <span class="label label-danger">&nbsp; &nbsp; &nbsp; until: @offers.EndDate.ToString("dd-MM-yyyy")</span>
+                                                                        @if(offers.Percentage != null)
+                                                                        {
+                                                                        <span class="label label-success">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; @offers.Percentage % &nbsp;</span>
+
+                                                                        }
+                                                                        <p>@offers.Description</p>
+                                                                    </div>
+                                                                    <div class="col-md-3">
+                                                                        <div class="dish-right-content">
+                                                                            <div class="dish-price">@offers.Price pkr</div>
+                                                                            <div class="text-right btn-remove pull-right">
+                                                                                <a asp-controller="Chef" asp-action="EditOffer" asp-route-id="@offers.OfferId" class="btn btn-danger btn-xs">Edit</a>
+                                                                            </div>
+                                                                            <div class="clearfix"></div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!-- /.dish-content -->
+                                                        </div>
+                                                        <!-- /.col-md-12 -->
+                                                    }
+                                                }else
+                                                {
+                                                        <div>
+                                                            <h4 class="text-capitalize text-center">Add Offer</h4>
+                                                            <p class="text-capitalize text-center">You do not have any Offer yet.</p>
+                                                        </div>
+                                                }
+                                            </div>
+                                        </div>
+                                        <!-- end category single content -->
+                                    </div>
+                                    <!-- end offer content -->
+                                </div>
+                                <!-- end orderonline-offer -->
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end category content all -->
+                </div>
+            </div>
+        </div>
+        <!--.container-->
+    </div>
+    <!--#order-online-->
+    <!--end order-online-->
+    <!-- Content End -->
+    <!-- start mobile footer nav -->
+    <nav class="navbar navbar-default navbar-fixed-bottom visible-xs visible-sm mobile-cart-nav">
+        <div class="mobile-cart-inner-content">
+            <div class="row">
+                <div class="col-md-4 col-xs-4">
+                    <div class="mobile-cart-item">
+                        <a id="mobileCartToggle" href="#"><i class="fa fa-shopping-basket"></i><span id="cart-item"> 10</span></a>
+                    </div>
+                </div>
+                <div class="col-md-4 col-xs-4">
+                    <div class="mobile-total-amount">Total: &pound;<span id="total-cart-amount">50</span></div>
+                </div>
+                <div class="col-md-4 col-xs-4">
+                    <a href="#" class="btn mobile-btn-checkout">Checkout</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!-- end mobile footer nav -->
+</main>
+<!-- Content End -->
+
+@section Scripts
+    {
+    <script src="~/js/order-online.js"></script>
+    @*<script src="~/lib/jquery.easing/js/jquery.easing.min.js"></script>*@
+    <script src="~/lib/jquery-sticky/jquery.sticky.js"></script>
+}
+
+

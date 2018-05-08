@@ -1,0 +1,109 @@
+﻿@model IEnumerable<FYPFinalKhanaGarKa.Models.Chef>
+@{
+    ViewData["Title"] = "Chef List";
+}
+
+@section Styles{
+    <link href="~/css/fontello.css" rel="stylesheet" />
+}
+
+@Html.Partial("_PageTitlePartial", ViewData["Title"])
+<!-- Content Start -->
+<main class="main-content">
+
+    <div class="container internal-body-container">
+        <!-- Main container -->
+        <div class="row">
+            <!-- Main row -->
+            <div class="col-md-12 restaurant-list-three">
+                @if (Model != null && Model.Count() > 0)
+                {
+                    @foreach (var chef in Model)
+                    {
+                    <!-- Single Chef detail -->
+                    <div class="row">
+                        <!-- Chef detail -->
+                        <div class="col-xs-12">
+                            <div class="item-block">
+                                <header>
+                                    @if (chef.ImgUrl == null) { chef.ImgUrl = "/img/avatar.png"; }
+                                    else { chef.ImgUrl = chef.ImgUrl; }
+                                    <a href="#"><img src="@chef.ImgUrl.Replace(" ", string.Empty)" alt=""></a>
+                                    <div class="hgroup">
+                                        <h4><a href="#">@chef.FirstName @chef.LastName</a> &nbsp; &nbsp; 
+                                        @if (chef.Category == 7)
+                                        { 
+                                            <span class="label label-warning">&nbsp; Popular &nbsp;</span>
+                                        }
+                                        else if(chef.Category == 5)
+                                        {
+                                            <span class="label label-success">&nbsp; Special &nbsp;</span>
+
+                                        }
+                                        else if(chef.Category == 3)
+                                        {
+                                            <span class="label label-danger">&nbsp; New &nbsp;</span>
+
+                                        }
+                                        </h4>
+                                    </div>
+                                    <div class="header-meta">
+                                        <span class="location">@chef.City @chef.Area @chef.Street</span>
+                                    </div>
+                                </header>
+                                <div class="item-body">
+								    <p>@chef.About</p>
+							    </div>
+                                <footer>
+                                    <p class="status"><strong>Min:</strong> Rs 150</p>
+                                    <p class="status"><strong>Delivery:</strong> 60 min</p>
+                                    <p class="status">
+                                        <span>
+                                            @for (int i = 0; i < chef.Rating; i++)
+                                            {
+                                            <span style="color: #ED1C3B;"><i class="fa fa-star"></i></span>
+                                            }
+                                            @for (int i = 0; i < 5 - chef.Rating; i++)
+                                            {
+                                            <span style="color: #CCCCCC;"><i class="fa fa-star"></i></span>
+                                            }
+                                            <span class="review">
+                                                (<span>35</span>)
+                                            </span>
+                                        </span>
+                                    </p>
+                                    <div class="action-btn">
+                                        <a class="btn btn-xs btn-danger" href="Order/index/@chef.ChefId">Place Order</a>
+                                    </div>
+                                </footer>
+                            </div>
+                        </div>
+                        <!-- END Chef detail -->
+                    </div>
+                    <!-- End Single Chef detail -->
+                    }
+                }
+                else
+                {
+                    <section id="page-not-found" class="light-wrapper">
+                        <div class="container">
+                            <div class="inner">
+                                <div class="row">
+                                    <div class="section-404 col-lg-12">
+                                        <h3>Sorry...</h3>
+                                        <p>We donot find any chef in this area</p>
+                                        <a asp-controller="Home" asp-action="Index" class="btn btn-danger">Back To Homepage</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                }
+            </div>
+        </div>
+        <!-- Main row end -->
+    </div>
+    <!-- Main container end -->
+</main>
+<!-- Content End -->

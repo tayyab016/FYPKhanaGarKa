@@ -1,0 +1,266 @@
+﻿@model FYPFinalKhanaGarKa.Models.ViewModels.RegisterViewModel
+
+@{
+    ViewData["Title"] = "Register";
+}
+@section Styles{ 
+<link href="~/css/order-online.css" rel="stylesheet" />
+<style>
+    .reg-block h1 {
+        font-family: Open Sans,sans-serif;
+        color: #96a2b2;
+        letter-spacing: 1px;
+        font-size: 22px;
+        margin-bottom: 60px;
+        margin-top: 40px;
+        text-align: center;
+    }
+
+    .reg-block img#logo, .text-center {
+        margin-top: 40px;
+    }
+
+    #sign-up {
+        margin-bottom: 40px;
+        margin-top: 20px;
+    }
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+</style>
+}
+@Html.Partial("_PageTitlePartial", ViewData["Title"])
+<main class="main-content">
+    <!-- Content Start -->
+    <section class="cfo-area">
+        <div class="container">
+            <div class="row">
+                <div class="reg-block col-lg-9 col-lg-offset-1 col-md-9 col-md-offset-1 col-sm-12 col-xs-12">
+                    <div class="contact-details myaccount-contact">
+                        <center>
+                            <img src="~/img/logo_gray.png" alt="" id="logo">
+                            <h1>Join KhanaGarKa.com</h1>
+                        </center>
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <div class="address-form">
+                                    <div class="row">
+                                        <form asp-action="Register" enctype="multipart/form-data" asp-controller="Home" method="post" class="clearfix">
+                                            <div asp-validation-summary="ModelOnly" class="text-danger text-center"></div>
+                                            <div class="form-group">
+                                                <div class="col-lg-offset-1 col-md-offset-1 col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                                                    <label>Your Profile Pic*</label>
+                                                </div>
+                                                <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                                                    <img alt="image" src="~/img/avatar.png" class="img img-responsive img-thumbnail" width="113" height="113">
+                                                </div>
+                                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                                    <input asp-for="Image" style="margin-top:30px;" />
+
+                                                </div>
+
+                                                <span class="clearfix"></span>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <div class="col-lg-offset-1 col-md-offset-1 col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                                                    <label asp-for="Role">Role *</label>
+                                                </div>
+                                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                    <select class="form-control" asp-for="Role">
+                                                        <option value="Customer" selected>Customer</option>
+                                                        <option value="Chef">Chef</option>
+                                                        <option value="DBoy">DBoy</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <div class="col-lg-offset-1 col-md-offset-1 col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                                                    <label asp-for="Cnic">CNIC *</label>
+                                                </div>
+                                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                    <input asp-for="Cnic" class="form-control" type="number" placeholder="CNIC" />
+                                                    <span asp-validation-for="Cnic" class="text-danger"></span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="col-lg-offset-1 col-md-offset-1 col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                                                    <label asp-for="FirstName">First Name *</label>
+                                                </div>
+                                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                    <input asp-for="FirstName" class="form-control" placeholder="First Name">
+                                                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="col-lg-offset-1 col-md-offset-1 col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                                                    <label asp-for="LastName">Last Name *</label>
+                                                </div>
+                                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                    <input asp-for="LastName" class="form-control" placeholder="Last Name">
+                                                    <span asp-validation-for="LastName" class="text-danger"></span>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <div class="col-lg-offset-1 col-md-offset-1 col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                                                    <label asp-for="Email">Email Address *</label>
+                                                </div>
+                                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                    <input asp-for="Email" class="form-control" placeholder="Email Address">
+                                                    <span asp-validation-for="Email" class="text-danger"></span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="col-lg-offset-1 col-md-offset-1 col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                                                    <label asp-for="Password">Password *</label>
+                                                </div>
+                                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                    <input asp-for="Password" type="password" class="form-control" placeholder="Password">
+                                                    <span asp-validation-for="Password" class="text-danger"></span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="col-lg-offset-1 col-md-offset-1 col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                                                    <label asp-for="PhoneNo">Mobile No *</label>
+                                                </div>
+                                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                    <input asp-for="PhoneNo" type="number" class="form-control" placeholder="Mobile No">
+                                                    <span asp-validation-for="PhoneNo" class="text-danger"></span>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <div class="col-lg-offset-1 col-md-offset-1 col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                                                    <label asp-for="Gender">Gender *</label>
+                                                </div>
+                                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                    <select class="form-control" asp-for="Gender">
+                                                        <option value=true selected>Male</option>
+                                                        <option value=false>Female</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <div class="col-lg-offset-1 col-md-offset-1 col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                                                    <label asp-for="Dob">D/O/B *</label>
+                                                </div>
+                                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                    <input asp-for="Dob" class="form-control" type="date" />
+                                                    <span asp-validation-for="Dob" class="text-danger"></span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="col-lg-offset-1 col-md-offset-1 col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                                                    <label>Address *</label>
+                                                </div>
+                                                <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12 select-field-wrap pull-left">
+                                                    <select name="City" asp-for="City" class="search-form-select form-control">
+                                                        <option selected>--CITY--</option>
+                                                        <option class="sialkot" value="Sialkot">SIALKOT</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12 select-field-wrap pull-left">
+                                                    <select name="Area" asp-for="Area" class="search-form-select form-control">
+
+                                                        <option class="options">--AREA--</option>
+
+                                                        <option class="options" value="Kashmir Road">Kashmir Road</option>
+                                                        <option class="options" value="Citi Housing Society">Citi Housing Society</option>
+                                                        <option class="options" value="Askari 2">Askari 2</option>
+                                                        <option class="options" value="Defence Road">Defence Road</option>
+                                                        <option class="options" value="Hajipura Road">Hajipura Road</option>
+                                                        <option class="options" value="Khokhar Town">Khokhar Town</option>
+                                                        <option class="options" value="Sambrial">Sambrial</option>
+                                                        <option class="options" value="Model Town Coop Housing Society">Model Town Coop Housing Society</option>
+                                                        <option class="options" value="Ugoki Road">Ugoki Road</option>
+                                                        <option class="options" value="Cantt">Cantt</option>
+                                                        <option class="options" value="Mag Town">Mag Town</option>
+                                                        <option class="options" value="Toheed Town">Toheed Town</option>
+                                                        <option class="options" value="Iqbal Town">Iqbal Town</option>
+                                                        <option class="options" value="Bharath">Bharath</option>
+                                                        <option class="options" value="Defence Homes Society">Defence Homes Society</option>
+                                                        <option class="options" value="Cantt Avenue">Cantt Avenue</option>
+                                                        <option class="options" value="Khadim Ali Road">Khadim Ali Road</option>
+                                                        <option class="options" value="Wazirabad Road">Wazirabad Road</option>
+                                                        <option class="options" value="Rangpura Road">Rangpura Road</option>
+                                                        <option class="options" value="Hadi Town">Hadi Town</option>
+                                                        <option class="options" value="Jammu Road">Jammu Road</option>
+                                                        <option class="options" value="Askari 1">Askari 1</option>
+                                                        <option class="options" value="Cantt Road">Cantt Road</option>
+                                                        <option class="options" value="Shahab Pura Road">Shahab Pura Road</option>
+                                                        <option class="options" value="AirPort Road">AirPort Road</option>
+                                                        <option class="options" value="Cantt View Colony">Cantt View Colony</option>
+                                                        <option class="options" value="Christien Town">Christien Town</option>
+                                                        <option class="options" value="Jinnah Town">Jinnah Town</option>
+                                                        <option class="options" value="Aziz Garden">Aziz Garden</option>
+                                                        <option class="options" value="Neka Pura">Neka Pura</option>
+                                                        <option class="options" value="Chenab Rangers Road">Chenab Rangers Road</option>
+                                                        <option class="options" value="New MianaPura">New MianaPura</option>
+                                                        <option class="options" value="Nishat Park">Nishat Park</option>
+                                                        <option class="options" value="Daska Road">Daska Road</option>
+                                                        <option class="options" value="Shahab Pura">Shahab Pura</option>
+                                                        <option class="options" value="Aimanabad Road">Aimanabad Road</option>
+                                                        <option class="options" value="Pasrur Road">Pasrur Road</option>
+                                                        <option class="options" value="Khawar Road">Khawar Road</option>
+                                                        <option class="options" value="Church Road">Church Road</option>
+                                                        <option class="options" value="Aziz Bhatti Shaheed Road">Aziz Bhatti Shaheed Road</option>
+                                                        <option class="options" value="Lalazar Colony">Lalazar Colony</option>
+                                                        <option class="options" value="Shatab Garh">Shatab Garh</option>
+                                                        <option class="options" value="Marala Road">Marala Road</option>
+                                                        <option class="options" value="Umer Town">Umer Town</option>
+                                                        <option class="options" value="Nawna Pind Araiyan">Nawna Pind Araiyan</option>
+                                                        <option class="options" value="Sahowali">Sahowali</option>
+                                                        <option class="options" value="Adalat Garh">Adalat Garh</option>
+                                                        <option class="options" value="Fateh Garh Town">Fateh Garh Town</option>
+                                                        <option class="options" value="Zeeshan Colony">Zeeshan Colony</option>
+                                                        <option class="options" value="Kaake Wali">Kaake Wali</option>
+                                                        <option class="options" value="Gulshan Iqbal">Gulshan Iqbal</option>
+                                                        <option class="options" value="Mubarik Pura">Mubarik Pura</option>
+                                                        <option class="options" value="Commissioner Road">Commissioner Road</option>
+                                                        <option class="options" value="Muslim Colony">Muslim Colony</option>
+                                                        <option class="options" value="DinPura">DinPura</option>
+                                                        <option class="options" value="Civil lines">Civil lines</option>
+                                                        <option class="options" value="Jinnah Park Colony No 2">Jinnah Park Colony No 2</option>
+                                                        <option class="options" value="Kachehri Road">Kachehri Road</option>
+
+
+                                                    </select>
+                                                </div>
+                                                <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12 select-field-wrap pull-left">
+                                                    <input asp-for="Street" class="form-control" placeholder="Street" />
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <div class="col-lg-offset-1 col-md-offset-1 col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                                                    <label></label>
+                                                </div>
+                                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                    <button type="submit" id="sign-up" name="kkk" class="btn btn-primary btn-block custom-checkout">Sign Up</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- END OF DELIVERY ADDRESS SECTION -->
+                </div>
+                <span class="clearfix"></span>
+                <p class="text-center"> Already have an Account? <a class="txt-brand" asp-action="Login" asp-controller="Home">Login</a> 
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main container end -->
+</main>
+
+
+<!-- Content End -->

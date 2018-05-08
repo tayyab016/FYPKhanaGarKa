@@ -1,0 +1,262 @@
+﻿@{
+    ViewData["Title"] = "Home";
+}
+
+
+<!-- Content Start -->
+<!-- start static header -->
+<section class="static-section">
+    <div class="container">
+        <div class="row static-header-content-wrapper">
+            <div class="col-md-12 static-header-content">
+                <div class="static-header-text">
+                    <h4 class="white">FIND AMAZING SELECTION OF LOCAL CHEFS DELIVERING FOOD TO YOUR DOOR</h4>
+                    <h2 class="white margin-bottom-30">Hungry? Order Online From Your Favorite Nearby Chef</h2>
+                </div>
+                <div class="col-md-12">
+                    <div class="search-form-wrap2">
+                        <form class="clearfix" asp-controller="Chef" asp-action="Index" method="get">
+                            <div class="select-field-wrap pull-left">
+                                <select name="city" class="search-form-select">
+                                    <option class="options">SELECT</option>
+                                    <option class="options" value="Sialkot">SIALKOT</option>
+
+
+                                </select>
+                            </div>
+                            <div class="select-field-wrap pull-left">
+                                <select name="area" class="search-form-select">
+                                    <option class="options" value="Sialkot">SIALKOT</option>
+                                    <option class="options" value="Daska">DASKA</option>
+                                    <option class="options" value="Pasrur">PASRUR</option>
+                                    <option class="options" value="Sambrial">SAMBRIAL</option>
+
+
+                                    <option class="options" value="Kashmir Road">Kashmir Road</option>
+                                    <option class="options" value="Citi Housing Society">Citi Housing Society</option>
+                                    <option class="options" value="Askari 2">Askari 2</option>
+                                    <option class="options" value="Defence Road">Defence Road</option>
+                                    <option class="options" value="Hajipura Road">Hajipura Road</option>
+                                    <option class="options" value="Khokhar Town">Khokhar Town</option>
+                                    <option class="options" value="Sambrial">Sambrial</option>
+                                    <option class="options" value="Model Town Coop Housing Society">Model Town Coop Housing Society</option>
+                                    <option class="options" value="Ugoki Road">Ugoki Road</option>
+                                    <option class="options" value="Cantt">Cantt</option>
+                                    <option class="options" value="Mag Town">Mag Town</option>
+                                    <option class="options" value="Toheed Town">Toheed Town</option>
+                                    <option class="options" value="Iqbal Town">Iqbal Town</option>
+                                    <option class="options" value="Bharath">Bharath</option>
+                                    <option class="options" value="Defence Homes Society">Defence Homes Society</option>
+                                    <option class="options" value="Cantt Avenue">Cantt Avenue</option>
+                                    <option class="options" value="Khadim Ali Road">Khadim Ali Road</option>
+                                    <option class="options" value="Wazirabad Road">Wazirabad Road</option>
+                                    <option class="options" value="Rangpura Road">Rangpura Road</option>
+                                    <option class="options" value="Hadi Town">Hadi Town</option>
+                                    <option class="options" value="Jammu Road">Jammu Road</option>
+                                    <option class="options" value="Askari 1">Askari 1</option>
+                                    <option class="options" value="Cantt Road">Cantt Road</option>
+                                    <option class="options" value="Shahab Pura Road">Shahab Pura Road</option>
+                                    <option class="options" value="AirPort Road">AirPort Road</option>
+                                    <option class="options" value="Cantt View Colony">Cantt View Colony</option>
+                                    <option class="options" value="Christien Town">Christien Town</option>
+                                    <option class="options" value="Jinnah Town">Jinnah Town</option>
+                                    <option class="options" value="Aziz Garden">Aziz Garden</option>
+                                    <option class="options" value="Neka Pura">Neka Pura</option>
+                                    <option class="options" value="Chenab Rangers Road">Chenab Rangers Road</option>
+                                    <option class="options" value="New MianaPura">New MianaPura</option>
+                                    <option class="options" value="Nishat Park">Nishat Park</option>
+                                    <option class="options" value="Daska Road">Daska Road</option>
+                                    <option class="options" value="Shahab Pura">Shahab Pura</option>
+                                    <option class="options" value="Aimanabad Road">Aimanabad Road</option>
+                                    <option class="options" value="Pasrur Road">Pasrur Road</option>
+                                    <option class="options" value="Khawar Road">Khawar Road</option>
+                                    <option class="options" value="Church Road">Church Road</option>
+                                    <option class="options" value="Aziz Bhatti Shaheed Road">Aziz Bhatti Shaheed Road</option>
+                                    <option class="options" value="Lalazar Colony">Lalazar Colony</option>
+                                    <option class="options" value="Shatab Garh">Shatab Garh</option>
+                                    <option class="options" value="Marala Road">Marala Road</option>
+                                    <option class="options" value="Umer Town">Umer Town</option>
+                                    <option class="options" value="Nawna Pind Araiyan">Nawna Pind Araiyan</option>
+                                    <option class="options" value="Sahowali">Sahowali</option>
+                                    <option class="options" value="Adalat Garh">Adalat Garh</option>
+                                    <option class="options" value="Fateh Garh Town">Fateh Garh Town</option>
+                                    <option class="options" value="Zeeshan Colony">Zeeshan Colony</option>
+                                    <option class="options" value="Kaake Wali">Kaake Wali</option>
+                                    <option class="options" value="Gulshan Iqbal">Gulshan Iqbal</option>
+                                    <option class="options" value="Mubarik Pura">Mubarik Pura</option>
+                                    <option class="options" value="Commissioner Road">Commissioner Road</option>
+                                    <option class="options" value="Muslim Colony">Muslim Colony</option>
+                                    <option class="options" value="DinPura">DinPura</option>
+                                    <option class="options" value="Civil lines">Civil lines</option>
+                                    <option class="options" value="Jinnah Park Colony No 2">Jinnah Park Colony No 2</option>
+                                    <option class="options" value="Kachehri Road">Kachehri Road</option>
+
+
+                                </select>
+                            </div>
+
+
+                            <div class="submit-field-wrap pull-left">
+                                <input name="key-word" class="search-form-submit bgred-1 white" type="submit" value="FIND A CHEF">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+<!-- end static header -->
+<section class="order-process-step">
+    <div class="container frontend">
+        <div class="clearfix"></div>
+        <!--Facts-->
+        <!--Process Block-->
+        <div class="block process-block">
+            <!--<h2>The process</h2>
+                <h5>4 Steps for Success</h5>-->
+            <div class="row text-center">
+                <ol class="process">
+                    <li class="col-md-3 col-sm-6 col-xs-6">
+                        <i class="fa fa-cutlery" aria-hidden="true"></i>
+                        <h4>Pick a restaurant</h4>
+                    </li>
+                    <li class="col-md-3 col-sm-6 col-xs-6">
+                        <i class="fa fa-car"></i>
+                        <h4>Order a takeaway</h4>
+                    </li>
+                    <li class="col-md-3 col-sm-6 col-xs-6">
+                        <i class="fa fa-beer"></i>
+                        <h4>Your food is delivered</h4>
+                    </li>
+                    <li class="col-md-3 col-sm-6 col-xs-6">
+                        <i class="fa fa-thumbs-o-up"></i>
+                        <h4>Happy, Enjoy</h4>
+                    </li>
+                </ol>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <!--/Process Block-->
+        <div class="clearfix"></div>
+        <!--/Facts-->
+    </div>
+</section>
+
+<section id="best-restaurant" class="best-restaurant">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <h1 class="font-lg"><span class="font-semibold chef-red">Khana Gar Ka</span> </h1>
+
+                <h2>
+                    SAY GOOD BYE…
+                    TO LOW QUALITY FOOD!
+                </h2>
+
+                <h4><b> WE SAVE YOU FROM UNHEALTHY TOXIC FOOD CHOICES BY SERVING YOU REAL HEALTHY HOMEMADE FOOD AT YOUR DOORSTEP.</b> </h4>
+                <h4>
+                    Not only health is most neglected aspect of our life,
+                    but we have tons of unhealthy toxic food choices around us,
+                    making it hard to live a healthy life. That is why Obesity,
+                    diabetes and heart diseases have become so common in our lives.
+                </h4>
+
+                <h1></h1>
+
+
+                <h4>
+                    At Khana Gar Ka, we decided to bring a CHANGE in the industry.
+                    Not only you get healthy homemade food by families,
+                    but you help us to make this CHANGE happen and empower
+                    our foodie women by giving them an opportunity to sell homemade
+                    food right from their home kitchens. Let’s grow this win-win relationship together!
+                </h4>
+
+                <h3> <span class="font-semibold chef-red"> SAVE YOUR HEALTH, MONEY AND TIME ALTOGETHER  </span></h3>
+            </div>
+            <!-- col-md-12 -->
+        </div>
+
+    </div>
+</section>
+
+<section id="best-restaurant" class="best-restaurant">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <h2 class="font-lg">
+                    <span class="font-semibold chef-red">
+                        <b>
+                            DOCTORS, IT WORKERS, CORPORATE, STUDENT AND
+                            FAMILIES TRUST OUR SERVICE.
+                        </b>
+                    </span>
+                </h2>
+            </div>
+            <!-- col-md-12 -->
+        </div>
+
+    </div>
+</section>
+
+<section id="best-restaurant" class="best-restaurant">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <h2 class="font-lg">
+                    <span class="font-semibold chef-red">
+                        <b>
+                            ہمار١ مشن آپکو صاف اور صحت مند کھانا پہنچانا
+                            اور خواتین کو گھر بیٹھے روزگار فراہم کرنا ہے
+                            کامیابی کے اس مشن میں ہمارا ساتھ دیں
+                        </b>
+                    </span>
+                </h2>
+            </div>
+            <!-- col-md-12 -->
+        </div>
+
+    </div>
+</section>
+
+
+<section id="best-restaurant" class="best-restaurant">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <h2 class="font-lg"><span class="font-semibold chef-red"><b>DO YOU LOVE COOKING?</b></span></h2>
+
+                <h4>Join us as a foodlancer and start selling homemade food. </h4>
+                <h4><span class="font-semibold chef-red">KhanaGarka.com helps you turn your passion into your business.</span></h4>
+                <h4>
+                    True home based business that empower food passionate families by giving them
+                    an opportunity to sell homemade food on the internet.
+                    Join KhanaGarka.com family today and start making money right from your home kitchen.
+                </h4>
+
+
+                <h1><a asp-controller="Home" asp-action="Register" class="btn btn-default"> <span class="font-semibold chef-red"><b>Register Now</b></span></a></h1>
+            </div>
+            <!-- col-md-12 -->
+        </div>
+
+    </div>
+</section>
+
+
+<section class="bt-block-home-parallax" style="background-image: url(img/blog-1.jpg);">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="lookbook-product">
+                    <h2>Delicious food is just a click away! Explore our enlisted Chefs – we believe, you will love them. </h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- /.bt-block-home-parallax -->
+<br />

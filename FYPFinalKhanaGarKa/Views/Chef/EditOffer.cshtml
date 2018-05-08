@@ -1,0 +1,140 @@
+﻿@model FYPFinalKhanaGarKa.Models.ViewModels.OfferViewModel
+@{
+    ViewData["Title"] = "Edit Offer";
+}
+@section Styles{
+    <link href="~/css/order-online.css" rel="stylesheet" />
+    <style>
+        .reg-block h1 {
+            font-family: Open Sans,sans-serif;
+            color: #96a2b2;
+            letter-spacing: 1px;
+            font-size: 22px;
+            margin-bottom: 60px;
+            margin-top: 40px;
+            text-align: center;
+        }
+
+        .reg-block img#logo, .text-center {
+            margin-top: 40px;
+        }
+
+        #add,#Delete {
+            margin-bottom: 40px;
+            margin-top: 20px;
+        }
+
+        .container {
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+    </style>
+}
+@Html.Partial("_PageTitlePartial", ViewData["Title"])
+<section class="cfo-area">
+    <div class="container">
+        <div class="row">
+            <div class="reg-block col-lg-9 col-lg-offset-1 col-md-9 col-md-offset-1 col-sm-12 col-xs-12">
+                <div class="contact-details myaccount-contact">
+                    <center>
+                        <img src="~/img/logo_gray.png" alt="" id="logo">
+                        <h1>Add Your Offer</h1>
+                    </center>
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="address-form">
+                                <div class="row">
+                                    <form enctype="multipart/form-data" method="post" class="clearfix">
+                                        <input type="hidden" asp-for="OfferId"/>
+                                        <input type="hidden" asp-for="ImgUrl"/>
+                                        <div class="form-group">
+                                            <div class="col-lg-offset-1 col-md-offset-1 col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                                                <label asp-for="OfferName">OfferName *</label>
+                                            </div>
+                                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                <input asp-for="OfferName" class="form-control" value="@Model.OfferName" />
+                                                <span asp-validation-for="OfferName" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-lg-offset-1 col-md-offset-1 col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                                                <label>Add Offer Pic</label>
+                                            </div>
+                                            <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                                            @if (Model.ImgUrl == null)
+                                            {
+                                            <img alt="image" src="~/img/foodimg/menuitem.jpg" class="img img-responsive img-thumbnail" width="113" height="113">
+                                            }
+                                            else
+                                            {
+                                            <img alt="image" src="@Model.ImgUrl" class="img img-responsive img-thumbnail" width="113" height="113" />
+
+                                            }
+                                            </div>
+                                            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                                <input asp-for="Image" type="file" style="margin-top:30px;" />
+                                            </div>
+                                            <span class="clearfix"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-lg-offset-1 col-md-offset-1 col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                                                <label asp-for="Price">Price *</label>
+                                            </div>
+                                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                <input asp-for="Price" type="number" class="form-control" value="@Model.Price" />
+                                                <span asp-validation-for="Price" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-lg-offset-1 col-md-offset-1 col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                                                <label asp-for="EndDate">Offer Ending Date *</label>
+                                            </div>
+                                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                <input asp-for="EndDate" type="date" class="form-control" value="@Model.EndDate.ToString("yyyy-MM-dd")" />
+                                                <span asp-validation-for="EndDate" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-lg-offset-1 col-md-offset-1 col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                                                <label asp-for="Percentage">Discount </label>
+                                            </div>
+                                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                <input asp-for="Percentage" type="number" class="form-control" value="@Model.Percentage" />
+                                                <span asp-validation-for="Percentage" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-lg-offset-1 col-md-offset-1 col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                                                <label asp-for="Description">Description </label>
+                                            </div>
+                                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                <textarea asp-for="Description" class="form-control" value="@Model.Description"></textarea>
+                                                <span asp-validation-for="Description" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-lg-offset-1 col-md-offset-1 col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                                                <label></label>
+                                            </div>
+                                            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                                                <button type="submit"  formaction="/Chef/EditOffer" id="add" class="btn btn-primary btn-block custom-checkout">Update</button>
+                                            </div>
+                                            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                                                <button type="submit"  formaction="/Chef/DeleteOffer" id="Delete" class="btn btn-primary btn-block custom-checkout">
+                                                    Delete
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- END OF DELIVERY ADDRESS SECTION -->
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Main container end -->

@@ -1,0 +1,47 @@
+@using FYPFinalKhanaGarKa.Models.ViewModels;
+@using FYPFinalKhanaGarKa.Controllers;
+
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@{
+    var img = ""; var name = "";
+    @if (HttpContextAccessor.HttpContext.Session.Get<SessionData>("_User") != null)
+    {
+
+        if (HttpContextAccessor.HttpContext.Session.Get<SessionData>("_User").ImgUrl != null)
+        {
+            img = HttpContextAccessor.HttpContext.Session.Get<SessionData>("_User").ImgUrl;
+
+        }
+        else
+        {
+            img = "/img/avatar.png";
+
+        }
+        if (HttpContextAccessor.HttpContext.Session.Get<SessionData>("_User").Name != null)
+        {
+            name = HttpContextAccessor.HttpContext.Session.Get<SessionData>("_User").Name;
+
+        }
+    }
+}
+
+    @if (HttpContextAccessor.HttpContext.Session.Get<SessionData>("_User") != null)
+    {
+        <div class="dropdown pull-right" style="margin-top:10px">
+            <img class="img img-circle" src="@img" width="50px" height="50px" />
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">@name <span class="caret"></span></a>
+            &nbsp;
+            <ul class="dropdown-menu">
+                <li><a href="/Order/History/">Order History</a></li>
+                <li><a href="/Home/ModifyDetails/">My Account</a></li>
+                <li><a href="/Home/Logout/">Logout</a></li>
+            </ul>
+        </div>
+    }
+    else
+    {
+        <div class="pull-right user-login">
+            <a class="btn btn-sm btn-primary" asp-controller="Home" asp-action="Login">Login</a> or &nbsp;
+            <a class="user-register-btn btn btn-sm btn-primary" asp-controller="Home" asp-action="Register">Register</a>
+        </div>
+    }

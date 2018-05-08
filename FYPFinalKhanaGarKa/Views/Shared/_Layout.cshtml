@@ -1,0 +1,219 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="KhanaGarKa is a food ordering platform which brings Chefs and food lovers together. Food ordering online is easier than any other platforms.">
+    <meta name="keywords" content="food, order online, restaurant, reservation, book a table, foodies, cafe, recipes, menu, dishes, chefs and cooking experts ">
+    <meta name="author" content="iglyphic">
+    <title>@ViewData["Title"] - KhanaGarKa</title>
+
+    <environment include="Development">
+        <!-- reset CSS -->
+        <link href="~/css/reset.css" rel="stylesheet">
+        <!-- Bootstrap css -->
+        <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+        <!-- icon CSS -->
+        <link href="~/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+        <!--others-->
+        @RenderSection("Styles", required: false)
+        <!-- Main css -->
+        <link href="~/css/main.css" rel="stylesheet" type="text/css">
+        <!-- rateyo css -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.css">
+        <!--datatable css cdn-->
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" />
+
+
+    </environment>
+    <environment exclude="Development">
+        <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
+              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
+              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
+        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+    </environment>
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body class="style-2 nav-on-header-white">
+    <!-- Start Loading -->
+    <section class="loading-overlay">
+        <div class="Loading-Page">
+            <h1 class="loader">Loading...</h1>
+        </div>
+    </section>
+    <!-- End Loading  -->
+    <!-- Start Navigation bar -->
+    <nav class="navbar">
+        <div class="container">
+            <!-- Logo -->
+            <div class="pull-left">
+                <a class="navbar-toggle" href="#" data-toggle="offcanvas"><i class="ti-menu"></i></a>
+                <div class="logo-wrapper">
+                    <a class="logo" href="index.html"><img src="~/img/logo_gray.png" alt="logo"></a>
+                    <a class="logo-alt" href="index.html"><img src="~/img/logo_gray.png" alt="logo-alt"></a>
+                </div>
+            </div>
+            <!-- END Logo -->
+            <!-- User account -->
+            @Html.Partial("_LoginPartial")
+            <!-- END User account -->
+            <!-- Navigation menu -->
+            <ul class="nav-menu">
+                <li>
+                    <a asp-controller="Home" asp-action="Index">Home</a>
+                </li>
+                <li>
+                    <a asp-controller="Home" asp-action="Index">Order</a>
+                </li>
+                <li>
+                    <a asp-controller="Home" asp-action="About">About Us</a>
+                </li>
+                <li>
+                    <a asp-controller="Home" asp-action="Contact">Contact Us</a>
+                </li>
+            </ul>
+            <!-- END Navigation menu -->
+        </div>
+    </nav>
+    <!-- End Navigation bar -->
+    @RenderBody()
+
+    <!-- start footer area -->
+    <section id="index-footer" class="footer-area-content">
+
+        <!-- Newsletter -->
+        <div id="newsletter">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <h3><i class="fa fa-envelope-o"></i>Keep in touch, Join our newsletter</h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 col-md-offset-3">
+                        <form asp-controller="Home" asp-action="NewsLetter" method="post">
+                            <div class="col-sm-8">
+                                <input type="email" required="required" placeholder="Your Email Address" id="email" class="form-control" name="email">
+                                <span class="text text-danger"></span>
+                            </div>
+                            <div class="col-sm-4">
+                                <input type="submit" class="btn btn-subscribe" value="Subscribe">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END: Newsletter -->
+        <div class="container">
+            <div class="footer-wrapper style-3">
+                <footer class="type-1">
+                    <div class="footer-columns-entry">
+
+                        <div class="col-md-3 col-sm-3">
+                            <h3 class="column-title">Khana Gar Ka</h3>
+                            <ul class="column">
+                                <li><a href="about-us.html">About Us</a></li>
+                                <li><a href="page-blog.html">News</a></li>
+                                <li><a href="#">Terms and conditions</a></li>
+                                <li><a href="page-privacy-policy.html"> Privacy policy</a></li>
+                                <li><a href="page-careers.html">Careers</a></li>
+                            </ul>
+                            <div class="clear"></div>
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col-md-3 col-sm-3">
+                                <h3 class="column-title">Popular Chefs</h3>
+                                <ul class="column">
+                                    <li><a href="#">Rashid Ali</a></li>
+                                    <li><a href="#">Mohammad Umair</a></li>
+                                    <li><a href="#">Mohammad Tayyab</a></li>
+
+                                </ul>
+                                <div class="clear"></div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </footer>
+            </div>
+        </div>
+
+        <div class="footer-bottom footer-wrapper style-3">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="footer-bottom-navigation">
+                            <div class="cell-view">
+                                <div class="footer-links">
+                                    <a href="#">Site Map</a>
+                                    <a href="#">Search</a>
+                                    <a href="#">Terms and Conditions</a>
+                                    <a asp-controller="Home" asp-action="Privacy_Policy">Privacy policy</a>
+                                    <a asp-controller="Home" asp-action="Index">Order Now</a>
+                                    <a asp-controller="Home" asp-action="Contact">Contact Us</a>
+                                    <a href="#">Careers</a>
+                                </div>
+                                <div class="copyright">Created with by <a target="_blank" href="#">Khana Gar Ka</a> . All right reserved</div>
+                            </div>
+                            <div class="cell-view">
+                                <div class="social-content">
+                                    <a class="post-facebook" href="#"><i class="fa fa-facebook"></i></a>
+                                    <a class="post-google-plus" href="#"><i class="fa fa-google-plus"></i></a>
+                                    <a class="post-twitter" href="#"><i class="fa fa-twitter"></i></a>
+                                    <a class="linkedin" href="#"><i class="fa fa-linkedin"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+    <!-- footer area end -->
+    <!-- Back to top Link -->
+    <div id="to-top" class="main-bg"><span class="fa fa-chevron-up"></span></div>
+
+    <environment include="Development">
+        <!--Jquery-->
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+        <!-- Bootstrap Javascript -->
+        <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+        <!-- Mynav Bar Script -->
+        @*<script src="~/js/app.min.js"></script>*@
+        @*<script src="~/lib/smoothscroll/dist/smoothscroll.min.js"></script>*@
+        <script src="~/lib/wow/dist/wow.min.js"></script>
+        <!-- Custom Javascript -->
+        <script src="~/js/custom.js"></script>
+        <!--rateyo js-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.js"></script>
+        <!-- others -->
+        @RenderSection("Scripts", required: false)
+
+    </environment>
+    <environment exclude="Development">
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
+                asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+                asp-fallback-test="window.jQuery"
+                crossorigin="anonymous"
+                integrity="sha384-K+ctZQ+LL8q6tP7I94W+qzQsfRV2a+AfHIi9k8z8l9ggpc8X+Ytst4yBo/hH+8Fk">
+        </script>
+        <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/bootstrap.min.js"
+                asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
+                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
+                crossorigin="anonymous"
+                integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
+        </script>
+        <script src="~/js/site.min.js" asp-append-version="true"></script>
+    </environment>
+</body>
+</html>

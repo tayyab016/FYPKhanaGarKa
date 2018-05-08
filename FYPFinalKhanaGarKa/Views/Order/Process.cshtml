@@ -1,0 +1,250 @@
+﻿@model FYPFinalKhanaGarKa.Models.ItemGroup
+@{
+    ViewData["Title"] = "Process";
+}
+
+@section Styles{
+    <link href="~/css/order-online.css" rel="stylesheet" />
+}
+
+@Html.Partial("_PageTitlePartial", ViewData["Title"])
+<!-- Content Start -->
+<main class="main-content">
+
+    <!-- Content Start -->
+    <!-- Start order-online-->
+    <div id="order-process">
+        <div class="container">
+            <div class="order-inner-content">
+                <div class="row">
+                    <form action="/Order/Success" method="post">
+                        <div class="col-md-9">
+                            <div class="order-process-left-side">
+                                <div class="order-information row">
+                                    <div class="col-md-6">
+                                        <h3 class="section-title">Order information</h3>
+                                        <ul class="list-unstyled info-list">
+                                            <li>
+                                                <input class="custom-radio-big" type="radio" name="collection" id="collection" checked>
+                                                <label for="collection">@Model.OrderType</label>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h3 class="section-title">Special Request</h3>
+                                        <textarea asp-for="SpReq" class="special-request"></textarea>
+                                    </div>
+                                </div>
+                                <div class="row order-delivery-address">
+                                    <div class="col-md-12">
+                                        <h3 class="section-title">Your delivery address</h3>
+                                        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                            <select name="City" asp-for="City" class="search-form-select form-control">
+                                                <option selected>--CITY--</option>
+                                                <option class="sialkot" value="Sialkot">SIALKOT</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                            <select name="Area" asp-for="Area" class="search-form-select form-control">
+                                                <option class="options">--AREA--</option>
+                                                <option class="options" value="Kashmir Road">Kashmir Road</option>
+                                                <option class="options" value="Citi Housing Society">Citi Housing Society</option>
+                                                <option class="options" value="Askari 2">Askari 2</option>
+                                                <option class="options" value="Defence Road">Defence Road</option>
+                                                <option class="options" value="Hajipura Road">Hajipura Road</option>
+                                                <option class="options" value="Khokhar Town">Khokhar Town</option>
+                                                <option class="options" value="Sambrial">Sambrial</option>
+                                                <option class="options" value="Model Town Coop Housing Society">Model Town Coop Housing Society</option>
+                                                <option class="options" value="Ugoki Road">Ugoki Road</option>
+                                                <option class="options" value="Cantt">Cantt</option>
+                                                <option class="options" value="Mag Town">Mag Town</option>
+                                                <option class="options" value="Toheed Town">Toheed Town</option>
+                                                <option class="options" value="Iqbal Town">Iqbal Town</option>
+                                                <option class="options" value="Bharath">Bharath</option>
+                                                <option class="options" value="Defence Homes Society">Defence Homes Society</option>
+                                                <option class="options" value="Cantt Avenue">Cantt Avenue</option>
+                                                <option class="options" value="Khadim Ali Road">Khadim Ali Road</option>
+                                                <option class="options" value="Wazirabad Road">Wazirabad Road</option>
+                                                <option class="options" value="Rangpura Road">Rangpura Road</option>
+                                                <option class="options" value="Hadi Town">Hadi Town</option>
+                                                <option class="options" value="Jammu Road">Jammu Road</option>
+                                                <option class="options" value="Askari 1">Askari 1</option>
+                                                <option class="options" value="Cantt Road">Cantt Road</option>
+                                                <option class="options" value="Shahab Pura Road">Shahab Pura Road</option>
+                                                <option class="options" value="AirPort Road">AirPort Road</option>
+                                                <option class="options" value="Cantt View Colony">Cantt View Colony</option>
+                                                <option class="options" value="Christien Town">Christien Town</option>
+                                                <option class="options" value="Jinnah Town">Jinnah Town</option>
+                                                <option class="options" value="Aziz Garden">Aziz Garden</option>
+                                                <option class="options" value="Neka Pura">Neka Pura</option>
+                                                <option class="options" value="Chenab Rangers Road">Chenab Rangers Road</option>
+                                                <option class="options" value="New MianaPura">New MianaPura</option>
+                                                <option class="options" value="Nishat Park">Nishat Park</option>
+                                                <option class="options" value="Daska Road">Daska Road</option>
+                                                <option class="options" value="Shahab Pura">Shahab Pura</option>
+                                                <option class="options" value="Aimanabad Road">Aimanabad Road</option>
+                                                <option class="options" value="Pasrur Road">Pasrur Road</option>
+                                                <option class="options" value="Khawar Road">Khawar Road</option>
+                                                <option class="options" value="Church Road">Church Road</option>
+                                                <option class="options" value="Aziz Bhatti Shaheed Road">Aziz Bhatti Shaheed Road</option>
+                                                <option class="options" value="Lalazar Colony">Lalazar Colony</option>
+                                                <option class="options" value="Shatab Garh">Shatab Garh</option>
+                                                <option class="options" value="Marala Road">Marala Road</option>
+                                                <option class="options" value="Umer Town">Umer Town</option>
+                                                <option class="options" value="Nawna Pind Araiyan">Nawna Pind Araiyan</option>
+                                                <option class="options" value="Sahowali">Sahowali</option>
+                                                <option class="options" value="Adalat Garh">Adalat Garh</option>
+                                                <option class="options" value="Fateh Garh Town">Fateh Garh Town</option>
+                                                <option class="options" value="Zeeshan Colony">Zeeshan Colony</option>
+                                                <option class="options" value="Kaake Wali">Kaake Wali</option>
+                                                <option class="options" value="Gulshan Iqbal">Gulshan Iqbal</option>
+                                                <option class="options" value="Mubarik Pura">Mubarik Pura</option>
+                                                <option class="options" value="Commissioner Road">Commissioner Road</option>
+                                                <option class="options" value="Muslim Colony">Muslim Colony</option>
+                                                <option class="options" value="DinPura">DinPura</option>
+                                                <option class="options" value="Civil lines">Civil lines</option>
+                                                <option class="options" value="Jinnah Park Colony No 2">Jinnah Park Colony No 2</option>
+                                                <option class="options" value="Kachehri Road">Kachehri Road</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                            <input asp-for="Street" class="form-control" placeholder="Street" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row order-payment-method">
+                                    <div class="col-md-12">
+                                        <h3 class="section-title">Payment Method</h3>
+                                        <label for="method-cash"><b>Cash On Delivey</b></label>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- start cart content -->
+                        <div class="col-md-3 ui-order-online-right-side">
+                            <div class="mobile-order-online-cart-inner">
+                                <div class="delivery-time">
+                                    <span class="est-deli">Estimated delivery time</span><span class="deli-time">75<span>minutes</span></span>
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="right-sidebar-inner-content sticky-content-right-side">
+                                    <div class="cart-content">
+                                        <div class="cfo-cart clearfix">
+                                            <div class="cart-info">
+                                                <h2>My Order</h2>
+                                                <div class="cart-table">
+                                                    <table class="table table-striped">
+                                                        <tbody>
+                                                            @if (Model.Items.Count > 0 && Model.Items != null)
+                                                            {
+                                                                @foreach (var item in Model.Items)
+                                                                {
+                                                                <tr class="hobtr">
+                                                                <td class="cross-td custom-spinner">
+                                                                <span>@item.Quantity x</span>
+                                                                </td>
+                                                                <td>@item.Name</td>
+                                                                <td>@item.Price</td>
+                                                                </tr>
+                                                                }
+                                                            }
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <!-- start offer list -->
+                                                <div class="ui-order-description">
+                                                    <div class="row color-gray">
+                                                        <div class="col-md-8 col-xs-8">
+                                                            <p>Subtotal: </p>
+                                                        </div>
+                                                        <div class="col-md-4 col-xs-4 text-right">
+                                                            <span id="subtotal_price">@Model.Subtotal</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row color-gray">
+                                                        <div class="col-md-8 col-xs-8">
+                                                            <p>Delivery Charge: </p>
+                                                        </div>
+                                                        <div class="col-md-4 col-xs-4 text-right">
+                                                            <span id="delivery_fee_price">10</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-8 col-xs-8">
+                                                            <p>Total: </p>
+                                                        </div>
+                                                        <div class="col-md-4 col-xs-4 text-right">
+                                                            <span id="order-total-amount" class="order-total-amount"><span id="full_total_price">@Model.Total</span></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- End of Order Info -->
+
+                                                <div class="cfo-checkoutarea">
+                                                    <input type="submit" class="btn btn-primary btn-block custom-checkout" value="Proceed to Checkout" />
+                                                </div>
+                                            </div>
+                    
+                </div>
+                        </div>
+                        <div class="min-off">
+                            <ul class="list-unstyled">
+                                <li>
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <p>Delivery fee per KM: </p>
+                                        </div>
+                                        <div class="col-md-4 text-right">
+                                            RS:25
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <p>Delivery minimum : </p>
+                                        </div>
+                                        <div class="col-md-4 text-right">
+                                            RS:350
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- end cart content -->
+                </div>
+            </div>
+                    </form>
+                </div>
+        <!--.container-->
+            </div>
+        </div>
+        <!--end container-->
+    </div>
+    <!--#order-online-->
+    <!--end order-online-->
+    <!-- Content End -->
+    <!-- start mobile footer nav -->
+    <nav class="navbar navbar-default navbar-fixed-bottom visible-xs visible-sm mobile-cart-nav">
+        <div class="mobile-cart-inner-content">
+            <div class="row">
+                <div class="col-md-4 col-xs-4">
+                    <div class="mobile-cart-item">
+                        <a id="mobileCartToggle" href="#"><i class="fa fa-shopping-basket"></i><span id="cart-item"> 10</span></a>
+                    </div>
+                </div>
+                <div class="col-md-4 col-xs-4">
+                    <div class="mobile-total-amount">Total: &pound;<span id="total-cart-amount">50</span></div>
+                </div>
+                <div class="col-md-4 col-xs-4">
+                    <a href="/Order/Success" class="btn mobile-btn-checkout">Checkout</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!-- end mobile footer nav -->
+    <!-- Main container end -->
+</main>
+<!-- Content End -->
