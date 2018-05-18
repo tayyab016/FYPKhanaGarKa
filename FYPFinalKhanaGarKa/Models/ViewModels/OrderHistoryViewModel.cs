@@ -7,7 +7,12 @@ namespace FYPFinalKhanaGarKa.Models.ViewModels
 {
     public class OrderHistoryViewModel
     {
-        public List<Orders> Orders { get; set; }
+        public int OrderId { get; set; }
+        public DateTime OrderDate { get; set; }
+        public int Total { get; set; }
+        public bool OrderStatus { get; set; }
+        public bool Received { get; set; }
         public string Role { get; set; }
+
     }
 }

@@ -30,7 +30,7 @@ namespace FYPFinalKhanaGarKa.Models
                 entity.Property(e => e.Cnic)
                     .IsRequired()
                     .HasColumnName("CNIC")
-                    .HasColumnType("nchar(15)");
+                    .HasMaxLength(13);
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime2(6)");
 
@@ -46,15 +46,11 @@ namespace FYPFinalKhanaGarKa.Models
 
                 entity.Property(e => e.PhonNo)
                     .IsRequired()
-                    .HasColumnType("nchar(15)");
+                    .HasMaxLength(11);
 
                 entity.Property(e => e.Role)
                     .IsRequired()
-                    .HasColumnType("nchar(10)");
-
-                entity.Property(e => e.Status)
-                    .IsRequired()
-                    .HasColumnType("nchar(10)");
+                    .HasMaxLength(10);
             });
 
             modelBuilder.Entity<Chef>(entity =>
@@ -334,10 +330,6 @@ namespace FYPFinalKhanaGarKa.Models
                 entity.Property(e => e.Feedback).HasMaxLength(150);
 
                 entity.Property(e => e.OrderDate).HasColumnType("datetime2(6)");
-
-                entity.Property(e => e.OrderType)
-                    .IsRequired()
-                    .HasMaxLength(15);
 
                 entity.Property(e => e.Street).HasMaxLength(100);
 

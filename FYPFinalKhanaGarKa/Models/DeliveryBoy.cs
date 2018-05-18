@@ -27,6 +27,7 @@ namespace FYPFinalKhanaGarKa.Models
         public DateTime? CreatedDate { get; set; }
         public DateTime? ModifiedDate { get; set; }
         public string ImgUrl { get; set; }
+        public bool Approved { get; set; }
 
         public ICollection<Orders> Orders { get; set; }
     }

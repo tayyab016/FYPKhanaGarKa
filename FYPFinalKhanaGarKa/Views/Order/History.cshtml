@@ -1,4 +1,8 @@
-﻿@model IEnumerable<FYPFinalKhanaGarKa.Models.Orders>
+﻿@model IEnumerable<FYPFinalKhanaGarKa.Models.ViewModels.OrderHistoryViewModel>
+@using FYPFinalKhanaGarKa.Models.ViewModels;
+@using FYPFinalKhanaGarKa.Controllers;
+
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 @{
     ViewData["Title"] = "History";
 }
@@ -39,19 +43,47 @@
                                         <th>Total amount</th>
                                         <th class="pay-th">Payment type</th>
                                         <th class="file-th">View</th>
-                                    </tr>
+                                        @if (string.Equals(HttpContextAccessor.HttpContext.Session.Get<SessionData>("_User").Role, "Customer", StringComparison.OrdinalIgnoreCase) ||
+                                            string.Equals(HttpContextAccessor.HttpContext.Session.Get<SessionData>("_User").Role, "Chef", StringComparison.OrdinalIgnoreCase))  
+                                        {
+                                            <th>Status</th>
+                                        }
+                                        </tr>
                                     @if (Model != null && Model.Count() > 0)
                                     {
                                         @foreach (var orders in Model)
                                         {
-                                            <tr class="orderdata-title">
-                                                <td>@orders.OrderId</td>
-                                                <td>@orders.OrderDate</td>
-                                                <td>Rs:189</td>
-                                                <td class="pay">Cash</td>
-                                                <td class="file-view"><a href="/Order/Details/@orders.OrderId"><i class="fa fa-file"></i></a></td>
-                                            </tr>
+                                    <tr class="orderdata-title">
+                                        <td>@orders.OrderId</td>
+                                        <td>@orders.OrderDate</td>
+                                        <td>Rs:@orders.Total</td>
+                                        <td class="pay">Cash</td>
+                                        <td class="file-view"><a href="/Order/Details/@orders.OrderId"><i class="fa fa-file"></i></a></td>
+                                        @if (string.Equals(HttpContextAccessor.HttpContext.Session.Get<SessionData>("_User").Role, "Customer", StringComparison.OrdinalIgnoreCase))
+                                        {
+                                            if (orders.Received == true)
+                                            {
+                                                <td>Received</td>
+                                            }
+                                            else
+                                            {
+                                            <td><button id="chef-order-deliver" data-oid="@orders.OrderId" class="btn btn-danger btn-xs order-recive-btn">Received</button></td>
+                                            }
                                         }
+                                        @if (string.Equals(HttpContextAccessor.HttpContext.Session.Get<SessionData>("_User").Role, "Chef", StringComparison.OrdinalIgnoreCase))
+                                        {
+                                            if (orders.OrderStatus == true)
+                                            {
+                                                <td>Dispatched</td>
+                                            }
+                                            else
+                                            {
+                                            <td><button id="customer-order-received" data-oid="@orders.OrderId" class="btn btn-danger btn-xs order-deliver-btn">Dispatch</button></td>
+                                            }
+                                        }
+                                    </tr>
+                                        }
+                                        /**/
                                     }
                                 </tbody>
                             </table>
@@ -68,3 +100,58 @@
     <!-- Main container end -->
 </main>
 <!-- Content End -->
+@section Scripts{ 
+<script>
+    $(document).ready(function () { 
+        $('.order-recive-btn').click(function () {
+            var justclicked = $(this);
+            $.ajax({
+
+                beforeSend: function () {
+                    justclicked.text('wait...');
+
+                },
+                url: '/Order/OrderDisRec',
+                type: 'POST',
+                data: {
+                    Id: justclicked.data('oid'),
+                    Role: 'Customer'
+                },
+                success: function (responsedata) {
+                    if (responsedata == "OK") {
+                        justclicked.fadeOut(2000);
+                    }
+                },
+                error: function () {
+                    window.alert("Some Error Occured ");
+                }
+            });
+        });
+
+        $('.order-deliver-btn').click(function () {
+            var justclicked = $(this);
+            $.ajax({
+
+                beforeSend: function () {
+                    justclicked.text('wait...');
+
+                },
+                url: '/Order/OrderDisRec',
+                type: 'POST',
+                data: {
+                    Id: justclicked.data('oid'),
+                    Role: 'Chef'
+                },
+                success: function (responsedata) {
+                    if (responsedata == "OK") {
+                        justclicked.fadeOut(2000);
+                    }
+                },
+                error: function () {
+                    window.alert("Some Error Occured ");
+                }
+            });
+        });
+    });
+    </script>
+}

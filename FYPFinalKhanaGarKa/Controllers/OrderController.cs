@@ -6,6 +6,7 @@ using FYPFinalKhanaGarKa.Models;
 using FYPFinalKhanaGarKa.Models.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 
 namespace FYPFinalKhanaGarKa.Controllers
@@ -20,32 +21,44 @@ namespace FYPFinalKhanaGarKa.Controllers
             this.db = db;
         }
 
+        [HttpGet]
         public IActionResult Index(int id)
         {
-            if (HttpContext.Session.Get<SessionData>(SessionUser) != null)
-            {
-                if (string.Equals(HttpContext.Session.Get<SessionData>(SessionUser).Role, "customer", StringComparison.OrdinalIgnoreCase))
-                {
-                    IEnumerable<Menu> menus = db.Menu.Where(i => i.ChefId == id).ToList().OrderByDescending(i => i.ModifiedDate);
-                    IEnumerable<Offer> offers = db.Offer.Where(i => i.ChefId == id).ToList().OrderByDescending(i => i.ModifiedDate);
-                    MenuOfferViewModel ViewModel = new MenuOfferViewModel
-                    {
-                        Menus = menus,
-                        Offers = offers
-                    };
-                    return View(ViewModel);
-                }
-                else
-                {
-                    return NotFound();
-                }
-            }
-            else
-            {
-                return RedirectToAction("Login","Home");
-            }
+            var vm = db.Chef
+                       .Where(i => i.ChefId == id && i.Status == true)
+                       .Select(i => new ChefAccountViewModel
+                       {
+                           ChefId = i.ChefId,
+                           FirstName = i.FirstName,
+                           LastName = i.LastName,
+                           Orders = i.Orders.Count(),
+                           Rating = (int)i.Rating,
+                           Menu = i.Menu.OrderByDescending(z => z.ModifiedDate)
+                           .Select(x => new Menu
+                           {
+                               ImgUrl = x.ImgUrl,
+                               Description = x.Description,
+                               DishName = x.DishName,
+                               Status = x.Status,
+                               Price = x.Price
+                           }).ToList(),
+
+                           Offer = i.Offer.Where(x => x.EndDate <= DateTime.Now)
+                           .Select(x => new Offer
+                           {
+                               ImgUrl = x.ImgUrl,
+                               OfferName = x.OfferName,
+                               Description = x.Description,
+                               Percentage = x.Percentage,
+                               EndDate = x.EndDate,
+                               Price = x.Price
+                           }).ToList()
+                       }).FirstOrDefault();
+
+            return View(vm);
         }
         
+        [HttpGet]
         public IActionResult Details(int id)
         {
             if (HttpContext.Session.Get<SessionData>(SessionUser) != null)
@@ -53,17 +66,21 @@ namespace FYPFinalKhanaGarKa.Controllers
                 List<OrderLine> Dishs = db.OrderLine.Where(i => i.OrderId == id).ToList();
                 Orders Order = db.Orders.Where(i => i.OrderId == id).FirstOrDefault();
                 Chef c = db.Chef.Where(i => i.ChefId == Order.ChefId).FirstOrDefault();
-                
 
-                OrderDetailViewModel ViewModel = new OrderDetailViewModel
+                var vm = db.Orders.Where(i => i.OrderId == id).Select(i => new OrderDetailViewModel
                 {
-                    Dishis = Dishs,
-                    Chef = c,
-                    Order = Order,
-                    Role = HttpContext.Session.Get<SessionData>(SessionUser).Role
-                };
+                    FirstName = i.Chef.FirstName,
+                    LastName = i.Chef.LastName,
+                    OrderType = i.OrderType,
+                    OrderDate = i.OrderDate,
+                    OrderStatus = i.OrderStatus,
+                    Received = i.Received,
+                    OrderId = i.OrderId,
+                    Orderline = i.OrderLine.ToList()
+                    
+                }).FirstOrDefault();
 
-                return View(ViewModel);
+                return View(vm);
             }
             else
             {
@@ -100,7 +117,8 @@ namespace FYPFinalKhanaGarKa.Controllers
                         SpReq = itemGroup.SpReq,
                         City = itemGroup.City,
                         Area = itemGroup.Area,
-                        Street = itemGroup.Street
+                        Street = itemGroup.Street,
+                        Received = false
                     };
                     
                     using (var tr = db.Database.BeginTransaction())
@@ -128,6 +146,7 @@ namespace FYPFinalKhanaGarKa.Controllers
             }
         }
         
+        [HttpGet]
         public IActionResult History()
         {
             if (HttpContext.Session.Get<SessionData>(SessionUser) != null)
@@ -135,29 +154,44 @@ namespace FYPFinalKhanaGarKa.Controllers
 
                 if (string.Equals(HttpContext.Session.Get<SessionData>(SessionUser).Role, "chef", StringComparison.OrdinalIgnoreCase))
                 {
-                    return View(db.Orders.Where(i => i.ChefId == HttpContext.Session.Get<SessionData>(SessionUser).Id).ToList());
+                    var vm = db.Orders.Where(i => i.ChefId == HttpContext.Session.Get<SessionData>(SessionUser).Id)
+                        .Select(x => new OrderHistoryViewModel
+                        {
+                            OrderId = x.OrderId,
+                            OrderDate = x.OrderDate,
+                            OrderStatus = x.OrderStatus,
+                            Received = x.Received,
+                            Total = x.OrderLine.Sum(i => i.Price)
+                        }).ToList();
+                    return View(vm);
                 }
                 else if (string.Equals(HttpContext.Session.Get<SessionData>(SessionUser).Role, "customer", StringComparison.OrdinalIgnoreCase))
                 {
-                    return View(db.Orders.Where(i => i.CustomerId == HttpContext.Session.Get<SessionData>(SessionUser).Id).ToList());
+                    var vm = db.Orders.Where(i => i.CustomerId == HttpContext.Session.Get<SessionData>(SessionUser).Id)
+                        .Select(x => new OrderHistoryViewModel
+                        {
+                            OrderId = x.OrderId,
+                            OrderDate = x.OrderDate,
+                            OrderStatus = x.OrderStatus,
+                            Received = x.Received,
+                            Total = x.OrderLine.Sum(i => i.Price)
+                        }).ToList();
+                    return View(vm);
                 }
                 else if (string.Equals(HttpContext.Session.Get<SessionData>(SessionUser).Role, "DBoy", StringComparison.OrdinalIgnoreCase))
                 {
-                    return View(db.Orders.Where(i => i.DeliveryBoyId == HttpContext.Session.Get<SessionData>(SessionUser).Id).ToList());
+                    var vm = db.Orders.Where(i => i.DeliveryBoyId == HttpContext.Session.Get<SessionData>(SessionUser).Id)
+                        .Select(x => new OrderHistoryViewModel
+                        {
+                            OrderId = x.OrderId,
+                            OrderDate = x.OrderDate,
+                            OrderStatus = x.OrderStatus,
+                            Received = x.Received,
+                            Total = x.OrderLine.Sum(i => i.Price)
+                        }).ToList();
+                    return View(vm);
                 }
 
-                return View();
-            }
-            else
-            {
-                return RedirectToAction("Login", "Home");
-            }
-        }
-
-        public IActionResult Summary()
-        {
-            if (HttpContext.Session.Get<SessionData>(SessionUser) != null)
-            {
                 return View();
             }
             else
@@ -201,6 +235,52 @@ namespace FYPFinalKhanaGarKa.Controllers
                 state = 0,
                 msg = string.Empty
             });
+        }
+
+        [HttpPost]
+        public string OrderDisRec(int Id,string Role)
+        {
+            if (string.Equals(Role, "Customer", StringComparison.OrdinalIgnoreCase))
+            {
+                Orders o = db.Orders.Where(i => i.OrderId == Id).FirstOrDefault();
+                o.Received = true;
+                using (var tr = db.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        db.Orders.Update(o);
+                        db.SaveChanges();
+
+                        tr.Commit();
+                        return "OK";
+                    }
+                    catch
+                    {
+                        tr.Rollback();
+                    }
+                }
+            }
+            else if (string.Equals(Role, "Chef", StringComparison.OrdinalIgnoreCase))
+            {
+                Orders o = db.Orders.Where(i => i.OrderId == Id).FirstOrDefault();
+                o.OrderStatus = true;
+                using (var tr = db.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        db.Orders.Update(o);
+                        db.SaveChanges();
+
+                        tr.Commit();
+                        return "OK";
+                    }
+                    catch
+                    {
+                        tr.Rollback();
+                    }
+                }
+            }
+            return "";
         }
 
         [HttpPost]

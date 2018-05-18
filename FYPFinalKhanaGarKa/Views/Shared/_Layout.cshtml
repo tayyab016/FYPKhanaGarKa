@@ -22,8 +22,6 @@
         <link href="~/css/main.css" rel="stylesheet" type="text/css">
         <!-- rateyo css -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.css">
-        <!--datatable css cdn-->
-        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" />
 
 
     </environment>
@@ -41,11 +39,11 @@
 </head>
 <body class="style-2 nav-on-header-white">
     <!-- Start Loading -->
-    <section class="loading-overlay">
+    @*<section class="loading-overlay">
         <div class="Loading-Page">
             <h1 class="loader">Loading...</h1>
         </div>
-    </section>
+    </section>*@
     <!-- End Loading  -->
     <!-- Start Navigation bar -->
     <nav class="navbar">
@@ -96,15 +94,12 @@
                 </div>
                 <div class="row">
                     <div class="col-md-6 col-md-offset-3">
-                        <form asp-controller="Home" asp-action="NewsLetter" method="post">
                             <div class="col-sm-8">
-                                <input type="email" required="required" placeholder="Your Email Address" id="email" class="form-control" name="email">
-                                <span class="text text-danger"></span>
+                                <input id="nl-input" type="email" placeholder="Your Email Address" class="form-control" name="Email">
                             </div>
                             <div class="col-sm-4">
-                                <input type="submit" class="btn btn-subscribe" value="Subscribe">
+                                <button id="nl-btn" class="btn btn-subscribe">Subscribe</button>
                             </div>
-                        </form>
                     </div>
                 </div>
             </div>
@@ -189,14 +184,34 @@
         <!-- Bootstrap Javascript -->
         <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
         <!-- Mynav Bar Script -->
-        @*<script src="~/js/app.min.js"></script>*@
-        @*<script src="~/lib/smoothscroll/dist/smoothscroll.min.js"></script>*@
         <script src="~/lib/wow/dist/wow.min.js"></script>
         <!-- Custom Javascript -->
         <script src="~/js/custom.js"></script>
         <!--rateyo js-->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.js"></script>
         <!-- others -->
+        <script>
+            $(document).ready(function () {
+                $('#nl-btn').click(function () {
+                     var nlvalue = $('#nl-input').val();
+                    $.ajax({
+                        url: '/Home/NewsLetter',
+                        type: 'POST',
+                        data: {
+                            Email: nlvalue
+                        },
+                        success: function (responsedata) {
+                            if (responsedata == "OK") {
+                                alert("Thank you for registring our NewsLetter");
+                            }
+                        },
+                        error: function () {
+                            alert("We are having some problems please try later");
+                        }
+                    });
+                });
+            });
+        </script>
         @RenderSection("Scripts", required: false)
 
     </environment>
@@ -213,7 +228,7 @@
                 crossorigin="anonymous"
                 integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
         </script>
-        <script src="~/js/site.min.js" asp-append-version="true"></script>
     </environment>
+    
 </body>
 </html>

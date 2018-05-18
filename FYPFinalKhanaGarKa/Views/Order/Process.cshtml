@@ -25,8 +25,15 @@
                                         <h3 class="section-title">Order information</h3>
                                         <ul class="list-unstyled info-list">
                                             <li>
-                                                <input class="custom-radio-big" type="radio" name="collection" id="collection" checked>
-                                                <label for="collection">@Model.OrderType</label>
+                                                <input class="custom-radio-big" type="radio" checked />
+                                                @if (Model.OrderType == true)
+                                                {
+                                                    <label for="delivery">Delivery</label>
+                                                }
+                                                else
+                                                {
+                                                    <lable for="collection">Collection</lable>
+                                                }
                                             </li>
                                         </ul>
                                     </div>

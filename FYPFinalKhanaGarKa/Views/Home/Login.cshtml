@@ -14,7 +14,7 @@
             <div class="form-group">
                 <div class="input-group">
                     <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-                    <input asp-for="Email" type="email" class="form-control" placeholder="Your Email">
+                    <input asp-for="Email" type="email" class="form-control" placeholder="Your Email" required>
                     <span asp-validation-for="Email" class="text-danger"></span>
                 </div>
             </div>
@@ -22,7 +22,7 @@
             <div class="form-group">
                 <div class="input-group">
                     <span class="input-group-addon"><i class="fa fa-unlock"></i></span>
-                    <input asp-for="Password" type="password" class="form-control" placeholder="Password">
+                    <input asp-for="Password" type="password" class="form-control" placeholder="Password" required>
                     <span asp-validation-for="Password" class="text-danger"></span>
                 </div>
             </div>

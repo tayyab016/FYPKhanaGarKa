@@ -1,4 +1,4 @@
-﻿@model IEnumerable<FYPFinalKhanaGarKa.Models.Chef>
+﻿@model IEnumerable<FYPFinalKhanaGarKa.Models.ViewModels.ChefOrderViewModel>
 @{
     ViewData["Title"] = "Chef List";
 }
@@ -68,12 +68,12 @@
                                             <span style="color: #CCCCCC;"><i class="fa fa-star"></i></span>
                                             }
                                             <span class="review">
-                                                (<span>35</span>)
+                                                (<span>@chef.Orders</span>)
                                             </span>
                                         </span>
                                     </p>
                                     <div class="action-btn">
-                                        <a class="btn btn-xs btn-danger" href="Order/index/@chef.ChefId">Place Order</a>
+                                        <a class="btn btn-xs btn-danger" href="Order/index/@chef.ChefId">Check Menu</a>
                                     </div>
                                 </footer>
                             </div>
@@ -91,7 +91,7 @@
                                 <div class="row">
                                     <div class="section-404 col-lg-12">
                                         <h3>Sorry...</h3>
-                                        <p>We donot find any chef in this area</p>
+                                        <p>We donot find any chef in this City</p>
                                         <a asp-controller="Home" asp-action="Index" class="btn btn-danger">Back To Homepage</a>
                                     </div>
                                 </div>

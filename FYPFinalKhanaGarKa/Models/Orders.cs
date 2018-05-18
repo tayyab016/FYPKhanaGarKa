@@ -17,12 +17,13 @@ namespace FYPFinalKhanaGarKa.Models
         public int ChefId { get; set; }
         public int? DeliveryBoyId { get; set; }
         public int CustomerId { get; set; }
-        public string OrderType { get; set; }
+        public bool OrderType { get; set; }
         public string SpReq { get; set; }
         public string City { get; set; }
         public string Area { get; set; }
         public string Street { get; set; }
         public int? DeliveryCharges { get; set; }
+        public bool Received { get; set; }
 
         public Chef Chef { get; set; }
         public Customer Customer { get; set; }

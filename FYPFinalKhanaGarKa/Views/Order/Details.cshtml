@@ -1,4 +1,8 @@
 ﻿@model FYPFinalKhanaGarKa.Models.ViewModels.OrderDetailViewModel
+@using FYPFinalKhanaGarKa.Models.ViewModels;
+@using FYPFinalKhanaGarKa.Controllers;
+
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 @{
     ViewData["Title"] = "Details";
 }
@@ -38,11 +42,41 @@
                                     <th>Order status</th>
                                 </tr>
                                 <tr class="orderdata-title">
-                                    <td>@Model.Chef.FirstName @Model.Chef.LastName</td>
-                                    <td>@Model.Order.OrderDate</td>
-                                    <td>@Model.Order.OrderType</td>
+                                    <td>@Model.FirstName @Model.LastName</td>
+                                    <td>@Model.OrderDate</td>
+                                    @if (Model.OrderStatus == true)
+                                    {
+                                        <td>Delivery</td>
+
+                                    }
+                                    else
+                                    {
+                                        <td>Collection</td>
+
+                                    }
                                     <td>Cash</td>
-                                    <td>@Model.Order.OrderStatus</td>
+                                    @if (string.Equals(HttpContextAccessor.HttpContext.Session.Get<SessionData>("_User").Role, "Customer", StringComparison.OrdinalIgnoreCase))
+                                    {
+                                        if (Model.Received == true)
+                                        {
+                                            <td>Received</td>
+                                                    }
+                                                    else
+                                                    {
+                                            <td><button id="chef-order-deliver" data-oid="@Model.OrderId" class="btn btn-danger btn-xs order-recive-btn">Received</button></td>
+                                        }
+                                    }
+                                    @if (string.Equals(HttpContextAccessor.HttpContext.Session.Get<SessionData>("_User").Role, "Chef", StringComparison.OrdinalIgnoreCase))
+                                    {
+                                        if (Model.OrderStatus == true)
+                                        {
+                                            <td>Dispatched</td>
+                                        }
+                                        else
+                                        {
+                                            <td><button id="customer-order-received" data-oid="@Model.OrderId" class="btn btn-danger btn-xs order-deliver-btn">Dispatch</button></td>
+                                        }
+                                    }
                                 </tr>
                             </tbody>
                         </table>
@@ -57,20 +91,20 @@
                                         <th class="pay-th">Quantity</th>
                                         <th class="file-th">Dish ordered price</th>
                                     </tr>
-                                    @foreach (var dishs in Model.Dishis)
+                                    @foreach (var dishs in Model.Orderline)
                                     {
-                                    <tr class="orderdata-title">
-                                        <td>@dishs.Name</td>
-                                        <td>@Model.Order.OrderDate</td>
-                                        <td class="pay">@dishs.Quantity</td>
-                                        <td class="pay">@dishs.Price</td>
-                                    </tr>
+                                        <tr class="orderdata-title">
+                                            <td>@dishs.Name</td>
+                                            <td>@Model.OrderDate</td>
+                                            <td class="pay">@dishs.Quantity</td>
+                                            <td class="pay">@dishs.Price</td>
+                                        </tr>
                                     }
                                 </tbody>
                             </table>
                             <div class="clearfix"></div>
                             <div class="orderhistory-total clearfix">
-                                <h2><span class="total-title">Total</span> <span class="amount">@Model.Dishis.Sum(i => i.Price)</span></h2>
+                                <h2><span class="total-title">Total</span> <span class="amount">@Model.Orderline.Sum(i => i.Price)</span></h2>
                             </div>
                         </div>
                     </div>

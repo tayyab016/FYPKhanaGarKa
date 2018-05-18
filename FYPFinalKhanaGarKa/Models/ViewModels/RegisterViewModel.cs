@@ -30,7 +30,7 @@ namespace FYPFinalKhanaGarKa.Models.ViewModels
         [Required(ErrorMessage = "Your CNIC is Required")]
         [MaxLength(13, ErrorMessage = "Length of your Cnic should be 13 charaters")]
         [MinLength(13, ErrorMessage = "Length of your Cnic should be 13 charaters")]
-        [RegularExpression("[0-9]+", ErrorMessage = "Your CNIC can only contain numbers")]
+        [RegularExpression("[0-9]+", ErrorMessage = "Your CNIC can only contain numbers witout dashis")]
         public string Cnic { get; set; }
 
         [Required(ErrorMessage = "Your Phone No. is Required")]

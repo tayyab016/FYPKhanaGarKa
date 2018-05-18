@@ -1,0 +1,178 @@
+﻿@model IEnumerable<FYPFinalKhanaGarKa.Models.DeliveryBoy>
+
+@{
+    ViewData["Title"] = "DBoy";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<div id="page-wrapper" style="height:100vh">
+    <div class="container-fluid">
+        <!-- Page Heading -->
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">
+                    DeliveryBoy <small>Statistics</small>
+                </h1>
+                <ol class="breadcrumb">
+                    <li class="active">
+                        <i class="glyphicon glyphicon-user"></i>  &nbsp; DeliveryBoy
+                    </li>
+                </ol>
+            </div>
+        </div>
+        <!-- /.row -->
+        <div class="row">
+            <table class="table table-bordered table-hover table-striped" id="myTable">
+                <thead>
+                    <tr>
+                        <th>
+                            ID
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.FirstName)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.LastName)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Gender)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Dob)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Cnic)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.PhoneNo)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Email)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.City)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Area)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Street)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Role)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Status)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.CreatedDate)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.ModifiedDate)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.ImgUrl)
+                        </th>
+                        <th>
+                            Register
+                        </th>
+                        <th>
+                            Action
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.DeliveryBoyId</td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.FirstName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.LastName)
+                            </td>
+                            <td>
+                                @if (item.Gender == true)
+                                {
+                                    <span> Male </span>
+                                }
+                                else
+                                {
+                                    <span> Female </span>
+                                }
+                            </td>
+                            <td>
+                                @item.Dob.ToString("dd/MM/yyyy")
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Cnic)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.PhoneNo)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Email)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.City)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Area)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Street)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Role)
+                            </td>
+                            <td>
+                                @if (item.Status == true)
+                                {
+                                    <span> Active </span>
+                                }
+                                else
+                                {
+                                    <span> Unactive </span>
+                                }
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.CreatedDate)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ModifiedDate)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ImgUrl)
+                            </td>
+                            <td>
+                                @if (item.Approved == false)
+                                {
+                                    <button data-did="@item.DeliveryBoyId" class="btn btn-success btn-xs approve-btn-dboy">Approve</button>
+                                   
+                                }
+                                else
+                                {
+                                    <button id="disaprove-btn" data-did="@item.DeliveryBoyId" class="btn btn-danger btn-xs">Disapprove</button>
+
+                                }
+                            </td>
+                            <td>
+                                <a class="btn btn-danger btn-xs" asp-action="Delete" asp-route-id="@item.DeliveryBoyId">Delete</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+    @section scripts{
+        <script>
+            $(document).ready(function () {
+                $('#myTable').DataTable({
+                    "scrollX": true
+                });
+            });
+        </script>
+        <script src="~/js/admin.js" type="text/javascript"></script>
+    }

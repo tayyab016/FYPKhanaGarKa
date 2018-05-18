@@ -11,7 +11,7 @@ namespace FYPFinalKhanaGarKa.Models
 
         public int Total { get; set; }
 
-        public string OrderType { get; set; }
+        public bool OrderType { get; set; }
 
         public string Area { get; set; }
 

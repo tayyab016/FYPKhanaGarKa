@@ -6,14 +6,12 @@ using System.IO;
 using System.Linq;
 using System.Net.Mail;
 using System.Threading.Tasks;
+using TinifyAPI;
 
 namespace FYPFinalKhanaGarKa.Controllers
 {
     public class Utils
     {
-        private const string SessionCNIC = "_UserC";
-        private const string SessionRole = "_UserR";
-        private const string SessionId = "_UserI";
 
         //Helper Methods
         public static string GetUniqueName(string FileName)
@@ -27,9 +25,27 @@ namespace FYPFinalKhanaGarKa.Controllers
             return Guid.NewGuid().ToString().Substring(0, 6);
         }
 
+        public static async void CompressImage(string path)
+        {
+            var source = Tinify.FromFile(path);
+            await source.ToFile(path);
+        }
+
+        public static async void ResizeImage(string path)
+        {
+            var source = Tinify.FromFile(path);
+            var resized = source.Resize(new
+            {
+                method = "cover",
+                width = 300,
+                height = 168
+            });
+            await resized.ToFile(path);
+        }
+
         private static bool UploadImage(IHostingEnvironment env, IFormFile Image, string path, string name)
         {
-            if (Image != null && Image.Length > 0 && Image.Length < 1000000)
+            if (Image != null && Image.Length > 0 && Image.Length < 10000000)
             {
                 string ext = Path.GetExtension(Image.FileName);
 
@@ -39,6 +55,7 @@ namespace FYPFinalKhanaGarKa.Controllers
                 {
                     var filePath = env.WebRootPath + path + "/" + name;
                     Image.CopyTo(new FileStream(filePath.Trim(), FileMode.Create));
+                    
                     return true;
                 }
                 else
@@ -163,6 +180,7 @@ namespace FYPFinalKhanaGarKa.Controllers
 
             sc.Send(MM);
         }
+
         public static void FPEmail(string mailid, string code)
         {
             MailMessage MM = new MailMessage();

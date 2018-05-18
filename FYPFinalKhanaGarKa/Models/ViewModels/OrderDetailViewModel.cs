@@ -7,9 +7,14 @@ namespace FYPFinalKhanaGarKa.Models.ViewModels
 {
     public class OrderDetailViewModel
     {
-        public List<OrderLine> Dishis { get; set; }
-        public Chef Chef { get; set; }
-        public Orders Order { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public DateTime OrderDate { get; set; }
+        public bool OrderType { get; set; }
+        public int OrderId { get; set; }
+        public bool OrderStatus { get; set; }
+        public bool Received { get; set; }
+        public IEnumerable<OrderLine> Orderline { get; set; }
         public string Role { get; set; }
     }
 }

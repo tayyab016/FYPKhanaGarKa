@@ -32,6 +32,7 @@ namespace FYPFinalKhanaGarKa.Models
         public DateTime? ModifiedDate { get; set; }
         public string ImgUrl { get; set; }
         public string About { get; set; }
+        public bool Approved { get; set; }
 
         public ICollection<Menu> Menu { get; set; }
         public ICollection<Offer> Offer { get; set; }

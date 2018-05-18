@@ -1,11 +1,11 @@
-﻿@model FYPFinalKhanaGarKa.Models.MenuOfferViewModel
+﻿@model FYPFinalKhanaGarKa.Models.ViewModels.ChefAccountViewModel
 
 @{
-    ViewData["Title"] = "Order";
+    ViewData["Title"] = Model.FirstName + " " + Model.LastName;
     int cid = 0;
-    if(Model.Menus.Count() > 0)
+    if (Model.Menu.Count() > 0)
     {
-        cid = Model.Menus.FirstOrDefault().ChefId;
+        cid = Model.ChefId;
     }
 }
 
@@ -13,7 +13,37 @@
     <link href="~/css/order-online.css" rel="stylesheet" />
 }
 
-@Html.Partial("_PageTitlePartial", ViewData["Title"])
+<!-- Start Pages Title  -->
+<section id="page-title" class="page-title-style2">
+    <div class="color-overlay"></div>
+    <div class="container inner-img">
+        <div class="row">
+            <div class="Page-title">
+                <div class="col-md-12 text-center">
+                    <div class="title-text">
+                        <h6>
+                            @for (int i = 0; i < Model.Rating; i++)
+                            {
+                                <span style="color: #FFC107;"><i class="fa fa-star fa-lg"></i></span>
+                            }
+                        @for (int i = 0; i < 5 - Model.Rating; i++)
+                        {
+                            <span style="color: #CCCCCC;"><i class="fa fa-star fa-lg"></i></span>
+                        }
+                    </h6>
+                    <h2 class="page-title">@Model.FirstName @Model.LastName</h2>
+                </div>
+            </div>
+            <div class="col-md-12 text-center">
+                <div class="title-text">
+                    <h4 style="color:white">@Model.Orders Orders Delivered</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</section>
+<!-- End Pages Title  -->
 <!-- Content Start -->
 <main class="main-content">
 
@@ -58,16 +88,16 @@
                                         <div class="category-dish-content">
                                             <div class="row">
                                                 <div class="clearfix"></div>
-                                                @if (Model.Menus != null && Model.Menus.Count() > 0)
+                                                @if (Model.Menu != null && Model.Menu.Count() > 0)
                                                 {
-                                                    @foreach (var menus in Model.Menus)
+                                                    @foreach (var menus in Model.Menu)
                                                     {
                                                         <div class="col-md-12">
                                                             <div class="dish-content" data-name="@menus.DishName" data-price="@menus.Price" data-id="@menus.ChefId">
                                                                 <div class="row" style="transition: all 0.50s ease-in-out">
                                                                     <div class="col-md-3 dish-img">
                                                                         @if (menus.ImgUrl == null) { menus.ImgUrl = "/img/foodimg/menuitem.jpg"; }
-                                                                        <img class="img img-responsive img-thumbnail" alt="Image" src="@menus.ImgUrl" />
+                                                                        <img class="img img-responsive img-thumbnail" alt="Image" src="@menus.ImgUrl" height="168" width="300" />
                                                                     </div>
                                                                     <div class="col-md-6">
                                                                         <div class="dish-name">@menus.DishName</div>
@@ -91,10 +121,10 @@
                                                 }
                                                 else
                                                 {
-                                                   <div>
+                                                    <div>
                                                         <h4 class="text-capitalize text-center">Sorry..</h4>
                                                         <p class="text-capitalize text-center">Do not have any Menu yet.</p>
-                                                   </div>
+                                                    </div>
                                                 }
                                             </div>
 
@@ -114,23 +144,23 @@
 
                                             <div class="row">
                                                 <div class="clearfix"></div>
-                                                @if (Model.Offers != null && Model.Offers.Count() > 0)
+                                                @if (Model.Offer != null && Model.Offer.Count() > 0)
                                                 {
-                                                    @foreach (var offers in Model.Offers)
+                                                    @foreach (var offers in Model.Offer)
                                                     {
                                                         <div class="col-md-12">
                                                             <div class="dish-content" data-name="@offers.OfferName" data-price="@offers.Price" data-id="@offers.ChefId">
                                                                 <div class="row" style="transition: all 0.50s ease-in-out">
                                                                     <div class="col-md-3 dish-img">
                                                                         @if (offers.ImgUrl == null) { offers.ImgUrl = "/img/foodimg/menuitem.jpg"; }
-                                                                        <img class="img img-responsive img-thumbnail" alt="Image" src="@offers.ImgUrl" />
+                                                                        <img class="img img-responsive img-thumbnail" alt="Image" src="@offers.ImgUrl" height="168" width="300" />
                                                                     </div>
                                                                     <div class="col-md-6">
                                                                         <div class="dish-name">@offers.OfferName</div>
                                                                         <span class="label label-danger">&nbsp; &nbsp; &nbsp; until: @offers.EndDate.ToString("dd-MM-yyyy")</span>
-                                                                        @if(offers.Percentage != null)
+                                                                        @if (offers.Percentage != null)
                                                                         {
-                                                                        <span class="label label-success">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; @offers.Percentage % &nbsp;</span>
+                                                                            <span class="label label-success">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; @offers.Percentage % &nbsp;</span>
 
                                                                         }
                                                                         <p>@offers.Description</p>
@@ -177,10 +207,10 @@
                             <div class="ui-order-policy">
                                 <ul class="list-inline">
                                     <li>
-                                        <input class="custom-radio-big" type="radio" name="order-policy" value="Delivery" id="delivery"> <label for="delivery">Delivery</label>
+                                        <input class="custom-radio-big" type="radio" name="order-policy" value="True" id="delivery"> <label for="delivery">Delivery</label>
                                     </li>
                                     <li>
-                                        <input class="custom-radio-big" type="radio" name="order-policy" value="Collection" id="collection" checked> <label for="collection">Collection</label>
+                                        <input class="custom-radio-big" type="radio" name="order-policy" value="False" id="collection" checked> <label for="collection">Collection</label>
                                     </li>
                                 </ul>
                             </div>
@@ -291,7 +321,6 @@
 
 @section Scripts{
     <script src="~/js/order-online.js"></script>
-    @*<script src="~/lib/jquery.easing/js/jquery.easing.min.js"></script>*@
     <script src="~/lib/jquery-sticky/jquery.sticky.js"></script>
     <script src="~/js/cart.js"></script>
     <script>

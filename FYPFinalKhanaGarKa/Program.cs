@@ -7,6 +7,7 @@ using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using TinifyAPI;
 
 namespace FYPFinalKhanaGarKa
 {
@@ -14,6 +15,7 @@ namespace FYPFinalKhanaGarKa
     {
         public static void Main(string[] args)
         {
+            Tinify.Key = "gGHvuLZcT4lLd-55-kcnGazWM_2LstpA";
             BuildWebHost(args).Run();
         }
 

@@ -25,23 +25,26 @@ namespace FYPFinalKhanaGarKa.Controllers
         [HttpGet]
         public IActionResult Index(string City, string Area)
         {
-            if (HttpContext.Session.Get<SessionData>(SessionUser) != null)
-            {
-                if (string.Equals(HttpContext.Session.Get<SessionData>(SessionUser).Role, "customer", StringComparison.OrdinalIgnoreCase))
-                
+            var vm = db.Chef.Where(
+                    i => i.City.Contains(City) &&
+                    i.Area.Contains(Area) &&
+                    i.Status == true
+                ).Select( x => new ChefOrderViewModel
                 {
-                    List<Chef> chefs = db.Chef.Where(i => i.City.Contains(City) && i.Area.Contains(Area)).ToList();
-                    return View(chefs);
-                }
-                else
-                {
-                    return NotFound();
-                }
-            }
-            else
-            {
-                return RedirectToAction("Login", "Home");
-            }
+                    FirstName = x.FirstName,
+                    LastName = x.LastName,
+                    ImgUrl = x.ImgUrl,
+                    City = x.City,
+                    Area = x.Area,
+                    Street = x.Street,
+                    Category = x.Category,
+                    Rating = (int)x.Rating,
+                    About = x.About,
+                    ChefId = x.ChefId,
+                    Orders = x.Orders.Count()
+                }).ToList();
+
+            return View(vm);
             
         }
 
@@ -52,15 +55,37 @@ namespace FYPFinalKhanaGarKa.Controllers
             {
                 if (string.Equals(HttpContext.Session.Get<SessionData>(SessionUser).Role, "chef", StringComparison.OrdinalIgnoreCase))
                 {
-                    IEnumerable<Menu> menus = db.Menu.Where(i => i.ChefId == HttpContext.Session.Get<SessionData>(SessionUser).Id).ToList().OrderByDescending(i => i.ModifiedDate);
-                    IEnumerable<Offer> offers = db.Offer.Where(i => i.ChefId == HttpContext.Session.Get<SessionData>(SessionUser).Id).ToList().OrderByDescending(i => i.ModifiedDate);
+                    var vm = db.Chef
+                        .Where(i => i.ChefId == HttpContext.Session.Get<SessionData>(SessionUser).Id)
+                        .Select(i => new ChefAccountViewModel
+                        {
+                            FirstName = i.FirstName,
+                            LastName = i.LastName,
+                            Orders = i.Orders.Count(),
+                            Rating = (int)i.Rating,
 
-                    MenuOfferViewModel MenuOffer = new MenuOfferViewModel
-                    {
-                        Menus = menus,
-                        Offers = offers
-                    };
-                    return View(MenuOffer);
+                            Menu = i.Menu.OrderByDescending(z => z.ModifiedDate)
+                            .Select(x => new Menu
+                            {
+                                ImgUrl = x.ImgUrl,
+                                Description = x.Description,
+                                DishName = x.DishName,
+                                Status = x.Status,
+                                Price = x.Price
+                            }).ToList(),
+
+                            Offer = i.Offer.Select(x => new Offer
+                            {
+                                ImgUrl = x.ImgUrl,
+                                OfferName = x.OfferName,
+                                Description = x.Description,
+                                Percentage = x.Percentage,
+                                EndDate = x.EndDate,
+                                Price = x.Price
+                            }).ToList()
+                        }).FirstOrDefault();
+
+                    return View(vm);
                 }
                 else
                 {
@@ -116,6 +141,12 @@ namespace FYPFinalKhanaGarKa.Controllers
 
                     db.Menu.Add(m);
                     db.SaveChanges();
+
+                    if (System.IO.File.Exists(m.ImgUrl) && m.ImgUrl != null)
+                    {
+                        Utils.CompressImage(m.ImgUrl);
+                        Utils.ResizeImage(m.ImgUrl);
+                    }
 
                     tr.Commit();
                 }

@@ -1,11 +1,39 @@
-﻿@model FYPFinalKhanaGarKa.Models.MenuOfferViewModel
+﻿@model FYPFinalKhanaGarKa.Models.ViewModels.ChefAccountViewModel
 @{
-    ViewData["Title"] = "Account";
+    ViewData["Title"] = Model.FirstName + " " + Model.LastName;
 }
 @section Styles{
     <link href="~/css/order-online.css" rel="stylesheet" />
 }
-@Html.Partial("_PageTitlePartial", ViewData["Title"])
+<!-- Start Pages Title  -->
+<section id="page-title" class="page-title-style2">
+    <div class="color-overlay"></div>
+    <div class="container inner-img">
+        <div class="row">
+            <div class="Page-title">
+                <div class="col-md-12 text-center">
+                    <div class="title-text">
+                        <h6>@for (int i = 0; i < Model.Rating; i++)
+                                    {
+                                        <span style="color: #FFC107;"><i class="fa fa-star fa-lg"></i></span>
+                                    }
+                                    @for (int i = 0; i < 5 - Model.Rating; i++)
+                                    {
+                                        <span style="color: #CCCCCC;"><i class="fa fa-star fa-lg"></i></span>
+                                    }</h6>
+                        <h2 class="page-title">@Model.FirstName @Model.LastName</h2>
+                    </div>
+                </div>
+                <div class="col-md-12 text-center">
+                    <div class="title-text">
+                        <h4 style="color:white">@Model.Orders Orders Delivered</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Pages Title  -->
 <!-- Content Start -->
 <main class="main-content">
 
@@ -18,21 +46,7 @@
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 zero-pad">
                     <div class="orderonline-search clearfix">
                         <div class="openclose-message">
-                            <p>My Rating. &nbsp; &nbsp; 
-                            <span>
-                                 @for (int i = 0; i < 2; i++)
-                                  {
-                                     <span style="color: #ED1C3B;"><i class="fa fa-star"></i></span>
-                                  }
-                                  @for (int i = 0; i < 5 - 2; i++)
-                                   {
-                                      <span style="color: #CCCCCC;"><i class="fa fa-star"></i></span>
-                                   }
-                                      <span class="review">
-                                        (<span>35</span>)
-                                      </span>
-                             </span>
-                            </p>
+                            <p>A 24 by 7 service!</p>
                         </div>
                     </div>
                 </div>
@@ -67,19 +81,20 @@
 
                                             <div class="row">
                                                 <div class="clearfix"></div>
-                                                @if (Model.Menus.Count() > 0 && Model.Menus != null)
+                                                @if (Model.Menu.Count() > 0 && Model.Menu != null)
                                                 {
-                                                    @foreach (var menus in Model.Menus)
+                                                    @foreach (var menus in Model.Menu)
                                                     {
                                                         <div class="col-md-12">
                                                             <div class="dish-content" data-name="@menus.DishName" data-price="@menus.Price">
                                                                 <div class="row" style="transition: all 0.50s ease-in-out">
                                                                     <div class="col-md-3 dish-img">
                                                                         @if (menus.ImgUrl == null) { menus.ImgUrl = "/img/foodimg/menuitem.jpg"; }
-                                                                        <img class="img img-responsive img-thumbnail" alt="Image" src="@menus.ImgUrl" />
+                                                                        <img class="img img-responsive img-thumbnail" alt="Image" src="@menus.ImgUrl" height="168" width="300" />
                                                                     </div>
                                                                     <div class="col-md-6">
-                                                                        <div class="dish-name">@menus.DishName &nbsp; &nbsp; 
+                                                                        <div class="dish-name">
+                                                                            @menus.DishName &nbsp; &nbsp;
                                                                         @if (menus.Status)
                                                                         {
                                                                             <span class="label label-warning">&nbsp; Avalible &nbsp;</span>
@@ -90,30 +105,31 @@
                                                                             <span class="label label-danger">&nbsp; Unavalible &nbsp;</span>
 
                                                                         }
-                                                                        </div>
-                                                                        <p>@menus.Description</p>
                                                                     </div>
-                                                                    <div class="col-md-3">
-                                                                        <div class="dish-right-content">
-                                                                            <div class="dish-price">@menus.Price pkr</div>
-                                                                            <div class="text-right pull-right btn-remove">
-                                                                                <a asp-controller="Chef" asp-action="EditMenu" asp-route-id="@menus.MenuId" class="btn btn-danger btn-xs">Edit</a>
-                                                                            </div>
-                                                                            <div class="clearfix"></div>
+                                                                    <p>@menus.Description</p>
+                                                                </div>
+                                                                <div class="col-md-3">
+                                                                    <div class="dish-right-content">
+                                                                        <div class="dish-price">@menus.Price pkr</div>
+                                                                        <div class="text-right pull-right btn-remove">
+                                                                            <a asp-controller="Chef" asp-action="EditMenu" asp-route-id="@menus.MenuId" class="btn btn-danger btn-xs">Edit</a>
                                                                         </div>
+                                                                        <div class="clearfix"></div>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <!-- /.dish-content -->
                                                         </div>
-                                                        <!-- /.col-md-12 -->
-                                                    }
-                                                }else
+                                                        <!-- /.dish-content -->
+                                                    </div>
+                                                    <!-- /.col-md-12 -->
+                                                }
+                                                }
+                                                else
                                                 {
-                                                        <div>
-                                                            <h4 class="text-capitalize text-center">Empty Menu</h4>
-                                                            <p class="text-capitalize text-center">Please, add some dishis to your menu.</p>
-                                                        </div>
+                                                    <div>
+                                                        <h4 class="text-capitalize text-center">Empty Menu...</h4>
+                                                        <p class="text-capitalize text-center">Please, add some dishis to your menu.</p>
+                                                    </div>
                                                 }
                                             </div>
 
@@ -134,48 +150,51 @@
                                         <div class="category-dish-content">
                                             <div class="row">
                                                 <div class="clearfix"></div>
-                                                @if (Model.Offers.Count() > 0 && Model.Offers != null)
+                                                @if (Model.Offer.Count() > 0 && Model.Offer != null)
                                                 {
-                                                    @foreach (var offers in Model.Offers)
+                                                    @foreach (var offers in Model.Offer)
                                                     {
                                                         <div class="col-md-12">
                                                             <div class="dish-content" data-name="@offers.OfferName" data-price="@offers.Price">
                                                                 <div class="row" style="transition: all 0.50s ease-in-out">
                                                                     <div class="col-md-3 dish-img">
                                                                         @if (offers.ImgUrl == null) { offers.ImgUrl = "/img/foodimg/menuitem.jpg"; }
-                                                                        <img class="img img-responsive img-thumbnail" alt="Image" src="@offers.ImgUrl" />
+                                                                        <img class="img img-responsive img-thumbnail" alt="Image" src="@offers.ImgUrl" height="168" width="300" />
                                                                     </div>
                                                                     <div class="col-md-6">
-                                                                        <div class="dish-name">@offers.OfferName</div>
-                                                                        <span class="label label-danger">&nbsp; &nbsp; &nbsp; until: @offers.EndDate.ToString("dd-MM-yyyy")</span>
-                                                                        @if(offers.Percentage != null)
+                                                                        <div class="dish-name">
+                                                                            @offers.OfferName
+                                                                        <span> &nbsp; &nbsp; &nbsp; <span class="label label-danger"> until: @offers.EndDate.ToString("dd-MM-yyyy") </span></span>
+                                                                        @if (offers.Percentage != null)
                                                                         {
-                                                                        <span class="label label-success">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; @offers.Percentage % &nbsp;</span>
+                                                                            <span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span class="label label-success"> -@offers.Percentage % </span></span>
 
                                                                         }
-                                                                        <p>@offers.Description</p>
                                                                     </div>
-                                                                    <div class="col-md-3">
-                                                                        <div class="dish-right-content">
-                                                                            <div class="dish-price">@offers.Price pkr</div>
-                                                                            <div class="text-right btn-remove pull-right">
-                                                                                <a asp-controller="Chef" asp-action="EditOffer" asp-route-id="@offers.OfferId" class="btn btn-danger btn-xs">Edit</a>
-                                                                            </div>
-                                                                            <div class="clearfix"></div>
+                                                                    <p>@offers.Description</p>
+                                                                </div>
+                                                                <div class="col-md-3">
+                                                                    <div class="dish-right-content">
+                                                                        <div class="dish-price">@offers.Price pkr</div>
+                                                                        <div class="text-right btn-remove pull-right">
+                                                                            <a asp-controller="Chef" asp-action="EditOffer" asp-route-id="@offers.OfferId" class="btn btn-danger btn-xs">Edit</a>
                                                                         </div>
+                                                                        <div class="clearfix"></div>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <!-- /.dish-content -->
                                                         </div>
-                                                        <!-- /.col-md-12 -->
-                                                    }
-                                                }else
+                                                        <!-- /.dish-content -->
+                                                    </div>
+                                                    <!-- /.col-md-12 -->
+                                                }
+                                                }
+                                                else
                                                 {
-                                                        <div>
-                                                            <h4 class="text-capitalize text-center">Add Offer</h4>
-                                                            <p class="text-capitalize text-center">You do not have any Offer yet.</p>
-                                                        </div>
+                                                    <div>
+                                                        <h4 class="text-capitalize text-center">Add Offer</h4>
+                                                        <p class="text-capitalize text-center">You do not have any Offer yet.</p>
+                                                    </div>
                                                 }
                                             </div>
                                         </div>

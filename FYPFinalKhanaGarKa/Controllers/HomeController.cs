@@ -54,7 +54,10 @@ namespace FYPFinalKhanaGarKa.Controllers
             {
                 if (string.Equals(vm.Role, "chef", StringComparison.OrdinalIgnoreCase))
                 {
-                    Chef c = db.Chef.Where(i => i.Email == vm.Email && i.Password == vm.Password).FirstOrDefault();
+                    Chef c = db.Chef.Where(
+                        i => i.Email == vm.Email &&
+                        i.Password == vm.Password &&
+                        i.Approved == true).FirstOrDefault();
                     if(c != null)
                     {
                         HttpContext.Session.Set<SessionData>(SessionUser, new SessionData {
@@ -76,7 +79,9 @@ namespace FYPFinalKhanaGarKa.Controllers
                 }
                 else if (string.Equals(vm.Role, "customer", StringComparison.OrdinalIgnoreCase))
                 {
-                    Customer cu = db.Customer.Where(i => i.Email == vm.Email && i.Password == vm.Password).FirstOrDefault();
+                    Customer cu = db.Customer.Where(
+                        i => i.Email == vm.Email &&
+                        i.Password == vm.Password).FirstOrDefault();
                     if (cu != null)
                     {
                         HttpContext.Session.Set<SessionData>(SessionUser, new SessionData
@@ -98,7 +103,10 @@ namespace FYPFinalKhanaGarKa.Controllers
                 }
                 else if (string.Equals(vm.Role, "DBoy", StringComparison.OrdinalIgnoreCase))
                 {
-                    DeliveryBoy d = db.DeliveryBoy.Where(i => i.Email == vm.Email && i.Password == vm.Password).FirstOrDefault();
+                    DeliveryBoy d = db.DeliveryBoy.Where(
+                        i => i.Email == vm.Email &&
+                        i.Password == vm.Password &&
+                        i.Approved == true).FirstOrDefault();
                     if (d != null)
                     {
                         HttpContext.Session.Set<SessionData>(SessionUser, new SessionData
@@ -160,7 +168,8 @@ namespace FYPFinalKhanaGarKa.Controllers
                         Area = vm.Area,
                         Street = vm.Street,
                         Cnic = vm.Cnic.Trim(),
-                        Rating = 0
+                        Rating = 0,
+                        Approved = false
                     };
 
                     using (var tr = db.Database.BeginTransaction())
@@ -171,27 +180,22 @@ namespace FYPFinalKhanaGarKa.Controllers
                             {
                                 c.ImgUrl = Utils.UploadImageR(env, "/Uploads/Chefs/"+vm.Cnic, vm.Image);
                             }
-                            else
-                            {
-                                ModelState.AddModelError("", "Cannot upload your image");
-                                return View(vm);
-                            }
 
                             db.Chef.Add(c);
-                            //GreetingsEmail(c.Email, c.FirstName, c.LastName);
                             db.SaveChanges();
 
                             tr.Commit();
+                            
+                            //GreetingsEmail(c.Email, c.FirstName, c.LastName);
 
                             return RedirectToAction("Login", "Home");
                         }
 
-                        catch(Microsoft.EntityFrameworkCore.DbUpdateException e)
+                        catch
                         {
-                            string msg = e.Message;
                             tr.Rollback();
 
-                            ModelState.AddModelError("", msg);
+                            ModelState.AddModelError("", "We are having some problem in registration");
                             return View(vm);
                         }
                     }
@@ -214,7 +218,8 @@ namespace FYPFinalKhanaGarKa.Controllers
                         City = vm.City,
                         Area = vm.Area,
                         Street = vm.Street,
-                        Cnic = vm.Cnic.Trim()
+                        Cnic = vm.Cnic.Trim(),
+                        Approved = false
                         
                     };
 
@@ -226,17 +231,12 @@ namespace FYPFinalKhanaGarKa.Controllers
                             {
                                 d.ImgUrl = Utils.UploadImageR(env, "/Uploads/DBoy/"+vm.Cnic, vm.Image);
                             }
-                            else
-                            {
-                                ModelState.AddModelError("", "Cannot upload your image");
-                                return View(vm);
-                            }
 
                             db.DeliveryBoy.Add(d);
-                            //GreetingsEmail(d.Email, d.FirstName, d.LastName);
                             db.SaveChanges();
 
                             tr.Commit();
+                            //GreetingsEmail(d.Email, d.FirstName, d.LastName);
 
                             return RedirectToAction("Login", "Home");
                         }
@@ -278,18 +278,14 @@ namespace FYPFinalKhanaGarKa.Controllers
                             {
                                 cu.ImgUrl = Utils.UploadImageR(env, "/Uploads/Customer/"+vm.Cnic, vm.Image);
                             }
-                            else
-                            {
-                                ModelState.AddModelError("", "Cannot upload your image");
-                                return View(vm);
-                            }
 
                             db.Customer.Add(cu);
-                            //GreetingsEmail(cu.Email, cu.FirstName, cu.LastName);
                             db.SaveChanges();
 
                             tr.Commit();
-                            
+
+                            //GreetingsEmail(cu.Email, cu.FirstName, cu.LastName);
+
                             return RedirectToAction("Login", "Home");
                         }
                         catch
@@ -425,7 +421,10 @@ namespace FYPFinalKhanaGarKa.Controllers
                         catch
                         {
                             tr.Rollback();
-                        }
+
+                            ModelState.AddModelError("", "We are having some problem in Updating your record.");
+                            return ModifyDetails();
+                    }
                     }
                 }
                 else if (string.Equals(vm.Role.Trim(), "customer", StringComparison.OrdinalIgnoreCase))
@@ -460,7 +459,9 @@ namespace FYPFinalKhanaGarKa.Controllers
                         catch
                         {
                             tr.Rollback();
-                        }
+                        ModelState.AddModelError("", "We are having some problem in Updating your record.");
+                        return ModifyDetails();
+                    }
                     }
                 }
                 else if (string.Equals(vm.Role.Trim(), "DBoy", StringComparison.OrdinalIgnoreCase))
@@ -493,7 +494,9 @@ namespace FYPFinalKhanaGarKa.Controllers
                         catch
                         {
                             tr.Rollback();
-                        }
+                        ModelState.AddModelError("", "We are having some problem in Updating your record.");
+                        return ModifyDetails();
+                    }
                     }
                 }
             //}
@@ -517,9 +520,7 @@ namespace FYPFinalKhanaGarKa.Controllers
                 }
                 else if(string.Equals(vm.Choice.Trim(), "Email", StringComparison.OrdinalIgnoreCase))
                 {
-                    string code = Utils.GetCode();
-                    HttpContext.Session.SetString(SessionCode, code);
-                    Utils.FPEmail(HttpContext.Session.Get<SessionData>(SessionUser).Email, code);
+                    
                 }
 
             }
@@ -531,9 +532,7 @@ namespace FYPFinalKhanaGarKa.Controllers
                 }
                 else if (string.Equals(vm.Choice.Trim(), "Email", StringComparison.OrdinalIgnoreCase))
                 {
-                    string code = Utils.GetCode();
-                    HttpContext.Session.SetString(SessionCode, code);
-                    Utils.FPEmail(HttpContext.Session.Get<SessionData>(SessionUser).Email, code);
+                    
                 }
             }
             else if (string.Equals(HttpContext.Session.Get<SessionData>(SessionUser).Role, "deliveryboy", StringComparison.OrdinalIgnoreCase))
@@ -544,9 +543,7 @@ namespace FYPFinalKhanaGarKa.Controllers
                 }
                 else if (string.Equals(vm.Choice.Trim(), "Email", StringComparison.OrdinalIgnoreCase))
                 {
-                    string code = Utils.GetCode();
-                    HttpContext.Session.SetString(SessionCode, code);
-                    Utils.FPEmail(HttpContext.Session.Get<SessionData>(SessionUser).Email, code);
+                    
                 }
             }
             return View();
@@ -564,34 +561,38 @@ namespace FYPFinalKhanaGarKa.Controllers
             return View();
         }
 
-        [HttpGet]
+        [HttpPost]
         public IActionResult Contact(ContactViewModel vm)
         {
             return View();
         }
 
         [HttpPost]
-        public IActionResult NewsLetter(NewsLetter n)
+        public string NewsLetter(string Email)
         {
             if (ModelState.IsValid)
             {
-                using(var tr = db.Database.BeginTransaction())
+                if (Email != null && !Email.Equals(""))
                 {
-                    try
+                    using (var tr = db.Database.BeginTransaction())
                     {
-                        db.NewsLetter.Add(n);
-                        db.SaveChanges();
-                        tr.Commit();
-                    }
-                    catch
-                    {
-                        tr.Rollback();
+                        try
+                        {
+                            db.NewsLetter.Add(entity: new NewsLetter { Email = Email });
+                            db.SaveChanges();
+                            tr.Commit();
+                            return "OK";
+                        }
+                        catch
+                        {
+                            tr.Rollback();
+                        }
                     }
                 }
             }
-            return RedirectToAction("Index");
+            return null;
         }
-        
+
         [HttpGet]
         public IActionResult Privacy_Policy()
         {
