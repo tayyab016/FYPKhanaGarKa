@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Hosting;
 using FYPFinalKhanaGarKa.Models.ViewModels;
 using Microsoft.AspNetCore.Http;
 using System.Net.Mail;
+using TinifyAPI;
 
 namespace FYPFinalKhanaGarKa.Controllers
 {
@@ -144,7 +145,7 @@ namespace FYPFinalKhanaGarKa.Controllers
         }
 
         [HttpPost]
-        public IActionResult Register(RegisterViewModel vm)
+        public async Task<IActionResult> Register(RegisterViewModel vm)
         {
             if (ModelState.IsValid)
             {
@@ -185,7 +186,19 @@ namespace FYPFinalKhanaGarKa.Controllers
                             db.SaveChanges();
 
                             tr.Commit();
-                            
+
+                            if (c.ImgUrl != null && System.IO.File.Exists(env.WebRootPath + c.ImgUrl))
+                            {
+                                var source = Tinify.FromFile(env.WebRootPath + c.ImgUrl);
+                                var resized = source.Resize(new
+                                {
+                                    method = "cover",
+                                    width = 300,
+                                    height = 168
+                                });
+                                await resized.ToFile(env.WebRootPath + c.ImgUrl);
+                            }
+
                             //GreetingsEmail(c.Email, c.FirstName, c.LastName);
 
                             return RedirectToAction("Login", "Home");
@@ -236,6 +249,18 @@ namespace FYPFinalKhanaGarKa.Controllers
                             db.SaveChanges();
 
                             tr.Commit();
+
+                            if (d.ImgUrl != null && System.IO.File.Exists(env.WebRootPath + d.ImgUrl))
+                            {
+                                var source = Tinify.FromFile(env.WebRootPath + d.ImgUrl);
+                                var resized = source.Resize(new
+                                {
+                                    method = "cover",
+                                    width = 300,
+                                    height = 168
+                                });
+                                await resized.ToFile(env.WebRootPath + d.ImgUrl);
+                            }
                             //GreetingsEmail(d.Email, d.FirstName, d.LastName);
 
                             return RedirectToAction("Login", "Home");
@@ -283,6 +308,18 @@ namespace FYPFinalKhanaGarKa.Controllers
                             db.SaveChanges();
 
                             tr.Commit();
+
+                            if (cu.ImgUrl != null && System.IO.File.Exists(env.WebRootPath + cu.ImgUrl))
+                            {
+                                var source = Tinify.FromFile(env.WebRootPath + cu.ImgUrl);
+                                var resized = source.Resize(new
+                                {
+                                    method = "cover",
+                                    width = 300,
+                                    height = 168
+                                });
+                                await resized.ToFile(env.WebRootPath + cu.ImgUrl);
+                            }
 
                             //GreetingsEmail(cu.Email, cu.FirstName, cu.LastName);
 
@@ -384,7 +421,7 @@ namespace FYPFinalKhanaGarKa.Controllers
         }
 
         [HttpPost]
-        public IActionResult Update(RegisterViewModel vm)
+        public async Task<IActionResult> Update(RegisterViewModel vm)
         {
             //if (ModelState.IsValid)
             //{
@@ -415,6 +452,18 @@ namespace FYPFinalKhanaGarKa.Controllers
                         db.Chef.Update(c);
                         db.SaveChanges();
                         tr.Commit();
+
+                        if (c.ImgUrl != null && System.IO.File.Exists(env.WebRootPath + c.ImgUrl))
+                        {
+                            var source = Tinify.FromFile(env.WebRootPath + c.ImgUrl);
+                            var resized = source.Resize(new
+                            {
+                                method = "cover",
+                                width = 300,
+                                height = 168
+                            });
+                            await resized.ToFile(env.WebRootPath + c.ImgUrl);
+                        }
 
                         return RedirectToAction("Account", "Chef");
                     }
@@ -455,7 +504,19 @@ namespace FYPFinalKhanaGarKa.Controllers
                             db.SaveChanges();
 
                             tr.Commit();
+
+                        if (c.ImgUrl != null && System.IO.File.Exists(env.WebRootPath + c.ImgUrl))
+                        {
+                            var source = Tinify.FromFile(env.WebRootPath + c.ImgUrl);
+                            var resized = source.Resize(new
+                            {
+                                method = "cover",
+                                width = 300,
+                                height = 168
+                            });
+                            await resized.ToFile(env.WebRootPath + c.ImgUrl);
                         }
+                    }
                         catch
                         {
                             tr.Rollback();
@@ -490,7 +551,18 @@ namespace FYPFinalKhanaGarKa.Controllers
                             db.DeliveryBoy.Update(c);
                             db.SaveChanges();
                             tr.Commit();
+                        if (c.ImgUrl != null && System.IO.File.Exists(env.WebRootPath + c.ImgUrl))
+                        {
+                            var source = Tinify.FromFile(env.WebRootPath + c.ImgUrl);
+                            var resized = source.Resize(new
+                            {
+                                method = "cover",
+                                width = 300,
+                                height = 168
+                            });
+                            await resized.ToFile(env.WebRootPath + c.ImgUrl);
                         }
+                    }
                         catch
                         {
                             tr.Rollback();

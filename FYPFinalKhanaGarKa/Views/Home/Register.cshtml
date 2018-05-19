@@ -82,8 +82,7 @@
                                                     <label asp-for="Cnic">CNIC *</label>
                                                 </div>
                                                 <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                                                    <input asp-for="Cnic" class="form-control" type="text" placeholder="CNIC" required maxlength="13"
-                                                           pattern="[0-9]{13}" title="Your CNIC can only contain numbers witout dashis"/>
+                                                    <input asp-for="Cnic" class="form-control" type="number" placeholder="CNIC" required maxlength="13"/>
                                                     <span asp-validation-for="Cnic" class="text-danger"></span>
                                                 </div>
                                             </div>
@@ -92,8 +91,7 @@
                                                     <label asp-for="FirstName">First Name *</label>
                                                 </div>
                                                 <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                                                    <input asp-for="FirstName" class="form-control" placeholder="First Name" required maxlength="20"
-                                                           pattern="[a-zA-z]+" title="Your FirstName can only contain letters without space">
+                                                    <input asp-for="FirstName" class="form-control" placeholder="First Name" required maxlength="20"/>
                                                     <span asp-validation-for="FirstName" class="text-danger"></span>
                                                 </div>
                                             </div>
@@ -102,8 +100,7 @@
                                                     <label asp-for="LastName">Last Name *</label>
                                                 </div>
                                                 <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                                                    <input asp-for="LastName" class="form-control" placeholder="Last Name" required maxlength="20"
-                                                           pattern="[a-zA-Z]+" title="Your FirstName can only contain letters without space">
+                                                    <input asp-for="LastName" class="form-control" placeholder="Last Name" required maxlength="20"/>
                                                     <span asp-validation-for="LastName" class="text-danger"></span>
                                                 </div>
                                             </div>
@@ -113,8 +110,7 @@
                                                     <label asp-for="Email">Email Address *</label>
                                                 </div>
                                                 <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                                                    <input asp-for="Email" type="email" class="form-control" placeholder="Email Address" required
-                                                           pattern="[a-z0-9._%+-]+@@[a-z0-9.-]+\.[a-z]{2,4}" title="Enter a Valid Email">
+                                                    <input asp-for="Email" type="email" class="form-control" placeholder="Email Address" required/>
                                                     <span asp-validation-for="Email" class="text-danger"></span>
                                                 </div>
                                             </div>
@@ -123,9 +119,7 @@
                                                     <label asp-for="Password">Password *</label>
                                                 </div>
                                                 <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                                                    <input asp-for="Password" type="password" class="form-control" placeholder="Password" required maxlength="10"
-                                                           pattern="((?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])|(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[^a-zA-Z0-9])|(?=.*?[A-Z])(?=.*?[0-9])(?=.*?[^a-zA-Z0-9])|(?=.*?[a-z])(?=.*?[0-9])(?=.*?[^a-zA-Z0-9])).{8,}"
-                                                           title="Passwords must be at least 8 characters and contain at 3 of 4 of the following: upper case (A-Z), lower case (a-z), number (0-9) and special character (e.g. !@@#$%^&*)">
+                                                    <input asp-for="Password" type="password" class="form-control" placeholder="Password" required maxlength="10"/>
                                                     <span asp-validation-for="Password" class="text-danger"></span>
                                                 </div>
                                             </div>
@@ -134,8 +128,7 @@
                                                     <label asp-for="PhoneNo">Mobile No *</label>
                                                 </div>
                                                 <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                                                    <input asp-for="PhoneNo" type="text" class="form-control" placeholder="Mobile No" required maxlength="11"
-                                                           pattern="[0-9]{11}" title="Enter phone no without dash">
+                                                    <input asp-for="PhoneNo" type="number" class="form-control" placeholder="Mobile No" required maxlength="11"/>
                                                     <span asp-validation-for="PhoneNo" class="text-danger"></span>
                                                 </div>
                                             </div>

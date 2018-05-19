@@ -28,7 +28,15 @@ namespace FYPFinalKhanaGarKa.Controllers
         public static async void CompressImage(string path)
         {
             var source = Tinify.FromFile(path);
-            await source.ToFile(path);
+            try
+            {
+                await source.ToFile(path);
+            }
+            catch(IOException e)
+            {
+                string msg = e.Message;
+                Console.Write(msg);
+            }
         }
 
         public static async void ResizeImage(string path)
@@ -54,8 +62,9 @@ namespace FYPFinalKhanaGarKa.Controllers
                    string.Equals(ext, ".jpg", StringComparison.OrdinalIgnoreCase))
                 {
                     var filePath = env.WebRootPath + path + "/" + name;
-                    Image.CopyTo(new FileStream(filePath.Trim(), FileMode.Create));
-                    
+                    FileStream fs = new FileStream(filePath.Trim(), FileMode.Create);
+                    Image.CopyTo(fs);
+                    fs.Close();
                     return true;
                 }
                 else

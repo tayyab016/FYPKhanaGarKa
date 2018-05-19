@@ -6,7 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 using System.Linq;
+using TinifyAPI;
 
 namespace FYPFinalKhanaGarKa.Controllers
 {
@@ -119,7 +121,7 @@ namespace FYPFinalKhanaGarKa.Controllers
         }
 
         [HttpPost]
-        public IActionResult Menu(MenuViewModel vm)
+        public async Task<IActionResult> Menu(MenuViewModel vm)
         {
             Menu m = new Menu {
                 DishName = vm.DishName,
@@ -142,13 +144,19 @@ namespace FYPFinalKhanaGarKa.Controllers
                     db.Menu.Add(m);
                     db.SaveChanges();
 
-                    if (System.IO.File.Exists(m.ImgUrl) && m.ImgUrl != null)
-                    {
-                        Utils.CompressImage(m.ImgUrl);
-                        Utils.ResizeImage(m.ImgUrl);
-                    }
-
                     tr.Commit();
+
+                    if ( m.ImgUrl != null && System.IO.File.Exists(env.WebRootPath+m.ImgUrl))
+                    {
+                        var source = Tinify.FromFile(env.WebRootPath + m.ImgUrl);
+                        var resized = source.Resize(new
+                        {
+                            method = "cover",
+                            width = 300,
+                            height = 168
+                        });
+                        await resized.ToFile(env.WebRootPath + m.ImgUrl);
+                    }
                 }
                 catch
                 {
@@ -179,7 +187,7 @@ namespace FYPFinalKhanaGarKa.Controllers
         }
 
         [HttpPost]
-        public IActionResult Offer(OfferViewModel vm)
+        public async Task<IActionResult> Offer(OfferViewModel vm)
         {
             Offer o = new Offer
             {
@@ -206,6 +214,18 @@ namespace FYPFinalKhanaGarKa.Controllers
                     db.SaveChanges();
 
                     tr.Commit();
+
+                    if (o.ImgUrl != null && System.IO.File.Exists(env.WebRootPath + o.ImgUrl))
+                    {
+                        var source = Tinify.FromFile(env.WebRootPath + o.ImgUrl);
+                        var resized = source.Resize(new
+                        {
+                            method = "cover",
+                            width = 300,
+                            height = 168
+                        });
+                        await resized.ToFile(env.WebRootPath + o.ImgUrl);
+                    }
                 }
                 catch
                 {
@@ -288,7 +308,7 @@ namespace FYPFinalKhanaGarKa.Controllers
         }
 
         [HttpPost]
-        public IActionResult EditMenu(MenuViewModel vm)
+        public async Task<IActionResult> EditMenu(MenuViewModel vm)
         {
             Menu menu = db.Menu.Where(i => i.MenuId == vm.MenuId).FirstOrDefault();
             menu.ModifiedDate = DateTime.Now;
@@ -308,6 +328,18 @@ namespace FYPFinalKhanaGarKa.Controllers
                     db.SaveChanges();
 
                     tr.Commit();
+
+                    if (menu.ImgUrl != null && System.IO.File.Exists(env.WebRootPath + menu.ImgUrl))
+                    {
+                        var source = Tinify.FromFile(env.WebRootPath + menu.ImgUrl);
+                        var resized = source.Resize(new
+                        {
+                            method = "cover",
+                            width = 300,
+                            height = 168
+                        });
+                        await resized.ToFile(env.WebRootPath + menu.ImgUrl);
+                    }
                 }
                 catch
                 {
@@ -348,7 +380,7 @@ namespace FYPFinalKhanaGarKa.Controllers
         }
 
         [HttpPost]
-        public IActionResult EditOffer(OfferViewModel vm)
+        public async Task<IActionResult> EditOffer(OfferViewModel vm)
         {
             Offer o = db.Offer.Where(i => i.OfferId == vm.OfferId).FirstOrDefault();
             o.ModifiedDate = DateTime.Now;
@@ -369,6 +401,18 @@ namespace FYPFinalKhanaGarKa.Controllers
                     db.SaveChanges();
 
                     tr.Commit();
+
+                    if (o.ImgUrl != null && System.IO.File.Exists(env.WebRootPath + o.ImgUrl))
+                    {
+                        var source = Tinify.FromFile(env.WebRootPath + o.ImgUrl);
+                        var resized = source.Resize(new
+                        {
+                            method = "cover",
+                            width = 300,
+                            height = 168
+                        });
+                        await resized.ToFile(env.WebRootPath + o.ImgUrl);
+                    }
                 }
                 catch
                 {
