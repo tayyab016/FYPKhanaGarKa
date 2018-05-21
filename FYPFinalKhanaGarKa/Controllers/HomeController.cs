@@ -192,7 +192,7 @@ namespace FYPFinalKhanaGarKa.Controllers
                                 var source = Tinify.FromFile(env.WebRootPath + c.ImgUrl);
                                 var resized = source.Resize(new
                                 {
-                                    method = "cover",
+                                    method = "fit",
                                     width = 300,
                                     height = 168
                                 });
@@ -636,6 +636,7 @@ namespace FYPFinalKhanaGarKa.Controllers
         [HttpPost]
         public IActionResult Contact(ContactViewModel vm)
         {
+            Utils.ContactEmail(vm.Email, vm.Name, vm.Phone, vm.Msg);
             return View();
         }
 

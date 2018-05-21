@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace FYPFinalKhanaGarKa.Models.ViewModels
 {
-    public class ChefOrderViewModel
+    public class ChefViewModel
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -18,7 +18,5 @@ namespace FYPFinalKhanaGarKa.Models.ViewModels
         public int Rating { get; set; }
         public int Orders { get; set; }
         public int ChefId { get; set; }
-
-
     }
 }

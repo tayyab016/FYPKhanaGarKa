@@ -1,4 +1,4 @@
-﻿@model IEnumerable<FYPFinalKhanaGarKa.Models.ViewModels.ChefOrderViewModel>
+﻿@model FYPFinalKhanaGarKa.Models.ViewModels.ChefListViewModel
 @{
     ViewData["Title"] = "Chef List";
 }
@@ -16,88 +16,174 @@
         <div class="row">
             <!-- Main row -->
             <div class="col-md-12 restaurant-list-three">
-                @if (Model != null && Model.Count() > 0)
+                @if (Model != null && Model.SearchedChefs.Count() > 0)
                 {
-                    @foreach (var chef in Model)
+                    @foreach (var chef in Model.SearchedChefs)
                     {
-                    <!-- Single Chef detail -->
-                    <div class="row">
-                        <!-- Chef detail -->
-                        <div class="col-xs-12">
-                            <div class="item-block">
-                                <header>
-                                    @if (chef.ImgUrl == null) { chef.ImgUrl = "/img/avatar.png"; }
-                                    else { chef.ImgUrl = chef.ImgUrl; }
-                                    <a href="#"><img src="@chef.ImgUrl.Replace(" ", string.Empty)" alt=""></a>
-                                    <div class="hgroup">
-                                        <h4><a href="#">@chef.FirstName @chef.LastName</a> &nbsp; &nbsp; 
-                                        @if (chef.Category == 7)
-                                        { 
-                                            <span class="label label-warning">&nbsp; Popular &nbsp;</span>
-                                        }
-                                        else if(chef.Category == 5)
-                                        {
-                                            <span class="label label-success">&nbsp; Special &nbsp;</span>
+                        <!-- Single Chef detail -->
+                        <div class="row">
+                            <!-- Chef detail -->
+                            <div class="col-xs-12">
+                                <div class="item-block">
+                                    <header>
+                                        @if (chef.ImgUrl == null) { chef.ImgUrl = "/img/avatar.png"; }
+                                        else { chef.ImgUrl = chef.ImgUrl; }
+                                        <a href="#"><img src="@chef.ImgUrl.Replace(" ", string.Empty)" alt=""></a>
+                                        <div class="hgroup">
+                                            <h4>
+                                                <a href="#">@chef.FirstName @chef.LastName</a> &nbsp; &nbsp;
+                                                @if (chef.Category == 7)
+                                                {
+                                                    <span class="label label-warning">&nbsp; Popular &nbsp;</span>
+                                                }
+                                                else if (chef.Category == 5)
+                                                {
+                                                    <span class="label label-success">&nbsp; Special &nbsp;</span>
 
-                                        }
-                                        else if(chef.Category == 3)
-                                        {
-                                            <span class="label label-danger">&nbsp; New &nbsp;</span>
+                                                }
+                                                else if (chef.Category == 3)
+                                                {
+                                                    <span class="label label-danger">&nbsp; New &nbsp;</span>
 
-                                        }
-                                        </h4>
+                                                }
+                                            </h4>
+                                        </div>
+                                        <div class="header-meta">
+                                            <span class="location">@chef.City @chef.Area @chef.Street</span>
+                                        </div>
+                                    </header>
+                                    <div class="item-body">
+                                        <p>@chef.About</p>
                                     </div>
-                                    <div class="header-meta">
-                                        <span class="location">@chef.City @chef.Area @chef.Street</span>
-                                    </div>
-                                </header>
-                                <div class="item-body">
-								    <p>@chef.About</p>
-							    </div>
-                                <footer>
-                                    <p class="status"><strong>Min:</strong> Rs 150</p>
-                                    <p class="status"><strong>Delivery:</strong> 60 min</p>
-                                    <p class="status">
-                                        <span>
-                                            @for (int i = 0; i < chef.Rating; i++)
-                                            {
-                                            <span style="color: #ED1C3B;"><i class="fa fa-star"></i></span>
-                                            }
-                                            @for (int i = 0; i < 5 - chef.Rating; i++)
-                                            {
-                                            <span style="color: #CCCCCC;"><i class="fa fa-star"></i></span>
-                                            }
-                                            <span class="review">
-                                                (<span>@chef.Orders</span>)
+                                    <footer>
+                                        <p class="status"><strong>Min:</strong> Rs 150</p>
+                                        <p class="status"><strong>Delivery:</strong> 60 min</p>
+                                        <p class="status">
+                                            <span>
+                                                @for (int i = 0; i < chef.Rating; i++)
+                                                {
+                                                    <span style="color: #ED1C3B;"><i class="fa fa-star"></i></span>
+                                                }
+                                                @for (int i = 0; i < 5 - chef.Rating; i++)
+                                                {
+                                                    <span style="color: #CCCCCC;"><i class="fa fa-star"></i></span>
+                                                }
+                                                <span class="review">
+                                                    (<span>@chef.Orders</span>)
+                                                </span>
                                             </span>
-                                        </span>
-                                    </p>
-                                    <div class="action-btn">
-                                        <a class="btn btn-xs btn-danger" href="Order/index/@chef.ChefId">Check Menu</a>
-                                    </div>
-                                </footer>
+                                        </p>
+                                        <div class="action-btn">
+                                            <a class="btn btn-xs btn-danger" href="Order/index/@chef.ChefId">Check Menu</a>
+                                        </div>
+                                    </footer>
+                                </div>
                             </div>
+                            <!-- END Chef detail -->
                         </div>
-                        <!-- END Chef detail -->
-                    </div>
-                    <!-- End Single Chef detail -->
+                        <!-- End Single Chef detail -->
                     }
                 }
                 else
                 {
-                    <section id="page-not-found" class="light-wrapper">
-                        <div class="container">
-                            <div class="inner">
-                                <div class="row">
-                                    <div class="section-404 col-lg-12">
-                                        <h3>Sorry...</h3>
-                                        <p>We donot find any chef in this City</p>
-                                        <a asp-controller="Home" asp-action="Index" class="btn btn-danger">Back To Homepage</a>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="item-block">
+                                <h3 class="text-center">Sorry...</h3>
+                                <p class="text-center">We donot find any chef in this Area</p>
+                                <p class="text-center" style="margin: 20px"><a asp-controller="Home" asp-action="Index" class="btn btn-danger">Back To Homepage</a></p>
+                            </div>
+                        </div>
+                    </div>
+
+                }
+
+                @if (Model != null && Model.OtherChefs.Count() > 0)
+                {
+                    <div class="row" style="margin-top:100px">
+                        <div class="col-xs-12">
+                            <div class="item-block">
+                                <p class="text-center" style="margin-top:10px;margin-bottom:10px"><b>OTHER CHEFS IN THIS CITY</b></p>
+                            </div>
+                        </div>
+                    </div>
+                    @foreach (var chef in Model.OtherChefs)
+                    {
+                        <!-- Single Chef detail -->
+                        <div class="row">
+                            <!-- Chef detail -->
+                            <div class="col-xs-12">
+                                <div class="item-block">
+                                    <header>
+                                        @if (chef.ImgUrl == null) { chef.ImgUrl = "/img/avatar.png"; }
+                                        else { chef.ImgUrl = chef.ImgUrl; }
+                                        <a href="#"><img src="@chef.ImgUrl.Replace(" ", string.Empty)" alt=""></a>
+                                        <div class="hgroup">
+                                            <h4>
+                                                <a href="#">@chef.FirstName @chef.LastName</a> &nbsp; &nbsp;
+                                                @if (chef.Category == 7)
+                                                {
+                                                    <span class="label label-warning">&nbsp; Popular &nbsp;</span>
+                                                }
+                                                else if (chef.Category == 5)
+                                                {
+                                                    <span class="label label-success">&nbsp; Special &nbsp;</span>
+
+                                                }
+                                                else if (chef.Category == 3)
+                                                {
+                                                    <span class="label label-danger">&nbsp; New &nbsp;</span>
+
+                                                }
+                                            </h4>
+                                        </div>
+                                        <div class="header-meta">
+                                            <span class="location">@chef.City @chef.Area @chef.Street</span>
+                                        </div>
+                                    </header>
+                                    <div class="item-body">
+                                        <p>@chef.About</p>
                                     </div>
+                                    <footer>
+                                        <p class="status"><strong>Min:</strong> Rs 150</p>
+                                        <p class="status"><strong>Delivery:</strong> 60 min</p>
+                                        <p class="status">
+                                            <span>
+                                                @for (int i = 0; i < chef.Rating; i++)
+                                                {
+                                                    <span style="color: #ED1C3B;"><i class="fa fa-star"></i></span>
+                                                }
+                                                @for (int i = 0; i < 5 - chef.Rating; i++)
+                                                {
+                                                    <span style="color: #CCCCCC;"><i class="fa fa-star"></i></span>
+                                                }
+                                                <span class="review">
+                                                    (<span>@chef.Orders</span>)
+                                                </span>
+                                            </span>
+                                        </p>
+                                        <div class="action-btn">
+                                            <a class="btn btn-xs btn-danger" href="Order/index/@chef.ChefId">Check Menu</a>
+                                        </div>
+                                    </footer>
+                                </div>
+                            </div>
+                            <!-- END Chef detail -->
+                        </div>
+                        <!-- End Single Chef detail -->
+                    }
+                }
+                else
+                {
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="item-block">
+                                    <h3 class="text-center">Sorry...</h3>
+                                    <p class="text-center">We donot find any chef in this City</p>
+                                    <p class="text-center" style="margin: 20px"><a asp-controller="Home" asp-action="Index" class="btn btn-danger">Back To Homepage</a></p>
                                 </div>
                             </div>
                         </div>
-                    </section>
 
                 }
             </div>

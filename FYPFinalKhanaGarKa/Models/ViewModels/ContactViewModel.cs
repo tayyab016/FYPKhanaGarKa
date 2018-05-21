@@ -8,10 +8,15 @@ namespace FYPFinalKhanaGarKa.Models.ViewModels
 {
     public class ContactViewModel
     {
-        [Required]
+        [Required(ErrorMessage = "Your name is required.")]
         public string Name { get; set; }
+        [Required(ErrorMessage = "Your email is required.")]
+        [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
+        [Required(ErrorMessage = "Your phone number is required.")]
+        [DataType(DataType.PhoneNumber)]
         public string Phone { get; set; }
+        [Required(ErrorMessage ="Your message is required.")]
         public string Msg { get; set; }
     }
 }

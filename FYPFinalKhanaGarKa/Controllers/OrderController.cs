@@ -200,6 +200,7 @@ namespace FYPFinalKhanaGarKa.Controllers
             }
         }
 
+        [HttpGet]
         public IActionResult Process()
         {
             if (HttpContext.Session.Get<SessionData>(SessionUser) != null)
@@ -213,28 +214,33 @@ namespace FYPFinalKhanaGarKa.Controllers
         }
 
         [HttpPost]
-        public JsonResult RatingManag([FromBody]RatingViewModel data)
+        public string RatingManag(int Id, int CRating)
         {
-            Chef c = db.Chef.Where(i => i.ChefId == data.Id).FirstOrDefault();
-            c.Rating = (c.Rating + data.CRating) / 2;
-            using (var tr = db.Database.BeginTransaction())
+            if (HttpContext.Session.Get<SessionData>(SessionUser) != null)
             {
-                try
+                Chef c = db.Chef.Where(i => i.ChefId == Id).FirstOrDefault();
+                c.Rating = (c.Rating + CRating) / 2;
+                using (var tr = db.Database.BeginTransaction())
                 {
-                    db.Chef.Update(c);
-                    db.SaveChanges();
+                    try
+                    {
+                        db.Chef.Update(c);
+                        db.SaveChanges();
 
-                    tr.Commit();
-                }
-                catch
-                {
-                    tr.Rollback();
+                        tr.Commit();
+                        return "OK";
+                    }
+                    catch
+                    {
+                        tr.Rollback();
+                        return "";
+                    }
                 }
             }
-            return Json(new {
-                state = 0,
-                msg = string.Empty
-            });
+            else
+            {
+                return "Login";
+            }
         }
 
         [HttpPost]

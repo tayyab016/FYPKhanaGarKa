@@ -25,32 +25,6 @@ namespace FYPFinalKhanaGarKa.Controllers
             return Guid.NewGuid().ToString().Substring(0, 6);
         }
 
-        public static async void CompressImage(string path)
-        {
-            var source = Tinify.FromFile(path);
-            try
-            {
-                await source.ToFile(path);
-            }
-            catch(IOException e)
-            {
-                string msg = e.Message;
-                Console.Write(msg);
-            }
-        }
-
-        public static async void ResizeImage(string path)
-        {
-            var source = Tinify.FromFile(path);
-            var resized = source.Resize(new
-            {
-                method = "cover",
-                width = 300,
-                height = 168
-            });
-            await resized.ToFile(path);
-        }
-
         private static bool UploadImage(IHostingEnvironment env, IFormFile Image, string path, string name)
         {
             if (Image != null && Image.Length > 0 && Image.Length < 10000000)
@@ -190,13 +164,13 @@ namespace FYPFinalKhanaGarKa.Controllers
             sc.Send(MM);
         }
 
-        public static void FPEmail(string mailid, string code)
+        public static void ContactEmail(string mailid, string name, string phone, string msg)
         {
             MailMessage MM = new MailMessage();
-            MM.From = new MailAddress("khanagarka@gmail.com");
-            MM.To.Add(mailid);
-            MM.Subject = ("Your Recovery Code");
-            MM.Body = "<h4>" + code + "</h4>";
+            MM.From = new MailAddress(mailid);
+            MM.To.Add("khanagarka@gmail.com");
+            MM.Subject = (name);
+            MM.Body = "<h3>Phone: " + phone + "</h3><br>"+msg;
             MM.IsBodyHtml = true;
 
             SmtpClient sc = new SmtpClient("smtp.gmail.com", 587);
@@ -205,5 +179,6 @@ namespace FYPFinalKhanaGarKa.Controllers
 
             sc.Send(MM);
         }
+
     }
 }

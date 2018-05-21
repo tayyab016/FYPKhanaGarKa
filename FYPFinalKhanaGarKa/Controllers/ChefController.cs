@@ -27,11 +27,11 @@ namespace FYPFinalKhanaGarKa.Controllers
         [HttpGet]
         public IActionResult Index(string City, string Area)
         {
-            var vm = db.Chef.Where(
+            IList<ChefViewModel> searchedchefs = db.Chef.Where(
                     i => i.City.Contains(City) &&
                     i.Area.Contains(Area) &&
-                    i.Status == true
-                ).Select( x => new ChefOrderViewModel
+                    i.Status == true).OrderBy(i => i.Rating)
+                    .Select( x => new ChefViewModel
                 {
                     FirstName = x.FirstName,
                     LastName = x.LastName,
@@ -46,7 +46,29 @@ namespace FYPFinalKhanaGarKa.Controllers
                     Orders = x.Orders.Count()
                 }).ToList();
 
-            return View(vm);
+            IList<ChefViewModel> otherchefs = db.Chef.Where(
+                    i => i.City.Contains(City) &&
+                    !(i.Area.Contains(Area)) &&
+                    i.Status == true).OrderBy(i => i.Rating)
+                    .Select(x => new ChefViewModel
+                    {
+                        FirstName = x.FirstName,
+                        LastName = x.LastName,
+                        ImgUrl = x.ImgUrl,
+                        City = x.City,
+                        Area = x.Area,
+                        Street = x.Street,
+                        Category = x.Category,
+                        Rating = (int)x.Rating,
+                        About = x.About,
+                        ChefId = x.ChefId,
+                        Orders = x.Orders.Count()
+                    }).Take(10).ToList();
+
+            return View(new ChefListViewModel {
+                SearchedChefs = searchedchefs,
+                OtherChefs = otherchefs
+            });
             
         }
 
