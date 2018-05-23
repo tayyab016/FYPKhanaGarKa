@@ -584,38 +584,80 @@ namespace FYPFinalKhanaGarKa.Controllers
         [HttpPost]
         public IActionResult ForgotPassword(ForgotPasswordViewModel vm)
         {
-            if (string.Equals(HttpContext.Session.Get<SessionData>(SessionUser).Role, "chef", StringComparison.OrdinalIgnoreCase))
+            if (ModelState.IsValid)
             {
-                if (string.Equals(vm.Choice.Trim(), "Phone", StringComparison.OrdinalIgnoreCase))
+                
+                if (string.Equals(vm.Role.Trim(), "chef", StringComparison.OrdinalIgnoreCase))
                 {
+                    Chef c = db.Chef.Where(i => i.Email == vm.Email).FirstOrDefault();
+                    string resetpass = GeneratePassword();
+                    c.Password = resetpass;
+                    using (var tr = db.Database.BeginTransaction())
+                    {
+                        try
+                        {
+                            db.Chef.Update(c);
+                            db.SaveChanges();
+                            ResetPassEmail(c.Email, c.FirstName, resetpass);
+                            tr.Commit();
+                        }
+                        catch
+                        {
+                            tr.Rollback();
+                            ModelState.AddModelError("", "invalid Email or Role");
+                            return Login();
+                        }
+                    }
+                    return RedirectToAction("Login");
+                }
+                else if (string.Equals(vm.Role.Trim(), "customer", StringComparison.OrdinalIgnoreCase))
+                {
+                    Customer c = db.Customer.Where(i => i.Email == vm.Email).FirstOrDefault();
+                    if (c != null)
+                    {
+                        string resetpass = GeneratePassword();
+                        c.Password = resetpass;
+                        using (var tr = db.Database.BeginTransaction())
+                        {
+                            try
+                            {
+                                db.Customer.Update(c);
+                                db.SaveChanges();
+                                ResetPassEmail(c.Email, c.FirstName, resetpass);
+                                tr.Commit();
+                            }
+                            catch
+                            {
+                                tr.Rollback();
+                            }
+                        }
+                    }
+                    else
+                    {
 
+                    }
+                    return RedirectToAction("Login");
                 }
-                else if(string.Equals(vm.Choice.Trim(), "Email", StringComparison.OrdinalIgnoreCase))
+                else if (string.Equals(vm.Role.Trim(), "Delivery Boy", StringComparison.OrdinalIgnoreCase))
                 {
-                    
-                }
-
-            }
-            else if (string.Equals(HttpContext.Session.Get<SessionData>(SessionUser).Role, "customer", StringComparison.OrdinalIgnoreCase))
-            {
-                if (string.Equals(vm.Choice.Trim(), "Phone", StringComparison.OrdinalIgnoreCase))
-                {
-
-                }
-                else if (string.Equals(vm.Choice.Trim(), "Email", StringComparison.OrdinalIgnoreCase))
-                {
-                    
-                }
-            }
-            else if (string.Equals(HttpContext.Session.Get<SessionData>(SessionUser).Role, "deliveryboy", StringComparison.OrdinalIgnoreCase))
-            {
-                if (string.Equals(vm.Choice.Trim(), "Phone", StringComparison.OrdinalIgnoreCase))
-                {
-
-                }
-                else if (string.Equals(vm.Choice.Trim(), "Email", StringComparison.OrdinalIgnoreCase))
-                {
-                    
+                    DeliveryBoy b = db.DeliveryBoy.Where(i => i.Email == vm.Email).FirstOrDefault();
+                    string resetpass = GeneratePassword();
+                    b.Password = resetpass;
+                    using (var tr = db.Database.BeginTransaction())
+                    {
+                        try
+                        {
+                            db.DeliveryBoy.Update(b);
+                            db.SaveChanges();
+                            ResetPassEmail(b.Email, b.FirstName, resetpass);
+                            tr.Commit();
+                        }
+                        catch
+                        {
+                            tr.Rollback();
+                        }
+                    }
+                    return RedirectToAction("Login");
                 }
             }
             return View();
@@ -675,6 +717,33 @@ namespace FYPFinalKhanaGarKa.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+        private string GeneratePassword()
+        {
+            string strPwdchar = "abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            string strPwd = "";
+            Random rnd = new Random();
+            for (int i = 0; i <= 7; i++)
+            {
+                int iRandom = rnd.Next(0, strPwdchar.Length - 1);
+                strPwd += strPwdchar.Substring(iRandom, 1);
+            }
+            return strPwd;
+        }
+        public static void ResetPassEmail(string mailid, string name, string resetpass)
+        {
+            MailMessage MM = new MailMessage();
+            MM.From = new MailAddress("khanagarka@gmail.com");
+            MM.To.Add(mailid);
+            MM.Subject = ("Password Reset Request for KhanGarKa.com");
+            MM.Body = "<h1>Dear " + name + "</h1><br>Your new password for <h2>KhanaGarKa.com</h2> is <h1>"+resetpass+"</h1>.<br> You can change it after login.<br><br>----<br>Regards,<br> KhanaGarKa Team";
+            MM.IsBodyHtml = true;
+
+            SmtpClient sc = new SmtpClient("smtp.gmail.com", 587);
+            sc.Credentials = new System.Net.NetworkCredential("khanagarka@gmail.com", "stm-7063");
+            sc.EnableSsl = true;
+
+            sc.Send(MM);
         }
     }
 }
