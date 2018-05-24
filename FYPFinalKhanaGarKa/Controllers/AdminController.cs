@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FYPFinalKhanaGarKa.Models;
+using FYPFinalKhanaGarKa.Models.ViewModels;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -11,15 +13,68 @@ namespace FYPFinalKhanaGarKa.Controllers
     public class AdminController : Controller
     {
         private KhanaGarKaFinalContext db = null;
+        private const string SessionUser = "_User";
 
         public AdminController(KhanaGarKaFinalContext _db)
         {
             db = _db;
         }
+        [HttpGet]
+        public IActionResult login()
+        {
+                return View();
+         
+        }
+        [HttpPost]
+        public IActionResult login(LoginViewModel vm)
+        {
+            if (ModelState.IsValid)
+            {
+                if (string.Equals(vm.Role, "Admin", StringComparison.OrdinalIgnoreCase))
+                {
+                    Admin a = db.Admin.Where(
+                        i => i.Email == vm.Email &&
+                        i.Password == vm.Password).FirstOrDefault();
+                    if (a != null)
+                    {
+                        HttpContext.Session.SetString("_email", vm.Email);
+                      
+                        return Redirect("/admin/index");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "Incorrect Email or Password.");
+                    }
+
+
+                }
+            }
+
+
+                    return View(vm);    
+        }
+
+
 
         [HttpGet]
-        public IActionResult Index() => View();
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Clear();
+            return RedirectToAction("login");
+        }
 
+        [HttpGet]
+        public IActionResult Index()
+        {
+
+            if (HttpContext.Session.GetString("_email") == null)
+
+            {
+                return Redirect("/admin/login");
+            }
+
+            return View();
+        }
         [HttpGet]
         public IActionResult Chefs() => View(db.Chef.ToList());
 
