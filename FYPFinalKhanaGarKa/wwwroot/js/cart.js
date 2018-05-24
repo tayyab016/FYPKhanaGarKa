@@ -124,6 +124,7 @@
         
     });
 
+    
     Detail = {
         get_orderType: function () {
             return $('input[name=order-policy]:checked').val();
@@ -169,5 +170,7 @@
         }
 
     };
+
+    
 
 });

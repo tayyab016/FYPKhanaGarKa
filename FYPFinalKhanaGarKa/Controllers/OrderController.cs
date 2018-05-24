@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using FYPFinalKhanaGarKa.Models;
+﻿using FYPFinalKhanaGarKa.Models;
 using FYPFinalKhanaGarKa.Models.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace FYPFinalKhanaGarKa.Controllers
 {
@@ -36,6 +33,9 @@ namespace FYPFinalKhanaGarKa.Controllers
                            Menu = i.Menu.OrderByDescending(z => z.ModifiedDate)
                            .Select(x => new Menu
                            {
+                               MenuId = x.MenuId,
+                               DishLike = x.DishLike,
+                               DishDislike = x.DishDislike,
                                ImgUrl = x.ImgUrl,
                                Description = x.Description,
                                DishName = x.DishName,
@@ -43,7 +43,7 @@ namespace FYPFinalKhanaGarKa.Controllers
                                Price = x.Price
                            }).ToList(),
 
-                           Offer = i.Offer.Where(x => x.EndDate <= DateTime.Now)
+                           Offer = i.Offer.Where(x =>  x.EndDate > DateTime.Now)
                            .Select(x => new Offer
                            {
                                ImgUrl = x.ImgUrl,
@@ -167,7 +167,7 @@ namespace FYPFinalKhanaGarKa.Controllers
                 }
                 else if (string.Equals(HttpContext.Session.Get<SessionData>(SessionUser).Role, "customer", StringComparison.OrdinalIgnoreCase))
                 {
-                    var vm = db.Orders.Where(i => i.CustomerId == HttpContext.Session.Get<SessionData>(SessionUser).Id)
+                    IList<OrderHistoryViewModel> vm = db.Orders.Where(i => i.CustomerId == HttpContext.Session.Get<SessionData>(SessionUser).Id)
                         .Select(x => new OrderHistoryViewModel
                         {
                             OrderId = x.OrderId,
@@ -205,11 +205,49 @@ namespace FYPFinalKhanaGarKa.Controllers
         {
             if (HttpContext.Session.Get<SessionData>(SessionUser) != null)
             {
-                return View(HttpContext.Session.Get<ItemGroup>("CartData"));
+                if (string.Equals(HttpContext.Session.Get<SessionData>("_User").Role, "customer", StringComparison.OrdinalIgnoreCase))
+                {
+                    return View(HttpContext.Session.Get<ItemGroup>("CartData"));
+                }
+                else
+                {
+                    return NotFound();
+                }
             }
             else
             {
                 return RedirectToAction("Login", "Home");
+            }
+        }
+
+        [HttpPost]
+        public string Voting(int MenuId,int ChefId,int Likes,int Dislikes)
+        {
+            if (HttpContext.Session.Get<SessionData>(SessionUser) != null)
+            {
+                Menu m = db.Menu.Where(i => i.ChefId == ChefId && i.MenuId == MenuId).FirstOrDefault();
+                m.DishLike = Likes;
+                m.DishDislike = Dislikes;
+                using (var tr = db.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        db.Menu.Update(m);
+                        db.SaveChanges();
+
+                        tr.Commit();
+                        return "OK";
+                    }
+                    catch
+                    {
+                        tr.Rollback();
+                        return "";
+                    }
+                }
+            }
+            else
+            {
+                return "Login";
             }
         }
 

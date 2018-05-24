@@ -1,4 +1,8 @@
 ﻿@model FYPFinalKhanaGarKa.Models.ViewModels.ChefAccountViewModel
+@using FYPFinalKhanaGarKa.Controllers;
+@using FYPFinalKhanaGarKa.Models.ViewModels;
+
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 
 @{
     ViewData["Title"] = Model.FirstName + " " + Model.LastName;
@@ -11,6 +15,7 @@
 
 @section Styles{
     <link href="~/css/order-online.css" rel="stylesheet" />
+    <link href="~/css/custom.css" rel="stylesheet" />
 }
 
 <!-- Start Pages Title  -->
@@ -26,22 +31,22 @@
                             {
                                 <span style="color: #FFC107;"><i class="fa fa-star fa-lg"></i></span>
                             }
-                        @for (int i = 0; i < 5 - Model.Rating; i++)
-                        {
-                            <span style="color: #CCCCCC;"><i class="fa fa-star fa-lg"></i></span>
-                        }
-                    </h6>
-                    <h2 class="page-title">@Model.FirstName @Model.LastName</h2>
+                            @for (int i = 0; i < 5 - Model.Rating; i++)
+                            {
+                                <span style="color: #CCCCCC;"><i class="fa fa-star fa-lg"></i></span>
+                            }
+                        </h6>
+                        <h2 class="page-title">@Model.FirstName @Model.LastName</h2>
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-12 text-center">
-                <div class="title-text">
-                    <h4 style="color:white">@Model.Orders Orders Delivered</h4>
+                <div class="col-md-12 text-center">
+                    <div class="title-text">
+                        <h4 style="color:white">@Model.Orders Orders Delivered</h4>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 </section>
 <!-- End Pages Title  -->
 <!-- Content Start -->
@@ -56,7 +61,7 @@
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 zero-pad">
                     <div class="orderonline-search clearfix">
                         <div class="openclose-message">
-                            <p>Enjoy my Menu? Please,Rate Me!<span style="margin-top:-25px;margin-left:300px" id="rateYo"></span></p>
+                            <p>Enjoy my Menu? Please,Rate Me!<span id="rateYo" data-c="@Model.ChefId"></span></p>
                         </div>
                     </div>
                 </div>
@@ -110,9 +115,11 @@
                                                                                 <a><i class="fa fa-plus addItemBtn"></i></a>
                                                                             </div>
                                                                             <div class="clearfix"></div>
-                                                                            <div style="margin-top:50px">
-                                                                                <span><i class="fa fa-thumbs-o-up fa-2x"></i> <span style="font-size:17px;cursor:pointer;"> 0 </span></span> &nbsp; &nbsp;
-                                                                                <span><i class="fa fa-thumbs-o-down fa-2x"></i> <span style="font-size:17px;cursor:pointer;"> 0 </span></span>
+                                                                            <div class="dish-rating" data-c="@Model.ChefId" data-m="@menus.MenuId">
+                                                                                <span class="dish-like fa fa-thumbs-o-up"></span>
+                                                                                <span class="dish-like-text">@menus.DishLike</span>
+                                                                                <span class="dish-dislike fa fa-thumbs-o-down"></span>
+                                                                                <span class="dish-dislike-text">@menus.DishDislike</span>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -160,14 +167,15 @@
                                                                         <img class="img img-responsive img-thumbnail" alt="Image" src="@offers.ImgUrl" style="width:200px;height:120px;" />
                                                                     </div>
                                                                     <div class="col-md-6">
-                                                                        <div class="dish-name">@offers.OfferName &nbsp; &nbsp; &nbsp;
+                                                                        <div class="dish-name">
+                                                                            @offers.OfferName &nbsp; &nbsp; &nbsp;
                                                                             <span class="label label-danger"> until: @offers.EndDate.ToString("dd-MM-yyyy")</span>
-                                                                        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-                                                                        @if (offers.Percentage != null)
-                                                                        {
-                                                                            <span class="label label-success"> @offers.Percentage % &nbsp;</span>
+                                                                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                                                                            @if (offers.Percentage != null)
+                                                                            {
+                                                                                <span class="label label-success">- @offers.Percentage % &nbsp;</span>
 
-                                                                        }
+                                                                            }
                                                                         </div>
                                                                         <p>@offers.Description</p>
                                                                     </div>
@@ -329,33 +337,24 @@
     <script src="~/js/order-online.js"></script>
     <script src="~/lib/jquery-sticky/jquery.sticky.js"></script>
     <script src="~/js/cart.js"></script>
-    <script>
+    <script src="~/lib/like-dislike/js/like-dislike.min.js"></script>
+    @if (HttpContextAccessor.HttpContext.Session.Get<SessionData>("_User") != null && 
+        string.Equals(HttpContextAccessor.HttpContext.Session.Get<SessionData>("_User").Role,"customer",StringComparison.OrdinalIgnoreCase))
+    {
+        <script src="~/js/site.js"></script>
+    }
+    else { 
+        <script>
             $("#rateYo").rateYo({
-                starWidth: "20px",
-                fullStar: true,
-                onSet: function (rating, rateYoInstance) {
-                    
-                    $.ajax({
-                        url: '@Url.Action("RatingManag", "Order")',
-                        type: "POST",
-                        contentType: "application/json",
-                        data: { Id:@cid , CRating: rating},
-                        success: function (data) {
-                            if (data == "OK") {
-                                window.alert("Thank you for yor rating!");
-                            }
-                            else if (data == "Login") {
-                                window.alert("Please, Login to rate.");
-
-                            } else {
-                                window.alert("We are having some problem in rating.");
-
-                            }
-                        }
-                    });
-
-                }
+                rating: 0,
+                readOnly: true,
+                starWidth: "20px"
             });
+            $('.dish-rating').click(function () { window.alert('Please, Login first'); });
+        </script>
+    }
+
+    <script>
             $('#pro').click(function () {
                 var prices = Detail.get_prices();
                 var quantities = Detail.get_quantities();

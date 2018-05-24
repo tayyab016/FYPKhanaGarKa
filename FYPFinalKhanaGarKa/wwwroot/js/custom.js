@@ -11,6 +11,7 @@ $(document).ready(function(){
             position: "relative"
         })
     });
+
     /*----------------------------
      window on scroll
      ------------------------------ */

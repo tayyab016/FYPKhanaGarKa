@@ -20,7 +20,6 @@ namespace FYPFinalKhanaGarKa.Models.ViewModels
 
         [Required(ErrorMessage = "OfferName is Required")]
         [MaxLength(50, ErrorMessage = "Length should be not more than 50 charaters")]
-        [RegularExpression("[a-zA-Z0-9]+", ErrorMessage = "OfferName can only contain alphanumaric value")]
         public string OfferName { get; set; }
 
         [MaxLength(200, ErrorMessage = "Length should be not more than 200 charaters")]

@@ -201,7 +201,7 @@ namespace FYPFinalKhanaGarKa.Controllers
 
                             //GreetingsEmail(c.Email, c.FirstName, c.LastName);
 
-                            return RedirectToAction("Login", "Home");
+                            return RedirectToAction("Registration", "Home");
                         }
 
                         catch
@@ -263,7 +263,7 @@ namespace FYPFinalKhanaGarKa.Controllers
                             }
                             //GreetingsEmail(d.Email, d.FirstName, d.LastName);
 
-                            return RedirectToAction("Login", "Home");
+                            return RedirectToAction("Registration", "Home");
                         }
                         catch
                         {
@@ -636,7 +636,7 @@ namespace FYPFinalKhanaGarKa.Controllers
         [HttpPost]
         public IActionResult Contact(ContactViewModel vm)
         {
-            Utils.ContactEmail(vm.Email, vm.Name, vm.Phone, vm.Msg);
+            Utils.ContactEmail(vm.Email, vm.Name, vm.PhoneNo, vm.Msg);
             return View();
         }
 
@@ -668,6 +668,12 @@ namespace FYPFinalKhanaGarKa.Controllers
 
         [HttpGet]
         public IActionResult Privacy_Policy()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult Registration()
         {
             return View();
         }

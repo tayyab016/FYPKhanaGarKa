@@ -7,8 +7,8 @@ namespace FYPFinalKhanaGarKa.Models.ViewModels
 {
     public class ChefListViewModel
     {
-        public IList<ChefViewModel> SearchedChefs { get; set; }
-        public IList<ChefViewModel> OtherChefs { get; set; }
+        public IList<ChefViewModel> Chefs { get; set; }
+        public bool Find { get; set; }
 
     }
 }

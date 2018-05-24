@@ -15,7 +15,7 @@ namespace FYPFinalKhanaGarKa.Models.ViewModels
         public string Email { get; set; }
         [Required(ErrorMessage = "Your phone number is required.")]
         [DataType(DataType.PhoneNumber)]
-        public string Phone { get; set; }
+        public string PhoneNo { get; set; }
         [Required(ErrorMessage ="Your message is required.")]
         public string Msg { get; set; }
     }
