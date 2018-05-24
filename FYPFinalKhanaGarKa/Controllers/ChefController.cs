@@ -91,6 +91,7 @@ namespace FYPFinalKhanaGarKa.Controllers
                             Menu = i.Menu.OrderByDescending(z => z.ModifiedDate)
                             .Select(x => new Menu
                             {
+                                MenuId=x.MenuId,
                                 ImgUrl = x.ImgUrl,
                                 Description = x.Description,
                                 DishName = x.DishName,

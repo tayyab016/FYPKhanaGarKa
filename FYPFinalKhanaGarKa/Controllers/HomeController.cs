@@ -718,6 +718,49 @@ namespace FYPFinalKhanaGarKa.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+        [HttpGet]
+        public IActionResult ModifyPassword()
+        {
+            if (HttpContext.Session.Get<SessionData>(SessionUser) != null)
+            {
+                if (string.Equals(HttpContext.Session.Get<SessionData>(SessionUser).Role, "chef", StringComparison.OrdinalIgnoreCase))
+                {
+                    Chef c = db.Chef.Where(i => i.ChefId == HttpContext.Session.Get<SessionData>(SessionUser).Id).FirstOrDefault();
+                    return View(new ModifyPassword
+                    {
+                        NewPassword = c.Password
+                    });
+                }
+                else if (string.Equals(HttpContext.Session.Get<SessionData>(SessionUser).Role, "customer", StringComparison.OrdinalIgnoreCase))
+                {
+                    Customer c = db.Customer.Where(i => i.CustomerId == HttpContext.Session.Get<SessionData>(SessionUser).Id).FirstOrDefault();
+                    return View(new ModifyPassword
+                    {
+                        NewPassword=c.Password
+                    });
+                }
+                else if (string.Equals(HttpContext.Session.Get<SessionData>(SessionUser).Role, "Delivery Boy", StringComparison.OrdinalIgnoreCase))
+                {
+                    DeliveryBoy c = db.DeliveryBoy.Where(i => i.DeliveryBoyId == HttpContext.Session.Get<SessionData>(SessionUser).Id).FirstOrDefault();
+                    return View(new ModifyPassword
+                    {
+                        NewPassword = c.Password
+                    });
+                }
+
+            }
+            else
+            { }
+            return View();
+        }
+        [HttpPost]
+        public IActionResult ModifyPassword(ModifyPassword mp)
+        {
+            
+            return View();
+        }
+
         private string GeneratePassword()
         {
             string strPwdchar = "abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -745,5 +788,6 @@ namespace FYPFinalKhanaGarKa.Controllers
 
             sc.Send(MM);
         }
+
     }
 }
