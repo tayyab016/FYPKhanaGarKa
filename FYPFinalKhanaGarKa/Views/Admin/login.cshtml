@@ -1,0 +1,62 @@
+﻿@model FYPFinalKhanaGarKa.Models.ViewModels.LoginViewModel
+
+@{
+    Layout = null;
+}
+
+
+<link href="~/css/mainadmin.css" rel="stylesheet" />
+
+<div class="limite">
+    <div class="container-login100">
+        <div class="wrap-login100 p-t-85 p-b-20">
+            <form method="post" asp-action="login" asp-controller="admin" class="login100-form validate-form">
+                <span class="login100-form-title p-b-70">
+                    Welcome
+                </span>
+                <br />  <br />  <br />  <br />
+
+                <div class="wrap-input100 validate-input m-t-85 m-b-35" data-validate="Enter username">
+                    <input class="input100" asp-for="Email" type="text" placeholder="Email">
+                </div>
+
+                <div class="wrap-input100 validate-input m-b-50" data-validate="Enter password">
+                    <input class="input100" asp-for="Password" type="password" placeholder="Password">
+                </div>
+
+                <div class="wrap-input100 validate-input m-t-85 m-b-35" hidden>
+                    <input class="input100" asp-for="Role" type="text" placeholder="Role" value="Admin">
+                </div>
+                <br />  <br />  <br />
+                <div class="container-login100-form-btn">
+                    <button class="login100-form-btn" type="submit">Login</button>
+
+
+                </div>
+                <br />  <br />  <br />  <br />
+                <ul class="login-more p-t-190">
+                    <li class="m-b-8">
+                        <span class="txt1">
+                            Forgot
+                        </span>
+
+                        <a href="#" class="txt2">
+                            Password?
+                        </a>
+                    </li>
+
+                    <li>
+                        <span class="txt1">
+                            Don’t have an account?
+                        </span>
+
+                        <a href="#" class="txt2">
+                            Sign up
+                        </a>
+                    </li>
+                </ul>
+            </form>
+        </div>
+    </div>
+</div>
+
