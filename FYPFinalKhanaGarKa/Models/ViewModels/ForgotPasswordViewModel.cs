@@ -7,6 +7,7 @@ namespace FYPFinalKhanaGarKa.Models.ViewModels
 {
     public class ForgotPasswordViewModel
     {
-        public string Choice { get; set; }
+        public string Email { get; set; }
+        public string Role { get; set; }
     }
 }
