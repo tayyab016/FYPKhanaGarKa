@@ -201,7 +201,7 @@ namespace FYPFinalKhanaGarKa.Controllers
 
                             //GreetingsEmail(c.Email, c.FirstName, c.LastName);
 
-                            return RedirectToAction("Login", "Home");
+                            return RedirectToAction("Registration", "Home");
                         }
 
                         catch
@@ -263,7 +263,7 @@ namespace FYPFinalKhanaGarKa.Controllers
                             }
                             //GreetingsEmail(d.Email, d.FirstName, d.LastName);
 
-                            return RedirectToAction("Login", "Home");
+                            return RedirectToAction("Registration", "Home");
                         }
                         catch
                         {
@@ -678,7 +678,7 @@ namespace FYPFinalKhanaGarKa.Controllers
         [HttpPost]
         public IActionResult Contact(ContactViewModel vm)
         {
-            Utils.ContactEmail(vm.Email, vm.Name, vm.Phone, vm.Msg);
+            Utils.ContactEmail(vm.Email, vm.Name, vm.PhoneNo, vm.Msg);
             return View();
         }
 
@@ -714,6 +714,12 @@ namespace FYPFinalKhanaGarKa.Controllers
             return View();
         }
 
+        [HttpGet]
+        public IActionResult Registration()
+        {
+            return View();
+        }
+
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
@@ -729,7 +735,7 @@ namespace FYPFinalKhanaGarKa.Controllers
                     Chef c = db.Chef.Where(i => i.ChefId == HttpContext.Session.Get<SessionData>(SessionUser).Id).FirstOrDefault();
                     return View(new ModifyPassword
                     {
-                        NewPassword = c.Password
+                        Role = c.Role,
                     });
                 }
                 else if (string.Equals(HttpContext.Session.Get<SessionData>(SessionUser).Role, "customer", StringComparison.OrdinalIgnoreCase))
@@ -737,7 +743,8 @@ namespace FYPFinalKhanaGarKa.Controllers
                     Customer c = db.Customer.Where(i => i.CustomerId == HttpContext.Session.Get<SessionData>(SessionUser).Id).FirstOrDefault();
                     return View(new ModifyPassword
                     {
-                        NewPassword=c.Password
+                        Role = c.Role,
+
                     });
                 }
                 else if (string.Equals(HttpContext.Session.Get<SessionData>(SessionUser).Role, "Delivery Boy", StringComparison.OrdinalIgnoreCase))
@@ -745,7 +752,7 @@ namespace FYPFinalKhanaGarKa.Controllers
                     DeliveryBoy c = db.DeliveryBoy.Where(i => i.DeliveryBoyId == HttpContext.Session.Get<SessionData>(SessionUser).Id).FirstOrDefault();
                     return View(new ModifyPassword
                     {
-                        NewPassword = c.Password
+                        Role=c.Role,
                     });
                 }
 
@@ -757,7 +764,84 @@ namespace FYPFinalKhanaGarKa.Controllers
         [HttpPost]
         public IActionResult ModifyPassword(ModifyPassword mp)
         {
-            
+            if(ModelState.IsValid)
+            { 
+                
+            if (string.Equals(mp.Role.Trim(), "customer", StringComparison.OrdinalIgnoreCase))
+            {
+                Customer c = db.Customer.Where(i => i.CustomerId == HttpContext.Session.Get<SessionData>(SessionUser).Id).FirstOrDefault();
+                    if (mp.OldPassword == c.Password)
+                    {
+                        if(mp.NewPassword==mp.ConfirmPassword)
+                        {
+                            c.Password = mp.NewPassword;
+                            using (var tr = db.Database.BeginTransaction())
+                            {
+                                try { 
+                                db.Customer.Update(c);
+                                db.SaveChanges();
+                                tr.Commit();
+                                }
+                                catch
+                                {
+                                    tr.Rollback();
+                                }
+                            }
+                        }
+                    }
+                        
+            }
+                if (string.Equals(mp.Role.Trim(), "chef", StringComparison.OrdinalIgnoreCase))
+                {
+                    Customer c = db.Customer.Where(i => i.CustomerId == HttpContext.Session.Get<SessionData>(SessionUser).Id).FirstOrDefault();
+                    if (mp.OldPassword == c.Password)
+                    {
+                        if (mp.NewPassword == mp.ConfirmPassword)
+                        {
+                            c.Password = mp.NewPassword;
+                            using (var tr = db.Database.BeginTransaction())
+                            {
+                                try
+                                {
+                                    db.Customer.Update(c);
+                                    db.SaveChanges();
+                                    tr.Commit();
+                                }
+                                catch
+                                {
+                                    tr.Rollback();
+                                }
+                            }
+                        }
+                    }
+
+                }
+                if (string.Equals(mp.Role.Trim(), "deliveryboy", StringComparison.OrdinalIgnoreCase))
+                {
+                    Customer c = db.Customer.Where(i => i.CustomerId == HttpContext.Session.Get<SessionData>(SessionUser).Id).FirstOrDefault();
+                    if (mp.OldPassword == c.Password)
+                    {
+                        if (mp.NewPassword == mp.ConfirmPassword)
+                        {
+                            c.Password = mp.NewPassword;
+                            using (var tr = db.Database.BeginTransaction())
+                            {
+                                try
+                                {
+                                    db.Customer.Update(c);
+                                    db.SaveChanges();
+                                    tr.Commit();
+                                }
+                                catch
+                                {
+                                    tr.Rollback();
+                                }
+                            }
+                        }
+                    }
+
+                }
+            }
             return View();
         }
 
