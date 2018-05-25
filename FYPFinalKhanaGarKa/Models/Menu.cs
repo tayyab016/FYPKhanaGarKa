@@ -14,7 +14,8 @@ namespace FYPFinalKhanaGarKa.Models
         public bool Status { get; set; }
         public DateTime? CreatedDate { get; set; }
         public DateTime? ModifiedDate { get; set; }
-        public string Feedback { get; set; }
+        public int? DishLike { get; set; }
+        public int? DishDislike { get; set; }
 
         public Chef Chef { get; set; }
     }

@@ -241,8 +241,6 @@ namespace FYPFinalKhanaGarKa.Models
                     .IsRequired()
                     .HasMaxLength(50);
 
-                entity.Property(e => e.Feedback).HasMaxLength(150);
-
                 entity.Property(e => e.ImgUrl).HasMaxLength(200);
 
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime2(6)");

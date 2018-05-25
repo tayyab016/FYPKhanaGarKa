@@ -63,7 +63,7 @@
                                                     }
                                                     else
                                                     {
-                                            <td><button id="chef-order-deliver" data-oid="@Model.OrderId" class="btn btn-danger btn-xs order-recive-btn">Received</button></td>
+                                            <td><button id="chef-order-deliver" data-o="@Model.OrderId" class="btn btn-danger btn-xs order-receive-btn">Received</button></td>
                                         }
                                     }
                                     @if (string.Equals(HttpContextAccessor.HttpContext.Session.Get<SessionData>("_User").Role, "Chef", StringComparison.OrdinalIgnoreCase))
@@ -74,7 +74,7 @@
                                         }
                                         else
                                         {
-                                            <td><button id="customer-order-received" data-oid="@Model.OrderId" class="btn btn-danger btn-xs order-deliver-btn">Dispatch</button></td>
+                                            <td><button id="customer-order-received" data-o="@Model.OrderId" class="btn btn-danger btn-xs order-deliver-btn">Dispatch</button></td>
                                         }
                                     }
                                 </tr>
@@ -118,3 +118,7 @@
     <!-- Main container end -->
 </main>
 <!-- Content End -->
+@section scripts{
+<script src="~/js/site.js"></script>
+
+}

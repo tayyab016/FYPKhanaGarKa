@@ -1,0 +1,19 @@
+﻿/* styling like dislike buttons*/
+.dish-rating{
+    margin-top:70px;
+}
+.dish-like, .dish-dislike {
+    font-size: 20px;
+    color: #D45742;
+    margin-left:5px;
+    cursor:pointer;
+}
+.dish-like-text, .dish-dislike-text {
+    font-size: 12px;
+    color: #D45742;
+}
+/* rating plugin styles */
+#rateYo {
+    margin-top: -25px;
+    margin-left: 300px;
+}

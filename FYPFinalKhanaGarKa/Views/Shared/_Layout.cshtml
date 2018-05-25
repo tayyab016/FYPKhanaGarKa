@@ -188,15 +188,18 @@
         <!--Jquery Validation-->
         <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
         <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
-        <!-- Custom Javascript -->
-        <script src="~/js/custom.js"></script>
+
         <!--rateyo js-->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.js"></script>
         <!-- others -->
+
+        @RenderSection("Scripts", required: false)
+        <!-- Custom Javascript -->
+        <script src="~/js/custom.js"></script>
         <script>
             $(document).ready(function () {
                 $('#nl-btn').click(function () {
-                     var nlvalue = $('#nl-input').val();
+                    var nlvalue = $('#nl-input').val();
                     $.ajax({
                         url: '/Home/NewsLetter',
                         type: 'POST',
@@ -215,7 +218,6 @@
                 });
             });
         </script>
-        @RenderSection("Scripts", required: false)
 
     </environment>
     <environment exclude="Development">

@@ -67,7 +67,7 @@
                                             }
                                             else
                                             {
-                                            <td><button id="chef-order-deliver" data-oid="@orders.OrderId" class="btn btn-danger btn-xs order-recive-btn">Received</button></td>
+                                            <td><button id="chef-order-deliver" data-o="@orders.OrderId" class="btn btn-danger btn-xs order-receive-btn">Received</button></td>
                                             }
                                         }
                                         @if (string.Equals(HttpContextAccessor.HttpContext.Session.Get<SessionData>("_User").Role, "Chef", StringComparison.OrdinalIgnoreCase))
@@ -78,7 +78,7 @@
                                             }
                                             else
                                             {
-                                            <td><button id="customer-order-received" data-oid="@orders.OrderId" class="btn btn-danger btn-xs order-deliver-btn">Dispatch</button></td>
+                                            <td><button id="customer-order-received" data-o="@orders.OrderId" class="btn btn-danger btn-xs order-deliver-btn">Dispatch</button></td>
                                             }
                                         }
                                     </tr>
@@ -101,57 +101,5 @@
 </main>
 <!-- Content End -->
 @section Scripts{ 
-<script>
-    $(document).ready(function () { 
-        $('.order-recive-btn').click(function () {
-            var justclicked = $(this);
-            $.ajax({
-
-                beforeSend: function () {
-                    justclicked.text('wait...');
-
-                },
-                url: '/Order/OrderDisRec',
-                type: 'POST',
-                data: {
-                    Id: justclicked.data('oid'),
-                    Role: 'Customer'
-                },
-                success: function (responsedata) {
-                    if (responsedata == "OK") {
-                        justclicked.fadeOut(2000);
-                    }
-                },
-                error: function () {
-                    window.alert("Some Error Occured ");
-                }
-            });
-        });
-
-        $('.order-deliver-btn').click(function () {
-            var justclicked = $(this);
-            $.ajax({
-
-                beforeSend: function () {
-                    justclicked.text('wait...');
-
-                },
-                url: '/Order/OrderDisRec',
-                type: 'POST',
-                data: {
-                    Id: justclicked.data('oid'),
-                    Role: 'Chef'
-                },
-                success: function (responsedata) {
-                    if (responsedata == "OK") {
-                        justclicked.fadeOut(2000);
-                    }
-                },
-                error: function () {
-                    window.alert("Some Error Occured ");
-                }
-            });
-        });
-    });
-    </script>
+<script src="~/js/site.js"></script>
 }

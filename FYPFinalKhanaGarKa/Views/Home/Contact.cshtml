@@ -1,4 +1,4 @@
-﻿
+﻿@model FYPFinalKhanaGarKa.Models.ViewModels.ContactViewModel
 @{
     ViewData["Title"] = "Contact Us";
 }
@@ -17,19 +17,23 @@
                     <div class="col-md-8">
                         <div class="row">
                             <div class="Contact-Form">
-                                <form class="leave-comment contact-form" method="post" asp-controller="Home" asp-action="Contact" id="cform" autocomplete="on">
+                                <form class="leave-comment contact-form" method="post" asp-controller="Home" asp-action="Contact"autocomplete="on">
                                     <div class="Contact-us">
                                         <div class="form-input col-md-4">
-                                            <input type="text" class="form-control" placeholder="Name">
+                                            <input asp-for="Name" type="text" class="form-control" placeholder="Name">
+                                            <span asp-validation-for="Name" class="text-danger"></span>
                                         </div>
                                         <div class="form-input col-md-4">
-                                            <input type="email" class="form-control" placeholder="Email">
+                                            <input asp-for="Email" type="email" class="form-control" placeholder="Email">
+                                            <span asp-validation-for="Email" class="text-danger"></span>
                                         </div>
                                         <div class="form-input col-md-4">
-                                            <input type="text" class="form-control" name="contact_phone" placeholder="Phone">
+                                            <input asp-for="PhoneNo" type="text" class="form-control" placeholder="Phone">
+                                            <span asp-validation-for="PhoneNo" class="text-danger"></span>
                                         </div>
                                         <div class="form-input col-md-12">
-                                            <textarea class="form-control" rows="5" placeholder="Message"></textarea>
+                                            <textarea asp-for="Msg" class="form-control" rows="5" placeholder="Message"></textarea>
+                                            <span asp-validation-for="Msg" class="text-danger"></span>
                                         </div>
                                         <div class="form-submit col-md-12">
                                             <button class="btn btn-color" type="submit">Send Message</button>

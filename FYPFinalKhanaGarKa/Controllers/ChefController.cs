@@ -30,7 +30,7 @@ namespace FYPFinalKhanaGarKa.Controllers
             IList<ChefViewModel> searchedchefs = db.Chef.Where(
                     i => i.City.Contains(City) &&
                     i.Area.Contains(Area) &&
-                    i.Status == true).OrderBy(i => i.Rating)
+                    i.Status == true).OrderByDescending(i => i.Rating)
                     .Select( x => new ChefViewModel
                 {
                     FirstName = x.FirstName,
@@ -43,32 +43,45 @@ namespace FYPFinalKhanaGarKa.Controllers
                     Rating = (int)x.Rating,
                     About = x.About,
                     ChefId = x.ChefId,
-                    Orders = x.Orders.Count()
+                    Orders = x.Orders.Where(z => z.OrderStatus == true).Count()
                 }).ToList();
 
-            IList<ChefViewModel> otherchefs = db.Chef.Where(
-                    i => i.City.Contains(City) &&
-                    !(i.Area.Contains(Area)) &&
-                    i.Status == true).OrderBy(i => i.Rating)
-                    .Select(x => new ChefViewModel
-                    {
-                        FirstName = x.FirstName,
-                        LastName = x.LastName,
-                        ImgUrl = x.ImgUrl,
-                        City = x.City,
-                        Area = x.Area,
-                        Street = x.Street,
-                        Category = x.Category,
-                        Rating = (int)x.Rating,
-                        About = x.About,
-                        ChefId = x.ChefId,
-                        Orders = x.Orders.Count()
-                    }).Take(10).ToList();
+            if (searchedchefs.Count() == 0 || searchedchefs == null)
+            {
 
-            return View(new ChefListViewModel {
-                SearchedChefs = searchedchefs,
-                OtherChefs = otherchefs
-            });
+                IList<ChefViewModel> otherchefs = db.Chef.Where(
+                        i => i.City.Contains(City) &&
+                        !(i.Area.Contains(Area)) &&
+                        i.Status == true).OrderByDescending(i => i.Rating)
+                        .Select(x => new ChefViewModel
+                        {
+                            FirstName = x.FirstName,
+                            LastName = x.LastName,
+                            ImgUrl = x.ImgUrl,
+                            City = x.City,
+                            Area = x.Area,
+                            Street = x.Street,
+                            Category = x.Category,
+                            Rating = (int)x.Rating,
+                            About = x.About,
+                            ChefId = x.ChefId,
+                            Orders = x.Orders.Where(z => z.OrderStatus == true).Count()
+                        }).Take(10).ToList();
+
+                return View(new ChefListViewModel {
+                    Find = false,
+                    Chefs = otherchefs
+                });
+            }
+            else
+            {
+                return View(new ChefListViewModel
+                {
+                    Find = true,
+                    Chefs = searchedchefs
+                });
+
+            }
             
         }
 
@@ -91,6 +104,9 @@ namespace FYPFinalKhanaGarKa.Controllers
                             Menu = i.Menu.OrderByDescending(z => z.ModifiedDate)
                             .Select(x => new Menu
                             {
+                                DishLike = x.DishLike,
+                                DishDislike = x.DishDislike,
+                                MenuId = x.MenuId,
                                 ImgUrl = x.ImgUrl,
                                 Description = x.Description,
                                 DishName = x.DishName,
@@ -100,6 +116,7 @@ namespace FYPFinalKhanaGarKa.Controllers
 
                             Offer = i.Offer.Select(x => new Offer
                             {
+                                OfferId = x.OfferId,
                                 ImgUrl = x.ImgUrl,
                                 OfferName = x.OfferName,
                                 Description = x.Description,
@@ -152,6 +169,8 @@ namespace FYPFinalKhanaGarKa.Controllers
                 Status = true,
                 CreatedDate = DateTime.Now,
                 ModifiedDate = DateTime.Now,
+                DishDislike = 0,
+                DishLike = 0,
                 ChefId = HttpContext.Session.Get<SessionData>(SessionUser).Id
             };
             using (var tr = db.Database.BeginTransaction())
