@@ -1,9 +1,9 @@
-﻿@using Microsoft.AspNetCore.Http;
-@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+﻿ @using Microsoft.AspNetCore.Http;
+ @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 
 @{
     ViewData["Title"] = "Admin";
-    ViewData["Email"] = HttpContextAccessor.HttpContext.Session.GetString("_email");
+     ViewData["Email"] = HttpContextAccessor.HttpContext.Session.GetString("_email");
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 

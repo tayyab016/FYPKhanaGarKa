@@ -22,16 +22,16 @@ namespace FYPFinalKhanaGarKa.Controllers
         [HttpGet]
         public IActionResult login()
         {
-                return View();
+                  return View();
          
         }
         [HttpPost]
         public IActionResult login(LoginViewModel vm)
         {
-            if (ModelState.IsValid)
-            {
-                if (string.Equals(vm.Role, "Admin", StringComparison.OrdinalIgnoreCase))
-                {
+             if (ModelState.IsValid)
+             {
+                 if (string.Equals(vm.Role, "Admin", StringComparison.OrdinalIgnoreCase))
+                 {
                     Admin a = db.Admin.Where(
                         i => i.Email == vm.Email &&
                         i.Password == vm.Password).FirstOrDefault();
@@ -59,21 +59,21 @@ namespace FYPFinalKhanaGarKa.Controllers
         [HttpGet]
         public IActionResult Logout()
         {
-            HttpContext.Session.Clear();
-            return RedirectToAction("login");
+             HttpContext.Session.Clear();
+             return RedirectToAction("login");
         }
 
         [HttpGet]
         public IActionResult Index()
         {
 
-            if (HttpContext.Session.GetString("_email") == null)
+             if (HttpContext.Session.GetString("_email") == null)
+ 
+             {
+                 return Redirect("/admin/login");
+             }
 
-            {
-                return Redirect("/admin/login");
-            }
-
-            return View();
+             return View();
         }
         [HttpGet]
         public IActionResult Chefs() => View(db.Chef.ToList());
