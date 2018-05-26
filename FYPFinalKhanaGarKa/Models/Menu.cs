@@ -16,6 +16,7 @@ namespace FYPFinalKhanaGarKa.Models
         public DateTime? ModifiedDate { get; set; }
         public int? DishLike { get; set; }
         public int? DishDislike { get; set; }
+        public int? Serving { get; set; }
 
         public Chef Chef { get; set; }
     }

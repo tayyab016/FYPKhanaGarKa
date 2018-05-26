@@ -15,24 +15,30 @@
             text-align: center;
         }
 
-        .reg-block img#logo, .text-center {
+        #logo {
             margin-top: 40px;
         }
 
-        #add,#Delete {
+        #add, #Delete {
             margin-bottom: 40px;
             margin-top: 20px;
         }
 
-        .container {
+        #container {
             margin-top: 20px;
             margin-bottom: 20px;
+        }
+
+        input[type=number]::-webkit-inner-spin-button,
+        input[type=number]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
         }
     </style>
 }
 @Html.Partial("_PageTitlePartial", ViewData["Title"])
 <section class="cfo-area">
-    <div class="container">
+    <div class="container" id="container">
         <div class="row">
             <div class="reg-block col-lg-9 col-lg-offset-1 col-md-9 col-md-offset-1 col-sm-12 col-xs-12">
                 <div class="contact-details myaccount-contact">

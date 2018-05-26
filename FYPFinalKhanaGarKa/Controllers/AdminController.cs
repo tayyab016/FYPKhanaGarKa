@@ -13,48 +13,42 @@ namespace FYPFinalKhanaGarKa.Controllers
     public class AdminController : Controller
     {
         private KhanaGarKaFinalContext db = null;
-        private const string SessionUser = "_User";
+        private const string SessionEmail = "_Email";
 
         public AdminController(KhanaGarKaFinalContext _db)
         {
             db = _db;
         }
+
         [HttpGet]
-        public IActionResult login()
+        public IActionResult Login()
         {
-                return View();
-         
+            return View();
+
         }
+
         [HttpPost]
-        public IActionResult login(LoginViewModel vm)
+        public IActionResult Login(LoginViewModel vm)
         {
             if (ModelState.IsValid)
             {
-                if (string.Equals(vm.Role, "Admin", StringComparison.OrdinalIgnoreCase))
+                Admin a = db.Admin.Where(
+                     i => i.Email == vm.Email &&
+                     i.Password == vm.Password).FirstOrDefault();
+                if (a != null)
                 {
-                    Admin a = db.Admin.Where(
-                        i => i.Email == vm.Email &&
-                        i.Password == vm.Password).FirstOrDefault();
-                    if (a != null)
-                    {
-                        HttpContext.Session.SetString("_email", vm.Email);
-                      
-                        return Redirect("/admin/index");
-                    }
-                    else
-                    {
-                        ModelState.AddModelError("", "Incorrect Email or Password.");
-                    }
+                    HttpContext.Session.SetString(SessionEmail, vm.Email);
 
-
+                    return Redirect("/admin/index");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Incorrect Email or Password.");
                 }
             }
 
-
-                    return View(vm);    
+            return View(vm);
         }
-
-
 
         [HttpGet]
         public IActionResult Logout()
@@ -67,7 +61,7 @@ namespace FYPFinalKhanaGarKa.Controllers
         public IActionResult Index()
         {
 
-            if (HttpContext.Session.GetString("_email") == null)
+            if (HttpContext.Session.GetString(SessionEmail) == null)
 
             {
                 return Redirect("/admin/login");
@@ -75,18 +69,52 @@ namespace FYPFinalKhanaGarKa.Controllers
 
             return View();
         }
-        [HttpGet]
-        public IActionResult Chefs() => View(db.Chef.ToList());
 
         [HttpGet]
-        public IActionResult Customers() => View(db.Customer.ToList());
+        public IActionResult Chefs()
+        {
+            if (HttpContext.Session.GetString(SessionEmail) == null)
+
+            {
+                return Redirect("/admin/login");
+            }
+            return View(db.Chef.ToList());
+        }
 
         [HttpGet]
-        public IActionResult Orders() => View(db.Orders.ToList());
+        public IActionResult Customers()
+        {
+            if (HttpContext.Session.GetString(SessionEmail) == null)
+
+            {
+                return Redirect("/admin/login");
+            }
+            return View(db.Customer.ToList());
+        }
 
         [HttpGet]
-        public IActionResult DBoy() => View(db.DeliveryBoy.ToList());
+        public IActionResult Orders()
+        {
+            if (HttpContext.Session.GetString(SessionEmail) == null)
+
+                {
+                    return Redirect("/admin/login");
+                }
+            return View(db.Orders.ToList());
+        }
+
+        [HttpGet]
+        public IActionResult DBoy()
+        {
+            if (HttpContext.Session.GetString(SessionEmail) == null)
+
+            {
+                return Redirect("/admin/login");
+            }
+            return View(db.DeliveryBoy.ToList());
+        }
         
+        [HttpPost]
         public string ApproveReq(int Id, string Role)
         {
             if (string.Equals(Role, "DBoy", StringComparison.OrdinalIgnoreCase))

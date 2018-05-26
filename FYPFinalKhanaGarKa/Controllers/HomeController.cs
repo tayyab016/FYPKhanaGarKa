@@ -1,21 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using FYPFinalKhanaGarKa.Models;
+using FYPFinalKhanaGarKa.Models.ViewModels;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using FYPFinalKhanaGarKa.Models;
-using System.IO;
-using Microsoft.AspNetCore.Hosting;
-using FYPFinalKhanaGarKa.Models.ViewModels;
-using Microsoft.AspNetCore.Http;
-using System.Net.Mail;
 using TinifyAPI;
 
 namespace FYPFinalKhanaGarKa.Controllers
 {
-    
-    
     public class HomeController : Controller
     {
         private const string SessionUser = "_User";
@@ -261,6 +256,7 @@ namespace FYPFinalKhanaGarKa.Controllers
                                 });
                                 await resized.ToFile(env.WebRootPath + d.ImgUrl);
                             }
+
                             //GreetingsEmail(d.Email, d.FirstName, d.LastName);
 
                             return RedirectToAction("Registration", "Home");
@@ -590,77 +586,94 @@ namespace FYPFinalKhanaGarKa.Controllers
                 if (string.Equals(vm.Role.Trim(), "chef", StringComparison.OrdinalIgnoreCase))
                 {
                     Chef c = db.Chef.Where(i => i.Email == vm.Email).FirstOrDefault();
-                    string resetpass = GeneratePassword();
-                    c.Password = resetpass;
-                    using (var tr = db.Database.BeginTransaction())
+                    if (c != null)
                     {
-                        try
+                        using (var tr = db.Database.BeginTransaction())
                         {
-                            db.Chef.Update(c);
-                            db.SaveChanges();
-                            ResetPassEmail(c.Email, c.FirstName, resetpass);
-                            tr.Commit();
+                            try
+                            {
+                                db.Chef.Update(c);
+                                db.SaveChanges();
+                                tr.Commit();
+                                Utils.ResetPassEmail(c.Email, c.FirstName + " " + c.LastName, c.Password);
+
+                            }
+                            catch
+                            {
+                                tr.Rollback();
+                                ModelState.AddModelError("", "We are having some problems in reseting.");
+                                return View(vm);
+                            }
                         }
-                        catch
-                        {
-                            tr.Rollback();
-                            ModelState.AddModelError("", "invalid Email or Role");
-                            return Login();
-                        }
+                        return RedirectToAction("Login");
                     }
-                    return RedirectToAction("Login");
+                    else
+                    {
+                        ModelState.AddModelError("", "invalid Email or Role");
+                        return View(vm);
+                    }
                 }
                 else if (string.Equals(vm.Role.Trim(), "customer", StringComparison.OrdinalIgnoreCase))
                 {
                     Customer c = db.Customer.Where(i => i.Email == vm.Email).FirstOrDefault();
                     if (c != null)
                     {
-                        string resetpass = GeneratePassword();
-                        c.Password = resetpass;
                         using (var tr = db.Database.BeginTransaction())
                         {
                             try
                             {
                                 db.Customer.Update(c);
                                 db.SaveChanges();
-                                ResetPassEmail(c.Email, c.FirstName, resetpass);
                                 tr.Commit();
+                                Utils.ResetPassEmail(c.Email, c.FirstName, c.Password);
                             }
                             catch
                             {
                                 tr.Rollback();
+                                ModelState.AddModelError("", "We are having some problems in reseting.");
+                                return View(vm);
                             }
                         }
+                        return RedirectToAction("Login");
                     }
                     else
                     {
-
+                        ModelState.AddModelError("", "invalid Email or Role");
+                        return View(vm);
                     }
-                    return RedirectToAction("Login");
+                    
                 }
                 else if (string.Equals(vm.Role.Trim(), "Delivery Boy", StringComparison.OrdinalIgnoreCase))
                 {
                     DeliveryBoy b = db.DeliveryBoy.Where(i => i.Email == vm.Email).FirstOrDefault();
-                    string resetpass = GeneratePassword();
-                    b.Password = resetpass;
-                    using (var tr = db.Database.BeginTransaction())
+                    if (b != null)
                     {
-                        try
+                        using (var tr = db.Database.BeginTransaction())
                         {
-                            db.DeliveryBoy.Update(b);
-                            db.SaveChanges();
-                            ResetPassEmail(b.Email, b.FirstName, resetpass);
-                            tr.Commit();
+                            try
+                            {
+                                db.DeliveryBoy.Update(b);
+                                db.SaveChanges();
+                                tr.Commit();
+                                Utils.ResetPassEmail(b.Email, b.FirstName, b.Password);
+                            }
+                            catch
+                            {
+                                tr.Rollback();
+                                ModelState.AddModelError("", "We are having some problems in reseting.");
+                                return View(vm);
+                            }
                         }
-                        catch
-                        {
-                            tr.Rollback();
-                        }
+                        return RedirectToAction("Login");
                     }
-                    return RedirectToAction("Login");
+                    else
+                    {
+                        ModelState.AddModelError("", "invalid Email or Role");
+                        return View(vm);
+                    }
                 }
             }
-            return View();
+            return View(vm);
         }
 
         [HttpGet]
@@ -724,32 +737,7 @@ namespace FYPFinalKhanaGarKa.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-        private string GeneratePassword()
-        {
-            string strPwdchar = "abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-            string strPwd = "";
-            Random rnd = new Random();
-            for (int i = 0; i <= 7; i++)
-            {
-                int iRandom = rnd.Next(0, strPwdchar.Length - 1);
-                strPwd += strPwdchar.Substring(iRandom, 1);
-            }
-            return strPwd;
-        }
-        public static void ResetPassEmail(string mailid, string name, string resetpass)
-        {
-            MailMessage MM = new MailMessage();
-            MM.From = new MailAddress("khanagarka@gmail.com");
-            MM.To.Add(mailid);
-            MM.Subject = ("Password Reset Request for KhanGarKa.com");
-            MM.Body = "<h1>Dear " + name + "</h1><br>Your new password for <h2>KhanaGarKa.com</h2> is <h1>"+resetpass+"</h1>.<br> You can change it after login.<br><br>----<br>Regards,<br> KhanaGarKa Team";
-            MM.IsBodyHtml = true;
 
-            SmtpClient sc = new SmtpClient("smtp.gmail.com", 587);
-            sc.Credentials = new System.Net.NetworkCredential("khanagarka@gmail.com", "stm-7063");
-            sc.EnableSsl = true;
-
-            sc.Send(MM);
-        }
+        
     }
 }

@@ -11,7 +11,6 @@ namespace FYPFinalKhanaGarKa.Models
         public bool Status { get; set; }
         public DateTime? CreatedDate { get; set; }
         public DateTime? ModifiedDate { get; set; }
-        public string Role { get; set; }
         public int AdminId { get; set; }
         public string Cnic { get; set; }
     }

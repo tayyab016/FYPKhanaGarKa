@@ -15,18 +15,20 @@
             text-align: center;
         }
 
-        .reg-block img#logo, .text-center {
+        #logo {
             margin-top: 40px;
         }
 
-        #add,#Delete {
+        #add, #Delete {
             margin-bottom: 40px;
             margin-top: 20px;
         }
-        .container{
+
+        #container {
             margin-top: 20px;
             margin-bottom: 20px;
         }
+
         input[type=number]::-webkit-inner-spin-button,
         input[type=number]::-webkit-outer-spin-button {
             -webkit-appearance: none;
@@ -36,7 +38,7 @@
 }
 @Html.Partial("_PageTitlePartial", ViewData["Title"])
 
-    <div class="container">
+    <div class="container" id="container">
         <div class="row">
             <div class="reg-block col-lg-9 col-lg-offset-1 col-md-9 col-md-offset-1 col-sm-12 col-xs-12">
                 <div class="contact-details myaccount-contact">
@@ -100,6 +102,28 @@
                                                 </select>
                                             </div>
                                         </div>
+                                        <div class="form-group">
+                                            <div class="col-lg-offset-1 col-md-offset-1 col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                                                <label asp-for="Serving">Quantity </label>
+                                            </div>
+                                            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6">
+                                                <select class="form-control" asp-for="Serving">
+                                                    <option value="1" selected> 1 </option>
+                                                    <option value="2"> 2 </option>
+                                                    <option value="3"> 3 </option>
+                                                    <option value="4"> 4 </option>
+                                                    <option value="5"> 5 </option>
+                                                    <option value="6"> 6 </option>
+                                                    <option value="7"> 7 </option>
+                                                    <option value="8"> 8 </option>
+                                                    <option value="9"> 9 </option>
+                                                </select>
+                                            </div>
+                                            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6">
+                                                <p> Servings </p>
+                                            </div>
+                                        </div>
+                                        <div class="clearfix"></div>
                                         <div class="form-group">
                                             <div class="col-lg-offset-1 col-md-offset-1 col-lg-3 col-md-3 col-sm-12 col-xs-12">
                                                 <label asp-for="Description">Description </label>

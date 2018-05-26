@@ -11,7 +11,7 @@ namespace FYPFinalKhanaGarKa.Models.ViewModels
     {
         public int OfferId { get; set; }
 
-        [Range(0, 100, ErrorMessage = "Please Enter discount from 0 to 10")]
+        [Range(0, 100, ErrorMessage = "Please Enter discount from 0 to 100")]
         public int? Percentage { get; set; }
 
         [Required(ErrorMessage = "Price is Required")]
@@ -23,7 +23,6 @@ namespace FYPFinalKhanaGarKa.Models.ViewModels
         public string OfferName { get; set; }
 
         [MaxLength(200, ErrorMessage = "Length should be not more than 200 charaters")]
-        [RegularExpression("[a-zA-Z0-9]+", ErrorMessage = "Description can only contain alphanumaric value")]
         public string Description { get; set; }
 
         [DataType(DataType.DateTime)]

@@ -47,10 +47,6 @@ namespace FYPFinalKhanaGarKa.Models
                 entity.Property(e => e.PhonNo)
                     .IsRequired()
                     .HasMaxLength(11);
-
-                entity.Property(e => e.Role)
-                    .IsRequired()
-                    .HasMaxLength(10);
             });
 
             modelBuilder.Entity<Chef>(entity =>

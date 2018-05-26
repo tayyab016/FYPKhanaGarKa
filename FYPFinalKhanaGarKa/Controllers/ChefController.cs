@@ -104,6 +104,7 @@ namespace FYPFinalKhanaGarKa.Controllers
                             Menu = i.Menu.OrderByDescending(z => z.ModifiedDate)
                             .Select(x => new Menu
                             {
+                                Serving = x.Serving,
                                 DishLike = x.DishLike,
                                 DishDislike = x.DishDislike,
                                 MenuId = x.MenuId,
@@ -171,6 +172,7 @@ namespace FYPFinalKhanaGarKa.Controllers
                 ModifiedDate = DateTime.Now,
                 DishDislike = 0,
                 DishLike = 0,
+                Serving = vm.Serving,
                 ChefId = HttpContext.Session.Get<SessionData>(SessionUser).Id
             };
             using (var tr = db.Database.BeginTransaction())
@@ -333,7 +335,8 @@ namespace FYPFinalKhanaGarKa.Controllers
                         Description = m.Description,
                         ImgUrl = m.ImgUrl,
                         Status = m.Status,
-                        Price = m.Price
+                        Price = m.Price,
+                        Serving = m.Serving
                     });
                 }
                 else
@@ -357,6 +360,7 @@ namespace FYPFinalKhanaGarKa.Controllers
             menu.Price = vm.Price;
             menu.Status = vm.Status;
             menu.Description = vm.Description;
+            menu.Serving = vm.Serving;
             using (var tr = db.Database.BeginTransaction())
             {
                 try
@@ -370,7 +374,7 @@ namespace FYPFinalKhanaGarKa.Controllers
 
                     tr.Commit();
 
-                    if (menu.ImgUrl != null && System.IO.File.Exists(env.WebRootPath + menu.ImgUrl))
+                    if (vm.Image != null && menu.ImgUrl != null && System.IO.File.Exists(env.WebRootPath + menu.ImgUrl))
                     {
                         var source = Tinify.FromFile(env.WebRootPath + menu.ImgUrl);
                         var resized = source.Resize(new

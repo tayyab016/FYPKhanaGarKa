@@ -179,7 +179,23 @@ namespace FYPFinalKhanaGarKa.Controllers
 
             sc.Send(MM);
         }
-        
+
+        public static void ResetPassEmail(string mailid, string name, string pass)
+        {
+            MailMessage MM = new MailMessage();
+            MM.From = new MailAddress("khanagarka@gmail.com");
+            MM.To.Add(mailid);
+            MM.Subject = ("Password Reset Request for KhanGarKa.com");
+            MM.Body = "<h1>Dear " + name + "</h1><br>Your password for <h2>KhanaGarKa.com</h2> is <h1>" + pass + "</h1>.<br> You can change it after login.<br><br>----<br>Regards,<br> KhanaGarKa Team";
+            MM.IsBodyHtml = true;
+
+            SmtpClient sc = new SmtpClient("smtp.gmail.com", 587);
+            sc.Credentials = new System.Net.NetworkCredential("khanagarka@gmail.com", "stm-7063");
+            sc.EnableSsl = true;
+
+            sc.Send(MM);
+        }
+
 
     }
 }

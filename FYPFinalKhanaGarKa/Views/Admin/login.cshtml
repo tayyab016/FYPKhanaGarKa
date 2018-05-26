@@ -15,6 +15,7 @@
                     Welcome
                 </span>
                 <br />  <br />  <br />  <br />
+                                        <div asp-validation-summary="ModelOnly"></div>
 
                 <div class="wrap-input100 validate-input m-t-85 m-b-35" data-validate="Enter username">
                     <input class="input100" asp-for="Email" type="text" placeholder="Email">
@@ -42,16 +43,6 @@
 
                         <a href="#" class="txt2">
                             Password?
-                        </a>
-                    </li>
-
-                    <li>
-                        <span class="txt1">
-                            Don’t have an account?
-                        </span>
-
-                        <a href="#" class="txt2">
-                            Sign up
                         </a>
                     </li>
                 </ul>

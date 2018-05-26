@@ -33,6 +33,7 @@ namespace FYPFinalKhanaGarKa.Controllers
                            Menu = i.Menu.OrderByDescending(z => z.ModifiedDate)
                            .Select(x => new Menu
                            {
+                               Serving = x.Serving,
                                MenuId = x.MenuId,
                                DishLike = x.DishLike,
                                DishDislike = x.DishDislike,
@@ -54,7 +55,7 @@ namespace FYPFinalKhanaGarKa.Controllers
                                Price = x.Price
                            }).ToList()
                        }).FirstOrDefault();
-
+            
             return View(vm);
         }
         

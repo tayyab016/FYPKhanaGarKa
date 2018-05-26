@@ -95,18 +95,18 @@
                                                                     </div>
                                                                     <div class="col-md-6">
                                                                         <div class="dish-name">
-                                                                            @menus.DishName &nbsp; &nbsp;
-                                                                        @if (menus.Status)
-                                                                        {
-                                                                            <span class="label label-warning">&nbsp; Avalible &nbsp;</span>
+                                                                            @menus.DishName &nbsp; &nbsp; <small> @menus.Serving Serving(s)</small> &nbsp;
+                                                                            @if (menus.Status)
+                                                                            {
+                                                                                <span class="label label-warning">&nbsp; Avalible &nbsp;</span>
 
-                                                                        }
-                                                                        else if (!menus.Status)
-                                                                        {
-                                                                            <span class="label label-danger">&nbsp; Unavalible &nbsp;</span>
+                                                                            }
+                                                                            else if (!menus.Status)
+                                                                            {
+                                                                                <span class="label label-danger">&nbsp; Unavalible &nbsp;</span>
 
-                                                                        }
-                                                                    </div>
+                                                                            }
+                                                                        </div>
                                                                     <p>@menus.Description</p>
                                                                 </div>
                                                                     <div class="col-md-3">
