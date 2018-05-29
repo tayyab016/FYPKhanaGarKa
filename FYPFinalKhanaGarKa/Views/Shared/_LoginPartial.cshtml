@@ -36,17 +36,17 @@
                 {
                 <li><a href="/Chef/Account/"><i class="fa fa-fw fa-dashboard"></i> Dashboard </a></li>
                 }
-                <li><a href="/Home/ModifyDetails/"><i class="fa fa-fw fa-home"></i> My Account </a></li>
+                <li><a href="/Account/ModifyDetails/"><i class="fa fa-fw fa-home"></i> My Account </a></li>
                 <li><a href="/Order/History/"><i class="fa fa-fw fa-history"></i> Order History</a></li>
                 <li class="divider"></li>
-                <li><a href="/Home/Logout/"><i class="fa fa-fw fa-power-off"></i> Logout </a></li>
+                <li><a href="/Account/Logout/"><i class="fa fa-fw fa-power-off"></i> Logout </a></li>
             </ul>
         </div>
     }
     else
     {
         <div class="pull-right user-login">
-            <a class="btn btn-sm btn-primary" asp-controller="Home" asp-action="Login">Login</a> or &nbsp;
-            <a id="user-register" class="user-register-btn" asp-controller="Home" asp-action="Register">Register</a>
+            <a class="btn btn-sm btn-primary" asp-controller="Account" asp-action="Login">Login</a> or &nbsp;
+            <a id="user-register" class="user-register-btn" asp-controller="Account" asp-action="Register">Register</a>
         </div>
     }

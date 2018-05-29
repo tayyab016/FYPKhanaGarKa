@@ -24,6 +24,7 @@ namespace FYPFinalKhanaGarKa.Models
         public string Street { get; set; }
         public int? DeliveryCharges { get; set; }
         public bool Received { get; set; }
+        public bool? Confirmed { get; set; }
 
         public Chef Chef { get; set; }
         public Customer Customer { get; set; }

@@ -57,24 +57,35 @@
                                     <td>Cash</td>
                                     @if (string.Equals(HttpContextAccessor.HttpContext.Session.Get<SessionData>("_User").Role, "Customer", StringComparison.OrdinalIgnoreCase))
                                     {
-                                        if (Model.Received == true)
+                                        if (Model.Confirmed == true)
                                         {
-                                            <td>Received</td>
-                                                    }
-                                                    else
-                                                    {
-                                            <td><button id="chef-order-deliver" data-o="@Model.OrderId" class="btn btn-danger btn-xs order-receive-btn">Received</button></td>
+                                            if (Model.Received == true)
+                                            {
+                                                <td>Received</td>
+                                            }
+                                            else
+                                            {
+                                                <td><button data-o="@Model.OrderId" class="btn btn-danger btn-xs order-receive-btn">Received</button></td>
+                                            }
                                         }
                                     }
                                     @if (string.Equals(HttpContextAccessor.HttpContext.Session.Get<SessionData>("_User").Role, "Chef", StringComparison.OrdinalIgnoreCase))
                                     {
-                                        if (Model.OrderStatus == true)
+                                        if (Model.Confirmed)
                                         {
-                                            <td>Dispatched</td>
+                                            if (Model.OrderStatus == true)
+                                            {
+                                                <td>Dispatched</td>
+                                            }
+                                            else
+                                            {
+                                                <td><button data-o="@Model.OrderId" class="btn btn-danger btn-xs order-deliver-btn">Dispatch</button></td>
+                                            }
                                         }
                                         else
                                         {
-                                            <td><button id="customer-order-received" data-o="@Model.OrderId" class="btn btn-danger btn-xs order-deliver-btn">Dispatch</button></td>
+                                            <td><button data-o="@Model.OrderId" class="btn btn-success btn-xs order-confirm-btn">Confirm</button></td>
+
                                         }
                                     }
                                 </tr>

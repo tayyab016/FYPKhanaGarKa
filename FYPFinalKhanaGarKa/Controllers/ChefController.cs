@@ -136,7 +136,7 @@ namespace FYPFinalKhanaGarKa.Controllers
             }
             else
             {
-                return RedirectToAction("Login", "Home");
+                return RedirectToAction("Login", "Account");
             }
         }
 
@@ -156,7 +156,7 @@ namespace FYPFinalKhanaGarKa.Controllers
             }
             else
             {
-                return RedirectToAction("Login", "Home");
+                return RedirectToAction("Login", "Account");
             }
         }
 
@@ -225,7 +225,7 @@ namespace FYPFinalKhanaGarKa.Controllers
             }
             else
             {
-                return RedirectToAction("Login", "Home");
+                return RedirectToAction("Login", "Account");
             }
         }
 
@@ -346,7 +346,7 @@ namespace FYPFinalKhanaGarKa.Controllers
             }
             else
             {
-                return RedirectToAction("Login", "Home");
+                return RedirectToAction("Login", "Account");
             }
             
         }
@@ -419,7 +419,7 @@ namespace FYPFinalKhanaGarKa.Controllers
             }
             else
             {
-                return RedirectToAction("Login", "Home");
+                return RedirectToAction("Login", "Account");
             }
             
         }

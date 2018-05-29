@@ -167,10 +167,10 @@ namespace FYPFinalKhanaGarKa.Controllers
         public static void ContactEmail(string mailid, string name, string phone, string msg)
         {
             MailMessage MM = new MailMessage();
-            MM.From = new MailAddress(mailid);
+            MM.From = new MailAddress("khanagarka@gmail.com");
             MM.To.Add("khanagarka@gmail.com");
-            MM.Subject = (name);
-            MM.Body = "<h3>Phone: " + phone + "</h3><br>"+msg;
+            MM.Subject = ("Contact");
+            MM.Body = "<h4>Name: " + name + "</h4><br><h4>Phone: " + phone + "</h4><br><h4>Email: " + mailid + "</h4>" + msg;
             MM.IsBodyHtml = true;
 
             SmtpClient sc = new SmtpClient("smtp.gmail.com", 587);
@@ -187,6 +187,22 @@ namespace FYPFinalKhanaGarKa.Controllers
             MM.To.Add(mailid);
             MM.Subject = ("Password Reset Request for KhanGarKa.com");
             MM.Body = "<h1>Dear " + name + "</h1><br>Your password for <h2>KhanaGarKa.com</h2> is <h1>" + pass + "</h1>.<br> You can change it after login.<br><br>----<br>Regards,<br> KhanaGarKa Team";
+            MM.IsBodyHtml = true;
+
+            SmtpClient sc = new SmtpClient("smtp.gmail.com", 587);
+            sc.Credentials = new System.Net.NetworkCredential("khanagarka@gmail.com", "stm-7063");
+            sc.EnableSsl = true;
+
+            sc.Send(MM);
+        }
+
+        public static void OrderEmail(string mailto,  string msg)
+        {
+            MailMessage MM = new MailMessage();
+            MM.From = new MailAddress("khanagarka@gmail.com");
+            MM.To.Add(mailto);
+            MM.Subject = ("Order");
+            MM.Body = msg;
             MM.IsBodyHtml = true;
 
             SmtpClient sc = new SmtpClient("smtp.gmail.com", 587);

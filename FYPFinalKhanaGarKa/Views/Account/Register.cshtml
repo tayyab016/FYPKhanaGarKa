@@ -33,11 +33,19 @@
 }
 @Html.Partial("_PageTitlePartial", ViewData["Title"])
 <main class="main-content">
+    
     <!-- Content Start -->
     <section class="cfo-area">
         <div class="container">
             <div class="row">
                 <div class="reg-block col-lg-9 col-lg-offset-1 col-md-9 col-md-offset-1 col-sm-12 col-xs-12">
+                    @if (ViewBag.Success != null)
+                    {
+                    <div class="alert alert-success alert-dismissible">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        <strong>Success!</strong> Now you are the part of KhanaGarKa.com.Stay Blessed and enjoy healty home made food. <a href="/Home/Login/" class="alert-link">You can Login Now.</a>
+                    </div>
+                    }
                     <div class="contact-details myaccount-contact">
                         <center>
                             <img src="~/img/logo_gray.png" alt="" id="logo">
@@ -47,7 +55,7 @@
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                 <div class="address-form">
                                     <div class="row">
-                                        <form asp-action="Register" enctype="multipart/form-data" asp-controller="Home" method="post" class="clearfix">
+                                        <form asp-action="Register" enctype="multipart/form-data" asp-controller="Account" method="post" class="clearfix">
                                             <div asp-validation-summary="ModelOnly" class="text-danger text-center"></div>
                                             <div class="form-group">
                                                 <div class="col-lg-offset-1 col-md-offset-1 col-lg-3 col-md-3 col-sm-12 col-xs-12">
@@ -82,7 +90,7 @@
                                                     <label asp-for="Cnic">CNIC *</label>
                                                 </div>
                                                 <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                                                    <input asp-for="Cnic" class="form-control" type="number" placeholder="CNIC" required maxlength="13"/>
+                                                    <input asp-for="Cnic" class="form-control" type="number" placeholder="CNIC" required maxlength="13" />
                                                     <span asp-validation-for="Cnic" class="text-danger"></span>
                                                 </div>
                                             </div>
@@ -91,7 +99,7 @@
                                                     <label asp-for="FirstName">First Name *</label>
                                                 </div>
                                                 <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                                                    <input asp-for="FirstName" class="form-control" placeholder="First Name" required maxlength="20"/>
+                                                    <input asp-for="FirstName" class="form-control" placeholder="First Name" required maxlength="20" />
                                                     <span asp-validation-for="FirstName" class="text-danger"></span>
                                                 </div>
                                             </div>
@@ -100,7 +108,7 @@
                                                     <label asp-for="LastName">Last Name *</label>
                                                 </div>
                                                 <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                                                    <input asp-for="LastName" class="form-control" placeholder="Last Name" required maxlength="20"/>
+                                                    <input asp-for="LastName" class="form-control" placeholder="Last Name" required maxlength="20" />
                                                     <span asp-validation-for="LastName" class="text-danger"></span>
                                                 </div>
                                             </div>
@@ -110,7 +118,7 @@
                                                     <label asp-for="Email">Email Address *</label>
                                                 </div>
                                                 <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                                                    <input asp-for="Email" type="email" class="form-control" placeholder="Email Address" required/>
+                                                    <input asp-for="Email" type="email" class="form-control" placeholder="Email Address" required />
                                                     <span asp-validation-for="Email" class="text-danger"></span>
                                                 </div>
                                             </div>
@@ -119,7 +127,7 @@
                                                     <label asp-for="Password">Password *</label>
                                                 </div>
                                                 <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                                                    <input asp-for="Password" type="password" class="form-control" placeholder="Password" required maxlength="10"/>
+                                                    <input asp-for="Password" type="password" class="form-control" placeholder="Password" required maxlength="10" />
                                                     <span asp-validation-for="Password" class="text-danger"></span>
                                                 </div>
                                             </div>
@@ -128,7 +136,7 @@
                                                     <label asp-for="PhoneNo">Mobile No *</label>
                                                 </div>
                                                 <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                                                    <input asp-for="PhoneNo" type="number" class="form-control" placeholder="Mobile No" required maxlength="11"/>
+                                                    <input asp-for="PhoneNo" type="number" class="form-control" placeholder="Mobile No" required maxlength="11" />
                                                     <span asp-validation-for="PhoneNo" class="text-danger"></span>
                                                 </div>
                                             </div>
@@ -253,7 +261,8 @@
                     <!-- END OF DELIVERY ADDRESS SECTION -->
                 </div>
                 <span class="clearfix"></span>
-                <p class="text-center"> Already have an Account? <a class="txt-brand" asp-action="Login" asp-controller="Home">Login</a> 
+                <p class="text-center">
+                    Already have an Account? <a class="txt-brand" asp-action="Login" asp-controller="Account">Login</a>
                 </p>
             </div>
         </div>

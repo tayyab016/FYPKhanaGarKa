@@ -12,6 +12,13 @@
         <!-- Content Start -->
         <section class="cfo-area">
             <div class="container">
+                @if (ViewBag.Success != null)
+                {
+                <div class="alert alert-success alert-dismissible">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <strong>Success!</strong> @ViewBag.Success
+                </div>
+                }
                 <div class="row">
                     <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 account-cfoinfo clearfix">
                         <div class="cfoaccount">
@@ -41,7 +48,7 @@
                                         <tr>
                                             <td class="commonname-td"></td>
                                             <td class="nameshow-td">
-                                                <a asp-controller="Home" asp-action="ForgotPassword" data-toggle="modal" data-target="#modifypassword">Modify my password</a>
+                                                <a asp-controller="Account" asp-action="ModifyPassword">Modify my password</a>
                                             </td>
                                         </tr>
 
@@ -57,9 +64,8 @@
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                     <div class="address-form">
                                         <div class="row">
-                                            <form enctype="multipart/form-data" asp-action="Update" asp-controller="Home" method="post" class="clearfix">
-                                                <input type="hidden" asp-for="Id" />
-                                                <input type="hidden" asp-for="ImgUrl" />
+                                            <form enctype="multipart/form-data" asp-action="ModifyDetails" asp-controller="Account" method="post" class="clearfix">
+                                                <div asp-validation-summary="ModelOnly" class="text-danger text-center"></div>
                                                 <div class="form-group">
                                                     <div class="col-lg-offset-1 col-md-offset-1 col-lg-3 col-md-3 col-sm-12 col-xs-12">
                                                         <label asp-for="Cnic">CNIC *</label>
@@ -135,7 +141,7 @@
                                                         </div>
                                                         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                                             <textarea asp-for="About" class="form-control" value="@Model.About"></textarea>
-                                                            <span asp-validation-for="PhoneNo" class="text-danger"></span>
+                                                            <span asp-validation-for="About" class="text-danger"></span>
                                                         </div>
                                                     </div>
 
@@ -147,7 +153,7 @@
                                                     </div>
                                                     <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                                         <select class="form-control" asp-for="Gender">
-                                                            @if(Model.Gender)
+                                                            @if (Model.Gender)
                                                             {
                                                                 <option value="True" selected>Male</option>
                                                                 <option value="False">Female</option>
@@ -170,14 +176,14 @@
                                                         <select class="form-control" asp-for="Status">
                                                             @if (Model.Status)
                                                             {
-                                                                <option value = "True" selected>Active</option>
-                                                                <option value = "False">Inactive</option>
+                                                                <option value="True" selected>Active</option>
+                                                                <option value="False">Inactive</option>
 
                                                             }
                                                             else
                                                             {
-                                                                <option value = "False" selected>Inactive</option>
-                                                                <option value = "True">Active</option>
+                                                                <option value="False" selected>Inactive</option>
+                                                                <option value="True">Active</option>
 
                                                             }
 

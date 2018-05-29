@@ -13,6 +13,7 @@ namespace FYPFinalKhanaGarKa.Models.ViewModels
         public bool OrderType { get; set; }
         public int OrderId { get; set; }
         public bool OrderStatus { get; set; }
+        public bool Confirmed { get; set; }
         public bool Received { get; set; }
         public IEnumerable<OrderLine> Orderline { get; set; }
         public string Role { get; set; }

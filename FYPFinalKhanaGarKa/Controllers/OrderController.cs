@@ -76,6 +76,7 @@ namespace FYPFinalKhanaGarKa.Controllers
                     OrderDate = i.OrderDate,
                     OrderStatus = i.OrderStatus,
                     Received = i.Received,
+                    Confirmed = (bool)i.Confirmed,
                     OrderId = i.OrderId,
                     Orderline = i.OrderLine.ToList()
                     
@@ -131,6 +132,10 @@ namespace FYPFinalKhanaGarKa.Controllers
                             tr.Commit();
 
                             HttpContext.Session.Set<ItemGroup>("CartData", null);
+
+                            Utils.OrderEmail("khanagarka@gmail.com", "Order placed from customer ID: "+o.ChefId+" to chef ID: "+o.CustomerId);
+                            Utils.OrderEmail(db.Chef.Where(x => x.ChefId == o.ChefId).Select(x => x.Email).FirstOrDefault(),
+                                "You Have an order please visit your account and confirm order.");
                         }
                         catch
                         {
@@ -143,7 +148,7 @@ namespace FYPFinalKhanaGarKa.Controllers
             }
             else
             {
-                return RedirectToAction("Login", "Home");
+                return RedirectToAction("Login", "Account");
             }
         }
         
@@ -162,6 +167,7 @@ namespace FYPFinalKhanaGarKa.Controllers
                             OrderDate = x.OrderDate,
                             OrderStatus = x.OrderStatus,
                             Received = x.Received,
+                            Confirmed =(bool) x.Confirmed,
                             Total = x.OrderLine.Sum(i => i.Price)
                         }).ToList();
                     return View(vm);
@@ -197,7 +203,7 @@ namespace FYPFinalKhanaGarKa.Controllers
             }
             else
             {
-                return RedirectToAction("Login", "Home");
+                return RedirectToAction("Login", "Account");
             }
         }
 
@@ -217,7 +223,7 @@ namespace FYPFinalKhanaGarKa.Controllers
             }
             else
             {
-                return RedirectToAction("Login", "Home");
+                return RedirectToAction("Login", "Account");
             }
         }
 
@@ -297,6 +303,9 @@ namespace FYPFinalKhanaGarKa.Controllers
                         db.SaveChanges();
 
                         tr.Commit();
+                        
+                        Utils.OrderEmail("khanagarka@gmail.com", "<p>Order ID: " + Id + " is recieved by Customer ID " + o.CustomerId + "</p>");
+
                         return "OK";
                     }
                     catch
@@ -317,6 +326,9 @@ namespace FYPFinalKhanaGarKa.Controllers
                         db.SaveChanges();
 
                         tr.Commit();
+
+                        Utils.OrderEmail("khanagarka@gmail.com", "<p>Order ID: " + Id + " is Dispatched by Chef ID " + o.ChefId + "</p>");
+
                         return "OK";
                     }
                     catch
@@ -326,6 +338,32 @@ namespace FYPFinalKhanaGarKa.Controllers
                 }
             }
             return "";
+        }
+
+        [HttpPost]
+        public string OrderConfirm(int Id)
+        {
+            Orders o = db.Orders.Where(i => i.OrderId == Id).FirstOrDefault();
+            o.Confirmed = true;
+            using (var tr = db.Database.BeginTransaction())
+            {
+                try
+                {
+                    db.Orders.Update(o);
+                    db.SaveChanges();
+
+                    tr.Commit();
+                    Utils.OrderEmail("khanagarka@gmail.com", "Order ID: "+o.OrderId+" is confirmed by Chef ID: " + o.ChefId + " for Customer ID: " + o.CustomerId);
+                    Utils.OrderEmail(db.Customer.Where(x => x.CustomerId == o.CustomerId).Select(x => x.Email).FirstOrDefault(),
+                        "Your order is confirmed by the chef and deliverd to you within 150 min");
+                    return "OK";
+                }
+                catch
+                {
+                    tr.Rollback();
+                }
+            }
+            return null;
         }
 
         [HttpPost]

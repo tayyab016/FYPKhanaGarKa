@@ -9,7 +9,7 @@
     <div class="login-block">
         <img src="~/img/logo_gray.png" alt="">
         <h1>Log into your account</h1>
-        <form method="post" asp-action="Login" asp-controller="Home">
+        <form method="post" asp-action="Login" asp-controller="Account">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <div class="input-group">
@@ -43,8 +43,8 @@
         </form>
     </div>
     <div class="login-links">
-        <a class="pull-right" asp-controller="Home" asp-action="Register">Register an account</a>
-        <a class="pull-left" asp-controller="Home" asp-action="ForgotPassword">Forgot Password?</a>
+        <a class="pull-right" asp-controller="Account" asp-action="Register">Register an account</a>
+        <a class="pull-left" asp-controller="Account" asp-action="ForgotPassword">Forgot Password?</a>
     </div>
 </main>
 <!-- Main container end -->

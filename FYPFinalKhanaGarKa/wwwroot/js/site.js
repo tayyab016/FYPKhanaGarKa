@@ -25,7 +25,7 @@ $("#rateYo").rateYo({
     }
 });
 
-//order recive and order dispatched ajax
+//order recive and order dispatched and order confirm ajax
 $('.order-receive-btn').click(function () {
     var justclicked = $(this);
     $.ajax({
@@ -64,6 +64,30 @@ $('.order-deliver-btn').click(function () {
         data: {
             Id: justclicked.data('o'),
             Role: 'Chef'
+        },
+        success: function (responsedata) {
+            if (responsedata == "OK") {
+                justclicked.fadeOut(2000);
+            }
+        },
+        error: function () {
+            window.alert("Some Error Occured ");
+        }
+    });
+});
+
+$('.order-confirm-btn').click(function () {
+    var justclicked = $(this);
+    $.ajax({
+
+        beforeSend: function () {
+            justclicked.text('wait...');
+
+        },
+        url: '/Order/OrderConfirm',
+        type: 'POST',
+        data: {
+            Id: justclicked.data('o')
         },
         success: function (responsedata) {
             if (responsedata == "OK") {

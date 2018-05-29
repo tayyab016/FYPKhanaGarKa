@@ -23,7 +23,7 @@
                     <div class="cfoaccount">
                         <ul class="list-unstyled">
                             <li>
-                                <a href="/Home/ModifyDetails"><i class="fa fa-home" aria-hidden="true"></i>My Account</a>
+                                <a href="/Account/ModifyDetails"><i class="fa fa-home" aria-hidden="true"></i>My Account</a>
                             </li>
                             <li><a href="#"><i class="fa fa-history" aria-hidden="true"></i> Order History</a></li>
                         </ul>
@@ -61,24 +61,35 @@
                                         <td class="file-view"><a href="/Order/Details/@orders.OrderId"><i class="fa fa-file"></i></a></td>
                                         @if (string.Equals(HttpContextAccessor.HttpContext.Session.Get<SessionData>("_User").Role, "Customer", StringComparison.OrdinalIgnoreCase))
                                         {
-                                            if (orders.Received == true)
+                                            if (orders.Confirmed == true)
                                             {
+                                                if (orders.Received == true)
+                                                {
                                                 <td>Received</td>
-                                            }
-                                            else
-                                            {
-                                            <td><button id="chef-order-deliver" data-o="@orders.OrderId" class="btn btn-danger btn-xs order-receive-btn">Received</button></td>
+                                                }
+                                                else
+                                                {
+                                                <td><button data-o="@orders.OrderId" class="btn btn-danger btn-xs order-receive-btn">Received</button></td>
+                                                }
                                             }
                                         }
                                         @if (string.Equals(HttpContextAccessor.HttpContext.Session.Get<SessionData>("_User").Role, "Chef", StringComparison.OrdinalIgnoreCase))
                                         {
-                                            if (orders.OrderStatus == true)
+                                            if (orders.Confirmed)
                                             {
-                                                <td>Dispatched</td>
+                                                if (orders.OrderStatus == true)
+                                                {
+                                                    <td>Dispatched</td>
+                                                }
+                                                else
+                                                {
+                                                    <td><button data-o="@orders.OrderId" class="btn btn-danger btn-xs order-deliver-btn">Dispatch</button></td>
+                                                }
                                             }
                                             else
                                             {
-                                            <td><button id="customer-order-received" data-o="@orders.OrderId" class="btn btn-danger btn-xs order-deliver-btn">Dispatch</button></td>
+                                                <td><button data-o="@orders.OrderId" class="btn btn-success btn-xs order-confirm-btn">Confirm</button></td>
+
                                             }
                                         }
                                     </tr>
