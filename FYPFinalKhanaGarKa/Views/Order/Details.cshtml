@@ -57,17 +57,15 @@
                                     <td>Cash</td>
                                     @if (string.Equals(HttpContextAccessor.HttpContext.Session.Get<SessionData>("_User").Role, "Customer", StringComparison.OrdinalIgnoreCase))
                                     {
-                                        if (Model.Confirmed == true)
+                                        if (Model.Received == true)
                                         {
-                                            if (Model.Received == true)
-                                            {
-                                                <td>Received</td>
-                                            }
-                                            else
-                                            {
-                                                <td><button data-o="@Model.OrderId" class="btn btn-danger btn-xs order-receive-btn">Received</button></td>
-                                            }
+                                            <td>Received</td>
                                         }
+                                        else
+                                        {
+                                            <td><button data-o="@Model.OrderId" class="btn btn-danger btn-xs order-receive-btn">Received</button></td>
+                                        }
+                                        
                                     }
                                     @if (string.Equals(HttpContextAccessor.HttpContext.Session.Get<SessionData>("_User").Role, "Chef", StringComparison.OrdinalIgnoreCase))
                                     {

@@ -10,8 +10,6 @@
     var ID = 0; // Id assigned to each cart item.
     var names = [];// dish names will stored in this array
     var quantities = [];// quantities to store in this array
-    var subtotal_price = 0;
-    var delivery_fee_price = 10;
     var full_total_price = 0;
 
     $("#cart").append( // appending empty cart view
@@ -27,7 +25,7 @@
         var cart_item_price = $(this).closest(".dish-content").data("price");
 
         $("#cart").find("#cart-empty-view").remove(); //removing empty cart view
-        $("#pro").prop('disabled', false); // abling checkout button.
+        
         $("#cart").append(
             '<tr class="hobtr" data-id="' + ID + '">' +
             '<td class="cross-td custom-spinner">' +
@@ -46,9 +44,12 @@
         names[ID] = cart_item_name; //adding dish name to the array.
         quantities[ID] = 1; //adding quantities to the array.
         // this line will calculate total every time when new item is inserted in the cart.{
-        subtotal_price = subtotal_price + parseInt(prices[ID]);
-        $("#subtotal_price").text(subtotal_price);
-        full_total_price = subtotal_price + delivery_fee_price; // setting total price.
+        full_total_price = full_total_price + parseInt(prices[ID]); // setting total price.
+        if (full_total_price >= 300) {
+            $("#pro").prop('disabled', false); // abling checkout button .
+        } else {
+            $("#pro").prop('disabled', true); // disabling checkout button.
+        }
         $("#full_total_price").text(full_total_price);
         $("#total-cart-amount").text(full_total_price);//setting the total amout of mobile cart
         // end }
@@ -66,11 +67,12 @@
             }
             //finding what is current value of item.
             var current_price = parseInt(prices[Id]) * parseInt($(this).closest(".hobtr").find(".increse-val").val());
-            subtotal_price = subtotal_price - current_price; // subtracting deleted item value from subtotal.
-            $("#subtotal_price").text(subtotal_price);
-            full_total_price = subtotal_price + delivery_fee_price; // setting total price.
-            if (full_total_price == 10)//checking and setting the total price to zero when cart is empty
-                full_total_price = 0;
+            full_total_price = full_total_price - current_price; // setting total price.
+            if (full_total_price >= 300) {
+                $("#pro").prop('disabled', false); // abling checkout button.
+            } else {
+                $("#pro").prop('disabled', true); // disabling checkout button.
+            }
             $("#full_total_price").text(full_total_price);
             $("#total-cart-amount").text(full_total_price);//setting the total amout of mobile cart
             prices[Id] = 0; // setting the price to 0 which is removed from cart.
@@ -87,9 +89,12 @@
                 $(this).closest(".hobtr").find(".cart_item_price").text((prices[Id] * oldval));// this line will increase the price of single item.
                 
                 // getting the price from prices array and then setting it
-                subtotal_price = subtotal_price + parseInt(prices[$(this).closest(".hobtr").data("id")]);
-                $("#subtotal_price").text(subtotal_price);
-                full_total_price = subtotal_price + delivery_fee_price; // setting total price.
+                full_total_price = full_total_price + parseInt(prices[$(this).closest(".hobtr").data("id")]); // setting total price.
+                if (full_total_price >= 300) {
+                    $("#pro").prop('disabled', false); // abling checkout button .
+                } else {
+                    $("#pro").prop('disabled', true); // disabling checkout button.
+                }
                 $("#full_total_price").text(full_total_price);
                 $("#total-cart-amount").text(full_total_price);//setting the total amout of mobile cart
 
@@ -103,9 +108,12 @@
             $(this).siblings(".increse-val").val(function (i, oldval) {
                 var Id = $(this).closest(".hobtr").data("id");
                 if (oldval > 1) // this chek the quantity of item.
-                    subtotal_price = subtotal_price - parseInt(prices[$(this).closest(".hobtr").data("id")]);
-                $("#subtotal_price").text(subtotal_price);
-                full_total_price = subtotal_price + delivery_fee_price; // setting total price.
+                    full_total_price = full_total_price - parseInt(prices[$(this).closest(".hobtr").data("id")]);
+                if (full_total_price >= 300) {
+                    $("#pro").prop('disabled', false); // abling checkout button .
+                } else {
+                    $("#pro").prop('disabled', true); // disabling checkout button.
+                }
                 $("#full_total_price").text(full_total_price);
                 $("#total-cart-amount").text(full_total_price);//setting the total amout of mobile cart
                 oldval--;

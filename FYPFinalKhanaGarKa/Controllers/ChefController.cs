@@ -98,7 +98,7 @@ namespace FYPFinalKhanaGarKa.Controllers
                         {
                             FirstName = i.FirstName,
                             LastName = i.LastName,
-                            Orders = i.Orders.Count(),
+                            Orders = i.Orders.Where(z => z.OrderStatus == true).Count(),
                             Rating = (int)i.Rating,
 
                             Menu = i.Menu.OrderByDescending(z => z.ModifiedDate)

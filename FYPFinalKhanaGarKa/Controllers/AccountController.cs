@@ -337,9 +337,8 @@ namespace FYPFinalKhanaGarKa.Controllers
                 if (string.Equals(HttpContext.Session.Get<SessionData>(SessionUser).Role, "chef", StringComparison.OrdinalIgnoreCase))
                 {
                     Chef c = db.Chef.Where(i => i.ChefId == HttpContext.Session.Get<SessionData>(SessionUser).Id).FirstOrDefault();
-                    return View(new RegisterViewModel
+                    return View(new ModifyDetailsViewModel
                     {
-                        Id = c.ChefId,
                         Role = c.Role,
                         Status = c.Status,
                         FirstName = c.FirstName,
@@ -347,7 +346,6 @@ namespace FYPFinalKhanaGarKa.Controllers
                         Gender = c.Gender,
                         Dob = c.Dob,
                         Email = c.Email,
-                        Password = c.Password,
                         PhoneNo = c.PhoneNo,
                         City = c.City,
                         Area = c.Area,
@@ -360,9 +358,8 @@ namespace FYPFinalKhanaGarKa.Controllers
                 else if (string.Equals(HttpContext.Session.Get<SessionData>(SessionUser).Role, "customer", StringComparison.OrdinalIgnoreCase))
                 {
                     Customer c = db.Customer.Where(i => i.CustomerId == HttpContext.Session.Get<SessionData>(SessionUser).Id).FirstOrDefault();
-                    return View(new RegisterViewModel
+                    return View(new ModifyDetailsViewModel
                     {
-                        Id = c.CustomerId,
                         Role = c.Role,
                         Status = c.Status,
                         FirstName = c.FirstName,
@@ -370,7 +367,6 @@ namespace FYPFinalKhanaGarKa.Controllers
                         Gender = c.Gender,
                         Dob = c.Dob,
                         Email = c.Email,
-                        Password = c.Password,
                         PhoneNo = c.PhoneNo,
                         City = c.City,
                         Area = c.Area,
@@ -382,9 +378,8 @@ namespace FYPFinalKhanaGarKa.Controllers
                 else if (string.Equals(HttpContext.Session.Get<SessionData>(SessionUser).Role, "DBoy", StringComparison.OrdinalIgnoreCase))
                 {
                     DeliveryBoy d = db.DeliveryBoy.Where(i => i.DeliveryBoyId == HttpContext.Session.Get<SessionData>(SessionUser).Id).FirstOrDefault();
-                    return View(new RegisterViewModel
+                    return View(new ModifyDetailsViewModel
                     {
-                        Id = d.DeliveryBoyId,
                         Role = d.Role,
                         Status = d.Status,
                         FirstName = d.FirstName,
@@ -392,7 +387,6 @@ namespace FYPFinalKhanaGarKa.Controllers
                         Gender = d.Gender,
                         Dob = d.Dob,
                         Email = d.Email,
-                        Password = d.Password,
                         PhoneNo = d.PhoneNo,
                         City = d.City,
                         Area = d.Area,
@@ -411,9 +405,8 @@ namespace FYPFinalKhanaGarKa.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> ModifyDetails(RegisterViewModel vm)
+        public async Task<IActionResult> ModifyDetails(ModifyDetailsViewModel vm)
         {
-            vm.Password = "";
             if (ModelState.IsValid)
             {
             if (string.Equals(vm.Role.Trim(), "chef", StringComparison.OrdinalIgnoreCase))
@@ -457,9 +450,8 @@ namespace FYPFinalKhanaGarKa.Controllers
                         }
                         ViewBag.Success = " Your data is successfully modified.";
 
-                        return View(new RegisterViewModel
+                        return View(new ModifyDetailsViewModel
                         {
-                            Id = c.ChefId,
                             Role = c.Role,
                             Status = c.Status,
                             FirstName = c.FirstName,
@@ -467,7 +459,6 @@ namespace FYPFinalKhanaGarKa.Controllers
                             Gender = c.Gender,
                             Dob = c.Dob,
                             Email = c.Email,
-                            Password = c.Password,
                             PhoneNo = c.PhoneNo,
                             City = c.City,
                             Area = c.Area,
@@ -482,9 +473,8 @@ namespace FYPFinalKhanaGarKa.Controllers
                         tr.Rollback();
 
                         ModelState.AddModelError("", "We are having some problem in Updating your record.");
-                        return View(new RegisterViewModel
+                        return View(new ModifyDetailsViewModel
                         {
-                            Id = c.ChefId,
                             Role = c.Role,
                             Status = c.Status,
                             FirstName = c.FirstName,
@@ -492,7 +482,6 @@ namespace FYPFinalKhanaGarKa.Controllers
                             Gender = c.Gender,
                             Dob = c.Dob,
                             Email = c.Email,
-                            Password = c.Password,
                             PhoneNo = c.PhoneNo,
                             City = c.City,
                             Area = c.Area,
@@ -546,9 +535,8 @@ namespace FYPFinalKhanaGarKa.Controllers
                         }
                         ViewBag.Success = " Your data is successfully modified.";
 
-                        return View(new RegisterViewModel
+                        return View(new ModifyDetailsViewModel
                         {
-                            Id = c.CustomerId,
                             Role = c.Role,
                             Status = c.Status,
                             FirstName = c.FirstName,
@@ -556,7 +544,6 @@ namespace FYPFinalKhanaGarKa.Controllers
                             Gender = c.Gender,
                             Dob = c.Dob,
                             Email = c.Email,
-                            Password = c.Password,
                             PhoneNo = c.PhoneNo,
                             City = c.City,
                             Area = c.Area,
@@ -569,9 +556,8 @@ namespace FYPFinalKhanaGarKa.Controllers
                     {
                         tr.Rollback();
                         ModelState.AddModelError("", "We are having some problem in Updating your record.");
-                        return View(new RegisterViewModel
+                        return View(new ModifyDetailsViewModel
                         {
-                            Id = c.CustomerId,
                             Role = c.Role,
                             Status = c.Status,
                             FirstName = c.FirstName,
@@ -579,7 +565,6 @@ namespace FYPFinalKhanaGarKa.Controllers
                             Gender = c.Gender,
                             Dob = c.Dob,
                             Email = c.Email,
-                            Password = c.Password,
                             PhoneNo = c.PhoneNo,
                             City = c.City,
                             Area = c.Area,
@@ -629,9 +614,8 @@ namespace FYPFinalKhanaGarKa.Controllers
                         }
                         ViewBag.Success = " Your data is successfully modified.";
 
-                        return View(new RegisterViewModel
+                        return View(new ModifyDetailsViewModel
                         {
-                            Id = c.DeliveryBoyId,
                             Role = c.Role,
                             Status = c.Status,
                             FirstName = c.FirstName,
@@ -639,7 +623,6 @@ namespace FYPFinalKhanaGarKa.Controllers
                             Gender = c.Gender,
                             Dob = c.Dob,
                             Email = c.Email,
-                            Password = c.Password,
                             PhoneNo = c.PhoneNo,
                             City = c.City,
                             Area = c.Area,
@@ -652,9 +635,8 @@ namespace FYPFinalKhanaGarKa.Controllers
                     {
                         tr.Rollback();
                         ModelState.AddModelError("", "We are having some problem in Updating your record.");
-                        return View(new RegisterViewModel
+                        return View(new ModifyDetailsViewModel
                         {
-                            Id = c.DeliveryBoyId,
                             Role = c.Role,
                             Status = c.Status,
                             FirstName = c.FirstName,
@@ -662,7 +644,6 @@ namespace FYPFinalKhanaGarKa.Controllers
                             Gender = c.Gender,
                             Dob = c.Dob,
                             Email = c.Email,
-                            Password = c.Password,
                             PhoneNo = c.PhoneNo,
                             City = c.City,
                             Area = c.Area,

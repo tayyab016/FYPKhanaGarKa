@@ -44,57 +44,66 @@
                                         <th class="pay-th">Payment type</th>
                                         <th class="file-th">View</th>
                                         @if (string.Equals(HttpContextAccessor.HttpContext.Session.Get<SessionData>("_User").Role, "Customer", StringComparison.OrdinalIgnoreCase) ||
-                                            string.Equals(HttpContextAccessor.HttpContext.Session.Get<SessionData>("_User").Role, "Chef", StringComparison.OrdinalIgnoreCase))  
+                                        string.Equals(HttpContextAccessor.HttpContext.Session.Get<SessionData>("_User").Role, "Chef", StringComparison.OrdinalIgnoreCase))
                                         {
                                             <th>Status</th>
                                         }
-                                        </tr>
+                                    </tr>
                                     @if (Model != null && Model.Count() > 0)
                                     {
                                         @foreach (var orders in Model)
                                         {
-                                    <tr class="orderdata-title">
-                                        <td>@orders.OrderId</td>
-                                        <td>@orders.OrderDate</td>
-                                        <td>Rs:@orders.Total</td>
-                                        <td class="pay">Cash</td>
-                                        <td class="file-view"><a href="/Order/Details/@orders.OrderId"><i class="fa fa-file"></i></a></td>
-                                        @if (string.Equals(HttpContextAccessor.HttpContext.Session.Get<SessionData>("_User").Role, "Customer", StringComparison.OrdinalIgnoreCase))
-                                        {
-                                            if (orders.Confirmed == true)
+                                            @if (orders.Confirmed && string.Equals(HttpContextAccessor.HttpContext.Session.Get<SessionData>("_User").Role, "Customer", StringComparison.OrdinalIgnoreCase))
                                             {
-                                                if (orders.Received == true)
-                                                {
-                                                <td>Received</td>
-                                                }
-                                                else
-                                                {
-                                                <td><button data-o="@orders.OrderId" class="btn btn-danger btn-xs order-receive-btn">Received</button></td>
-                                                }
-                                            }
-                                        }
-                                        @if (string.Equals(HttpContextAccessor.HttpContext.Session.Get<SessionData>("_User").Role, "Chef", StringComparison.OrdinalIgnoreCase))
-                                        {
-                                            if (orders.Confirmed)
-                                            {
-                                                if (orders.OrderStatus == true)
-                                                {
-                                                    <td>Dispatched</td>
-                                                }
-                                                else
-                                                {
-                                                    <td><button data-o="@orders.OrderId" class="btn btn-danger btn-xs order-deliver-btn">Dispatch</button></td>
-                                                }
-                                            }
-                                            else
-                                            {
-                                                <td><button data-o="@orders.OrderId" class="btn btn-success btn-xs order-confirm-btn">Confirm</button></td>
+                                                <tr class="orderdata-title">
+                                                    <td>@orders.OrderId</td>
+                                                    <td>@orders.OrderDate</td>
+                                                    <td>Rs:@orders.Total</td>
+                                                    <td class="pay">Cash</td>
+                                                    <td class="file-view"><a href="/Order/Details/@orders.OrderId"><i class="fa fa-file"></i></a></td>
+                                                    @if (orders.Received == true)
+                                                    {
+                                                        <td>Received</td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td><button data-o="@orders.OrderId" class="btn btn-danger btn-xs order-receive-btn">Received</button></td>
+                                                    }
+                                                </tr>
 
                                             }
+                                            @if (string.Equals(HttpContextAccessor.HttpContext.Session.Get<SessionData>("_User").Role, "Chef", StringComparison.OrdinalIgnoreCase))
+                                            {
+                                                <tr class="orderdata-title">
+                                                    <td>@orders.OrderId</td>
+                                                    <td>@orders.OrderDate</td>
+                                                    <td>Rs:@orders.Total</td>
+                                                    <td class="pay">Cash</td>
+                                                    <td class="file-view"><a href="/Order/Details/@orders.OrderId"><i class="fa fa-file"></i></a></td>
+                                                    
+                                                        @if (orders.Confirmed)
+                                                        {
+                                                            if (orders.OrderStatus == true)
+                                                            {
+                                                                <td>Dispatched</td>
+                                                            }
+                                                            else
+                                                            {
+                                                                <td><button data-o="@orders.OrderId" class="btn btn-danger btn-xs order-deliver-btn">Dispatch</button></td>
+                                                            }
+                                                        }
+                                                        else
+                                                        {
+                                                            <td><button data-o="@orders.OrderId" class="btn btn-success btn-xs order-confirm-btn">Confirm</button></td>
+
+                                                        }
+                                                    
+                                                </tr>
+                                            }
+
+                                            /**/
+                                            /**/
                                         }
-                                    </tr>
-                                        }
-                                        /**/
                                     }
                                 </tbody>
                             </table>
