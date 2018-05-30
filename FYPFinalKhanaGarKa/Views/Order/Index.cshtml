@@ -362,11 +362,10 @@
                     CartItems[i] = obj;
                 }
                 var sendJsonData = {
-                    Subtotal: Detail.get_subtotal(),
                     Total: Detail.get_total(),
                     OrderType: type,
                     Items: CartItems,
-                    Cid: cid
+                    Cid: @cid
                 };
                 $.ajax({
                     url: '@Url.Action("PostJson", "Order")',

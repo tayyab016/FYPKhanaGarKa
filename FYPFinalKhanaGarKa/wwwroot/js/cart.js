@@ -137,9 +137,6 @@
         get_orderType: function () {
             return $('input[name=order-policy]:checked').val();
         },
-        get_subtotal: function () {
-            return subtotal_price;
-        },
         get_total: function () {
             return full_total_price;
         },

@@ -305,7 +305,7 @@ namespace FYPFinalKhanaGarKa.Controllers
 
                         tr.Commit();
                         
-                        //Utils.OrderEmail("khanagarka@gmail.com", "<p>Order ID: " + Id + " is recieved by Customer ID " + o.CustomerId + "</p>");
+                        Utils.OrderEmail("khanagarka@gmail.com", "<p>Order ID: " + Id + " is recieved by Customer ID " + o.CustomerId + "</p>");
 
                         return "OK";
                     }
@@ -328,7 +328,7 @@ namespace FYPFinalKhanaGarKa.Controllers
 
                         tr.Commit();
 
-                        //Utils.OrderEmail("khanagarka@gmail.com", "<p>Order ID: " + Id + " is Dispatched by Chef ID " + o.ChefId + "</p>");
+                        Utils.OrderEmail("khanagarka@gmail.com", "<p>Order ID: " + Id + " is Dispatched by Chef ID " + o.ChefId + "</p>");
 
                         return "OK";
                     }
@@ -354,9 +354,9 @@ namespace FYPFinalKhanaGarKa.Controllers
                     db.SaveChanges();
 
                     tr.Commit();
-                    //Utils.OrderEmail("khanagarka@gmail.com", "Order ID: "+o.OrderId+" is confirmed by Chef ID: " + o.ChefId + " for Customer ID: " + o.CustomerId);
-                    //Utils.OrderEmail(db.Customer.Where(x => x.CustomerId == o.CustomerId).Select(x => x.Email).FirstOrDefault(),
-                    //    "Your order is confirmed by the chef and deliverd to you within 150 min");
+                    Utils.OrderEmail("khanagarka@gmail.com", "Order ID: "+o.OrderId+" is confirmed by Chef ID: " + o.ChefId + " for Customer ID: " + o.CustomerId);
+                    Utils.OrderEmail(db.Customer.Where(x => x.CustomerId == o.CustomerId).Select(x => x.Email).FirstOrDefault(),
+                        "Your order is confirmed by the chef and deliverd to you within 150 min");
                     return "OK";
                 }
                 catch

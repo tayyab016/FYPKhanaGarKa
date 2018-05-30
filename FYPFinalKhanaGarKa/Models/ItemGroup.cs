@@ -7,8 +7,6 @@ namespace FYPFinalKhanaGarKa.Models
 {
     public class ItemGroup
     {
-        public int Subtotal { get; set; }
-
         public int Total { get; set; }
 
         public bool OrderType { get; set; }
