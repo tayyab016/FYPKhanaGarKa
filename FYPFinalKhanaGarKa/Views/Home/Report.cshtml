@@ -1,0 +1,49 @@
+﻿
+@{
+    ViewData["Title"] = "Report";
+}
+@Html.Partial("_PageTitlePartial", ViewData["Title"])
+<!-- Main container -->
+<main class="main-content contact-page-two">
+    <!-- Start Map Style1 -->
+    </br>
+    <!-- Start Contact Us -->
+    <div id="Contact" class="light-wrapper">
+        <div class="container">
+            @if (ViewBag.Success != null)
+            {
+                <div class="alert alert-success alert-dismissible">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <strong>Success!</strong> @ViewBag.Success
+                </div>
+            }
+            <div class="inner">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="Contact-Form">
+                                <form class="leave-comment contact-form" method="post" asp-controller="Home" asp-action="Report" autocomplete="on">
+                                    <div class="Contact-us">
+                                        <div class="form-input col-md-4">
+                                            <input name="Subject" type="text" class="form-control" placeholder="Subject" required>
+                                        </div>
+                                        <div class="form-input col-md-12">
+                                            <textarea name="Msg" class="form-control" rows="5" placeholder="Message" required></textarea>
+                                        </div>
+                                        <div class="form-submit col-md-12">
+                                            <button class="btn btn-color" type="submit">Report</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Contact Us -->
+
+</main>
+<!-- END Main container -->
+<!-- Content End -->

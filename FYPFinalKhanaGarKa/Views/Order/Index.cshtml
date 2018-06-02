@@ -106,7 +106,19 @@
                                                                         <img class="img img-responsive img-thumbnail" alt="Image" src="@menus.ImgUrl" style="width:200px;height:120px;" />
                                                                     </div>
                                                                     <div class="col-md-6">
-                                                                        <div class="dish-name">@menus.DishName &nbsp; &nbsp; <small>@menus.Serving Serving(s)</small></div>
+                                                                        <div class="dish-name">
+                                                                            @menus.DishName &nbsp; &nbsp; <small>@menus.Serving Serving(s)</small> &nbsp;
+                                                                            @if (menus.Status)
+                                                                            {
+                                                                                <span class="label label-warning"> On Demand </span>
+
+                                                                            }
+                                                                            else if (!menus.Status)
+                                                                            {
+                                                                                <span class="label label-success"> Avalible Today </span>
+
+                                                                            }
+                                                                        </div>
                                                                         <p>@menus.Description</p>
                                                                     </div>
                                                                     <div class="col-md-3">

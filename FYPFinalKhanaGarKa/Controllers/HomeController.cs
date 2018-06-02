@@ -45,7 +45,30 @@ namespace FYPFinalKhanaGarKa.Controllers
         [HttpPost]
         public IActionResult Contact(ContactViewModel vm)
         {
-            Utils.ContactEmail(vm.Email, vm.Name, vm.PhoneNo, vm.Msg);
+            //Utils.ContactEmail(vm.Email, vm.Name, vm.PhoneNo, vm.Msg);
+            ViewBag.Success = "Your message is successfully sent to the KhanaGarKa.com team.";
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult Report()
+        {
+            if (HttpContext.Session.Get<SessionData>(SessionUser) != null)
+            {
+                return View();
+            }
+            else
+            {
+                return Redirect("/Home/Page404");
+            }
+        }
+
+        [HttpPost]
+        public IActionResult Report(string Subject, string Msg)
+        {
+            //Utils.OrderEmail("khanagarka@gmail.com", "<h1>Complain<h1><br>ID: " + HttpContext.Session.Get<SessionData>(SessionUser).Id + "<br>" +
+            //    "CNIC: " + HttpContext.Session.Get<SessionData>(SessionUser).CNIC + "<br>" + Msg);
+            ViewBag.Success = "Your complain is forward to the admin.";
             return View();
         }
 

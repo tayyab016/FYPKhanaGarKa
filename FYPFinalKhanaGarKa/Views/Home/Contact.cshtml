@@ -10,14 +10,22 @@
     </br>
 
     <!-- Start Contact Us -->
+    
     <div id="Contact" class="light-wrapper">
         <div class="container">
+            @if (ViewBag.Success != null)
+            {
+                <div class="alert alert-success alert-dismissible">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <strong>Success!</strong> @ViewBag.Success
+                </div>
+            }
             <div class="inner">
                 <div class="row">
                     <div class="col-md-8">
                         <div class="row">
                             <div class="Contact-Form">
-                                <form class="leave-comment contact-form" method="post" asp-controller="Home" asp-action="Contact"autocomplete="on">
+                                <form class="leave-comment contact-form" method="post" asp-controller="Home" asp-action="Contact" autocomplete="on">
                                     <div class="Contact-us">
                                         <div class="form-input col-md-4">
                                             <input asp-for="Name" type="text" class="form-control" placeholder="Name">
@@ -28,7 +36,7 @@
                                             <span asp-validation-for="Email" class="text-danger"></span>
                                         </div>
                                         <div class="form-input col-md-4">
-                                            <input asp-for="PhoneNo" type="text" class="form-control" placeholder="Phone">
+                                            <input asp-for="PhoneNo" type="number" class="form-control" placeholder="Phone">
                                             <span asp-validation-for="PhoneNo" class="text-danger"></span>
                                         </div>
                                         <div class="form-input col-md-12">

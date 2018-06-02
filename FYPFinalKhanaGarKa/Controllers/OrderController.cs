@@ -141,15 +141,15 @@ namespace FYPFinalKhanaGarKa.Controllers
 
                             if (itemGroup.DeliveryDay == 0 && itemGroup.DeliveryTime == "")
                             {
-                                Utils.OrderEmail("khanagarka@gmail.com", "Order placed from customer ID: " + o.ChefId + " to chef ID: " + o.CustomerId);
-                                Utils.OrderEmail(db.Chef.Where(x => x.ChefId == o.ChefId).Select(x => x.Email).FirstOrDefault(),
-                                    "You Have an order please visit your account and confirm order.");
+                                //Utils.OrderEmail("khanagarka@gmail.com", "Order placed from customer ID: " + o.ChefId + " to chef ID: " + o.CustomerId);
+                                //Utils.OrderEmail(db.Chef.Where(x => x.ChefId == o.ChefId).Select(x => x.Email).FirstOrDefault(),
+                                //    "You Have an order please visit your account and confirm order.");
                             }
                             else
                             {
-                                Utils.OrderEmail("khanagarka@gmail.com", "Order placed from customer ID: " + o.ChefId + " to chef ID: " + o.CustomerId+" and scheduled " + itemGroup.DeliveryDay + "  at " + itemGroup.DeliveryTime);
-                                Utils.OrderEmail(db.Chef.Where(x => x.ChefId == o.ChefId).Select(x => x.Email).FirstOrDefault(),
-                                    "You Have an order and customer want to receive order "+itemGroup.DeliveryDay+"  at "+itemGroup.DeliveryTime+" .Please, visit your account and confirm order.");
+                               // Utils.OrderEmail("khanagarka@gmail.com", "Order placed from customer ID: " + o.ChefId + " to chef ID: " + o.CustomerId+" and scheduled " + itemGroup.DeliveryDay + "  at " + itemGroup.DeliveryTime);
+                               // Utils.OrderEmail(db.Chef.Where(x => x.ChefId == o.ChefId).Select(x => x.Email).FirstOrDefault(),
+                               //     "You Have an order and customer want to receive order "+itemGroup.DeliveryDay+"  at "+itemGroup.DeliveryTime+" .Please, visit your account and confirm order.");
                             }
                         }
                         catch

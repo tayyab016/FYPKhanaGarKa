@@ -75,35 +75,36 @@
                                             @if (string.Equals(HttpContextAccessor.HttpContext.Session.Get<SessionData>("_User").Role, "Chef", StringComparison.OrdinalIgnoreCase))
                                             {
                                                 <tr class="orderdata-title">
-                                                    <td>@orders.OrderDate</td>
                                                     <td>@orders.OrderId</td>
+                                                    <td>@orders.OrderDate</td>
                                                     <td>Rs:@orders.Total</td>
                                                     <td class="pay">Cash</td>
                                                     <td class="file-view"><a href="/Order/Details/@orders.OrderId"><i class="fa fa-file"></i></a></td>
-                                                    
-                                                        @if (orders.Confirmed)
+
+                                                    @if (orders.Confirmed)
+                                                    {
+                                                        if (orders.OrderStatus == true)
                                                         {
-                                                            if (orders.OrderStatus == true)
-                                                            {
-                                                                <td>Dispatched</td>
-                                                            }
-                                                            else
-                                                            {
-                                                                <td><button data-o="@orders.OrderId" class="btn btn-danger btn-xs order-deliver-btn">Dispatch</button></td>
-                                                            }
-                                                        }
-                                                        else if(orders.Canceled){
-                                                            <td class="text-danger">Canceled</td>
+                                                            <td>Dispatched</td>
                                                         }
                                                         else
                                                         {
-                                                            <td>
-                                                                <button data-o="@orders.OrderId" class="btn btn-success btn-xs order-confirm-btn">Confirm</button>
-                                                                <button data-o="@orders.OrderId" class="btn btn-danger btn-xs order-cancel-btn">Cancel</button>
-                                                            </td>
-
+                                                            <td><button data-o="@orders.OrderId" class="btn btn-danger btn-xs order-deliver-btn">Dispatch</button></td>
                                                         }
-                                                    
+                                                    }
+                                                    else if (orders.Canceled)
+                                                    {
+                                                        <td class="text-danger">Canceled</td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td>
+                                                            <button data-o="@orders.OrderId" class="btn btn-success btn-xs order-confirm-btn">Confirm</button>
+                                                            <button data-o="@orders.OrderId" class="btn btn-danger btn-xs order-cancel-btn">Cancel</button>
+                                                        </td>
+
+                                                    }
+
                                                 </tr>
                                             }
 
