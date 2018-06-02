@@ -25,7 +25,7 @@
                                         <h3 class="section-title">Order information</h3>
                                         <ul class="list-unstyled info-list">
                                             <li>
-                                                <input class="custom-radio-big" type="radio" checked />
+                                                <input class="custom-radio-big" type="radio" name="collection" id="collection" checked />
                                                 @if (Model.OrderType == true)
                                                 {
                                                     <label for="delivery">Delivery</label>
@@ -34,6 +34,55 @@
                                                 {
                                                     <lable for="collection">Collection</lable>
                                                 }
+                                            </li>
+                                            <li>
+                                                <div class="row">
+                                                    <div class="col-md-6 col-xs-6 col-sm-6">
+                                                        <input class="custom-radio-big" type="radio" value="Regular" name="delivery-priority" id="asap" checked>
+                                                        <label for="asap">Regular</label>
+                                                    </div>
+                                                    <div class="col-md-6 col-xs-6 col-sm-6">
+                                                        <input class="custom-radio-big" type="radio" value="Later" name="delivery-priority" id="later">
+                                                        <label for="later">Later</label>
+                                                    </div>
+                                                </div>
+                                                <div class="row order-time-options">
+                                                    <div class="col-md-6">
+                                                        <select asp-for="DeliveryDay" id="order-delivery-day">
+                                                            <option value=0>Select Day</option>
+                                                            <option value=1>Today</option>
+                                                            <option value=2>Tomorrow</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <select asp-for="DeliveryTime" id="order-delivery-time">
+                                                            <option value="">Select Time</option>
+                                                            <option value="1:30 PM">1:30 PM</option>
+                                                            <option value="1:45 PM">1:45 PM</option>
+                                                            <option value="2:00 PM">2:00 PM</option>
+                                                            <option value="6:00 PM">6:00 PM</option>
+                                                            <option value="6:15 PM">6:15 PM</option>
+                                                            <option value="6:30 PM">6:30 PM</option>
+                                                            <option value="6:45 PM">6:45 PM</option>
+                                                            <option value="7:00 PM">7:00 PM</option>
+                                                            <option value="7:15 PM">7:15 PM</option>
+                                                            <option value="7:30 PM">7:30 PM</option>
+                                                            <option value="7:45 PM">7:45 PM</option>
+                                                            <option value="8:00 PM">8:00 PM</option>
+                                                            <option value="8:15 PM">8:15 PM</option>
+                                                            <option value="8:30 PM">8:30 PM</option>
+                                                            <option value="8:45 PM">8:45 PM</option>
+                                                            <option value="9:00 PM">9:00 PM</option>
+                                                            <option value="9:15 PM">9:15 PM</option>
+                                                            <option value="9:30 PM">9:30 PM</option>
+                                                            <option value="9:45 PM">9:45 PM</option>
+                                                            <option value="10:00 PM">10:00 PM</option>
+                                                            <option value="10:15 PM">10:15 PM</option>
+                                                            <option value="10:30 PM">10:30 PM</option>
+                                                            <option value="10:45 PM">10:45 PM</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
                                             </li>
                                         </ul>
                                     </div>
@@ -132,7 +181,7 @@
                         <div class="col-md-3 ui-order-online-right-side">
                             <div class="mobile-order-online-cart-inner">
                                 <div class="delivery-time">
-                                    <span class="est-deli">Estimated delivery time</span><span class="deli-time">75<span>minutes</span></span>
+                                    <span class="est-deli">Estimated delivery time</span><span class="deli-time">90<span>minutes</span></span>
                                 </div>
                                 <div class="clearfix"></div>
                                 <div class="right-sidebar-inner-content sticky-content-right-side">
@@ -187,7 +236,7 @@
                                             <p>Delivery fee per KM: </p>
                                         </div>
                                         <div class="col-md-4 text-right">
-                                            RS:25
+                                            RS 20
                                         </div>
                                     </div>
                                 </li>
@@ -197,7 +246,7 @@
                                             <p>Delivery minimum : </p>
                                         </div>
                                         <div class="col-md-4 text-right">
-                                            RS:350
+                                            RS 300
                                         </div>
                                     </div>
                                 </li>
@@ -223,11 +272,11 @@
             <div class="row">
                 <div class="col-md-4 col-xs-4">
                     <div class="mobile-cart-item">
-                        <a id="mobileCartToggle" href="#"><i class="fa fa-shopping-basket"></i><span id="cart-item"> 10</span></a>
+                        <a id="mobileCartToggle" href="#"><i class="fa fa-shopping-basket"></i><span id="cart-item"></span></a>
                     </div>
                 </div>
                 <div class="col-md-4 col-xs-4">
-                    <div class="mobile-total-amount">Total: &pound;<span id="total-cart-amount">50</span></div>
+                    <div class="mobile-total-amount">Total: <span id="total-cart-amount">@Model.Total</span></div>
                 </div>
                 <div class="col-md-4 col-xs-4">
                     <a href="/Order/Success" class="btn mobile-btn-checkout">Checkout</a>
@@ -239,3 +288,18 @@
     <!-- Main container end -->
 </main>
 <!-- Content End -->
+@section Scripts{ 
+<script>
+    $('.order-time-options').hide();
+    $('.custom-radio-big').click(function () { 
+        if ($("#later").is(":checked")) {
+
+            $('.order-time-options').show();
+        }
+        else {
+            $('.order-time-options').hide();
+
+        }
+    });
+    </script>
+}

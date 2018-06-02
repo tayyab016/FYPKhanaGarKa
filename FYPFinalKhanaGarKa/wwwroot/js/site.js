@@ -100,6 +100,28 @@ $('.order-confirm-btn').click(function () {
     });
 });
 
+$('.order-cancel-btn').click(function () {
+    var justclicked = $(this);
+    $.ajax({
+        url: '/Order/OrderCancel',
+        type: 'POST',
+        data: {
+            Id: justclicked.data('o')
+        },
+        success: function (responsedata) {
+            if (responsedata == "OK") {
+                justclicked.prev('button').remove();
+                justclicked.after('Canceled');
+                justclicked.remove();
+
+            }
+        },
+        error: function () {
+            window.alert("Some Error Occured ");
+        }
+    });
+});
+
 // thumbs up and thumbs down handling ajax
 $('.dish-rating').likeDislike({
     reverseMode: true,

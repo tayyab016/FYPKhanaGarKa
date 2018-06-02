@@ -38,7 +38,7 @@
                             <table class="table table-striped">
                                 <tbody>
                                     <tr class="orderh-title">
-                                        <th>Order id</th>
+                                        <th>Order No.</th>
                                         <th>Date</th>
                                         <th>Total amount</th>
                                         <th class="pay-th">Payment type</th>
@@ -75,8 +75,8 @@
                                             @if (string.Equals(HttpContextAccessor.HttpContext.Session.Get<SessionData>("_User").Role, "Chef", StringComparison.OrdinalIgnoreCase))
                                             {
                                                 <tr class="orderdata-title">
-                                                    <td>@orders.OrderId</td>
                                                     <td>@orders.OrderDate</td>
+                                                    <td>@orders.OrderId</td>
                                                     <td>Rs:@orders.Total</td>
                                                     <td class="pay">Cash</td>
                                                     <td class="file-view"><a href="/Order/Details/@orders.OrderId"><i class="fa fa-file"></i></a></td>
@@ -92,9 +92,15 @@
                                                                 <td><button data-o="@orders.OrderId" class="btn btn-danger btn-xs order-deliver-btn">Dispatch</button></td>
                                                             }
                                                         }
+                                                        else if(orders.Canceled){
+                                                            <td class="text-danger">Canceled</td>
+                                                        }
                                                         else
                                                         {
-                                                            <td><button data-o="@orders.OrderId" class="btn btn-success btn-xs order-confirm-btn">Confirm</button></td>
+                                                            <td>
+                                                                <button data-o="@orders.OrderId" class="btn btn-success btn-xs order-confirm-btn">Confirm</button>
+                                                                <button data-o="@orders.OrderId" class="btn btn-danger btn-xs order-cancel-btn">Cancel</button>
+                                                            </td>
 
                                                         }
                                                     

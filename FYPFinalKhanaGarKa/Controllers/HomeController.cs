@@ -80,6 +80,12 @@ namespace FYPFinalKhanaGarKa.Controllers
         {
             return View();
         }
+
+        [HttpGet]
+        public IActionResult Page404()
+        {
+            return View();
+        }
         
         public IActionResult Error()
         {

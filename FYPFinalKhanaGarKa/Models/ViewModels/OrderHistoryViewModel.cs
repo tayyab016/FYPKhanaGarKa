@@ -13,7 +13,11 @@ namespace FYPFinalKhanaGarKa.Models.ViewModels
         public bool OrderStatus { get; set; }
         public bool Received { get; set; }
         public bool Confirmed { get; set; }
+        public bool Canceled { get; set; }
         public string Role { get; set; }
+        public int DeliveryDay { get; set; }
+
+        public string DeliveryTime { get; set; }
 
     }
 }

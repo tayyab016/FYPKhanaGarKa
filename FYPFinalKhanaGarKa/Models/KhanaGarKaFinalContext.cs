@@ -321,7 +321,7 @@ namespace FYPFinalKhanaGarKa.Models
 
                 entity.Property(e => e.DeliveryBoyId).HasColumnName("DeliveryBoyID");
 
-                entity.Property(e => e.Feedback).HasMaxLength(150);
+                entity.Property(e => e.DeliveryTime).HasMaxLength(10);
 
                 entity.Property(e => e.OrderDate).HasColumnType("datetime2(6)");
 

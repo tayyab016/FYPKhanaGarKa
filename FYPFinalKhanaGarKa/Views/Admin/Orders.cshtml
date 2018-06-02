@@ -34,9 +34,6 @@
                             @Html.DisplayNameFor(model => model.OrderStatus)
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.Feedback)
-                        </th>
-                        <th>
                             @Html.DisplayNameFor(model => model.OrderType)
                         </th>
                         <th>
@@ -86,9 +83,6 @@
                                 {
                                     <span>Pending</span>
                                 }
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Feedback)
                             </td>
                             <td>
                                 @if (item.OrderType == true)

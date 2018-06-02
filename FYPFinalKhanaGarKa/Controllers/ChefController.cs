@@ -131,7 +131,7 @@ namespace FYPFinalKhanaGarKa.Controllers
                 }
                 else
                 {
-                    return NotFound();
+                    return Redirect("/Home/Page404");
                 }
             }
             else
@@ -151,7 +151,7 @@ namespace FYPFinalKhanaGarKa.Controllers
                 }
                 else
                 {
-                    return NotFound();
+                    return Redirect("/Home/Page404");
                 }
             }
             else
@@ -220,7 +220,7 @@ namespace FYPFinalKhanaGarKa.Controllers
                 }
                 else
                 {
-                    return NotFound();
+                    return Redirect("/Home/Page404");
                 }
             }
             else
@@ -341,7 +341,7 @@ namespace FYPFinalKhanaGarKa.Controllers
                 }
                 else
                 {
-                    return NotFound();
+                    return Redirect("/Home/Page404");
                 }
             }
             else
@@ -414,7 +414,7 @@ namespace FYPFinalKhanaGarKa.Controllers
                 }
                 else
                 {
-                    return NotFound();
+                    return Redirect("/Home/Page404");
                 }
             }
             else
@@ -447,7 +447,7 @@ namespace FYPFinalKhanaGarKa.Controllers
 
                     tr.Commit();
 
-                    if (o.ImgUrl != null && System.IO.File.Exists(env.WebRootPath + o.ImgUrl))
+                    if (vm.Image != null && o.ImgUrl != null && System.IO.File.Exists(env.WebRootPath + o.ImgUrl))
                     {
                         var source = Tinify.FromFile(env.WebRootPath + o.ImgUrl);
                         var resized = source.Resize(new

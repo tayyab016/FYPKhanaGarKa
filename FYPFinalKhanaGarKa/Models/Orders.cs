@@ -13,7 +13,6 @@ namespace FYPFinalKhanaGarKa.Models
         public int OrderId { get; set; }
         public DateTime OrderDate { get; set; }
         public bool OrderStatus { get; set; }
-        public string Feedback { get; set; }
         public int ChefId { get; set; }
         public int? DeliveryBoyId { get; set; }
         public int CustomerId { get; set; }
@@ -25,6 +24,9 @@ namespace FYPFinalKhanaGarKa.Models
         public int? DeliveryCharges { get; set; }
         public bool Received { get; set; }
         public bool? Confirmed { get; set; }
+        public bool? Canceled { get; set; }
+        public int? DeliveryDay { get; set; }
+        public string DeliveryTime { get; set; }
 
         public Chef Chef { get; set; }
         public Customer Customer { get; set; }

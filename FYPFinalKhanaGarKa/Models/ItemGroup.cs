@@ -18,6 +18,10 @@ namespace FYPFinalKhanaGarKa.Models
         public string City { get; set; }
 
         public string SpReq { get; set; }
+        
+        public int DeliveryDay { get; set; }
+
+        public string DeliveryTime { get; set; }
 
         public int Cid { get; set; }
 

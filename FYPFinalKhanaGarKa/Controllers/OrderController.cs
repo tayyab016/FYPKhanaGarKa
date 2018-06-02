@@ -77,6 +77,7 @@ namespace FYPFinalKhanaGarKa.Controllers
                     OrderStatus = i.OrderStatus,
                     Received = i.Received,
                     Confirmed = (bool)i.Confirmed,
+                    Canceled = (bool) i.Canceled,
                     OrderId = i.OrderId,
                     Orderline = i.OrderLine.ToList()
                     
@@ -108,6 +109,7 @@ namespace FYPFinalKhanaGarKa.Controllers
                             Quantity = items.Quantity
                         });
                     }
+                    
                     Orders o = new Orders
                     {
                         OrderDate = DateTime.Now,
@@ -120,7 +122,11 @@ namespace FYPFinalKhanaGarKa.Controllers
                         City = itemGroup.City,
                         Area = itemGroup.Area,
                         Street = itemGroup.Street,
-                        Received = false
+                        Received = false,
+                        Confirmed = false,
+                        Canceled = false,
+                        DeliveryDay = itemGroup.DeliveryDay,
+                        DeliveryTime = itemGroup.DeliveryTime
                     };
                     
                     using (var tr = db.Database.BeginTransaction())
@@ -133,9 +139,18 @@ namespace FYPFinalKhanaGarKa.Controllers
 
                             HttpContext.Session.Set<ItemGroup>("CartData", null);
 
-                            Utils.OrderEmail("khanagarka@gmail.com", "Order placed from customer ID: "+o.ChefId+" to chef ID: "+o.CustomerId);
-                            Utils.OrderEmail(db.Chef.Where(x => x.ChefId == o.ChefId).Select(x => x.Email).FirstOrDefault(),
-                                "You Have an order please visit your account and confirm order.");
+                            if (itemGroup.DeliveryDay == 0 && itemGroup.DeliveryTime == "")
+                            {
+                                Utils.OrderEmail("khanagarka@gmail.com", "Order placed from customer ID: " + o.ChefId + " to chef ID: " + o.CustomerId);
+                                Utils.OrderEmail(db.Chef.Where(x => x.ChefId == o.ChefId).Select(x => x.Email).FirstOrDefault(),
+                                    "You Have an order please visit your account and confirm order.");
+                            }
+                            else
+                            {
+                                Utils.OrderEmail("khanagarka@gmail.com", "Order placed from customer ID: " + o.ChefId + " to chef ID: " + o.CustomerId+" and scheduled " + itemGroup.DeliveryDay + "  at " + itemGroup.DeliveryTime);
+                                Utils.OrderEmail(db.Chef.Where(x => x.ChefId == o.ChefId).Select(x => x.Email).FirstOrDefault(),
+                                    "You Have an order and customer want to receive order "+itemGroup.DeliveryDay+"  at "+itemGroup.DeliveryTime+" .Please, visit your account and confirm order.");
+                            }
                         }
                         catch
                         {
@@ -168,6 +183,7 @@ namespace FYPFinalKhanaGarKa.Controllers
                             OrderStatus = x.OrderStatus,
                             Received = x.Received,
                             Confirmed =(bool) x.Confirmed,
+                            Canceled = (bool) x.Canceled,
                             Total = x.OrderLine.Sum(i => i.Price)
                         }).ToList();
                     return View(vm);
@@ -219,7 +235,7 @@ namespace FYPFinalKhanaGarKa.Controllers
                 }
                 else
                 {
-                    return NotFound();
+                    return Redirect("/Home/Page404");
                 }
             }
             else
@@ -357,6 +373,32 @@ namespace FYPFinalKhanaGarKa.Controllers
                     Utils.OrderEmail("khanagarka@gmail.com", "Order ID: "+o.OrderId+" is confirmed by Chef ID: " + o.ChefId + " for Customer ID: " + o.CustomerId);
                     Utils.OrderEmail(db.Customer.Where(x => x.CustomerId == o.CustomerId).Select(x => x.Email).FirstOrDefault(),
                         "Your order is confirmed by the chef and deliverd to you within 150 min");
+                    return "OK";
+                }
+                catch
+                {
+                    tr.Rollback();
+                }
+            }
+            return null;
+        }
+
+        [HttpPost]
+        public string OrderCancel(int Id)
+        {
+            Orders o = db.Orders.Where(i => i.OrderId == Id).FirstOrDefault();
+            o.Canceled = true;
+            using (var tr = db.Database.BeginTransaction())
+            {
+                try
+                {
+                    db.Orders.Update(o);
+                    db.SaveChanges();
+
+                    tr.Commit();
+                   // Utils.OrderEmail("khanagarka@gmail.com", "Order ID: " + o.OrderId + " is canceled by Chef ID: " + o.ChefId + " for Customer ID: " + o.CustomerId);
+                   // Utils.OrderEmail(db.Customer.Where(x => x.CustomerId == o.CustomerId).Select(x => x.Email).FirstOrDefault(),
+                   //     "Your order is canceled by the chef. Please, give order to another chef. THANK YOU.");
                     return "OK";
                 }
                 catch

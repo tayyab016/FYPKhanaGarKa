@@ -65,7 +65,7 @@
                                         {
                                             <td><button data-o="@Model.OrderId" class="btn btn-danger btn-xs order-receive-btn">Received</button></td>
                                         }
-                                        
+
                                     }
                                     @if (string.Equals(HttpContextAccessor.HttpContext.Session.Get<SessionData>("_User").Role, "Chef", StringComparison.OrdinalIgnoreCase))
                                     {
@@ -80,10 +80,16 @@
                                                 <td><button data-o="@Model.OrderId" class="btn btn-danger btn-xs order-deliver-btn">Dispatch</button></td>
                                             }
                                         }
+                                        else if (Model.Canceled)
+                                        {
+                                            <td class="text-danger">Canceled</td>
+                                        }
                                         else
                                         {
-                                            <td><button data-o="@Model.OrderId" class="btn btn-success btn-xs order-confirm-btn">Confirm</button></td>
-
+                                            <td>
+                                                <button data-o="@Model.OrderId" class="btn btn-success btn-xs order-confirm-btn">Confirm</button>
+                                                <button data-o="@Model.OrderId" class="btn btn-danger btn-xs order-cancel-btn">Cancel</button>
+                                            </td>
                                         }
                                     }
                                 </tr>
