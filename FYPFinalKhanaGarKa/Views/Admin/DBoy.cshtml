@@ -4,7 +4,7 @@
     ViewData["Title"] = "DBoy";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
-<div id="page-wrapper" style="height:100vh">
+<div id="page-wrapper" style="min-height:100px">
     <div class="container-fluid">
         <!-- Page Heading -->
         <div class="row">
@@ -152,7 +152,7 @@
                                 }
                                 else
                                 {
-                                    <button id="disaprove-btn" data-did="@item.DeliveryBoyId" class="btn btn-danger btn-xs">Disapprove</button>
+                                    <button id="disaprove-btn" data-did="@item.DeliveryBoyId" class="btn btn-danger btn-xs disapprove-btn-dboy">Disapprove</button>
 
                                 }
                             </td>

@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<div id="page-wrapper" style="height:100vh">
+<div id="page-wrapper" style="min-height:100px">
     <div class="container-fluid">
         <!-- Page Heading -->
         <div class="row">
@@ -83,7 +83,9 @@
                         <th>
                             @Html.DisplayNameFor(model => model.Approved)
                         </th>
-                        <th></th>
+                        <th>
+                            Action
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -167,7 +169,7 @@
                                 }
                                 else
                                 {
-                                    <button data-cid="@item.ChefId" class="btn btn-danger btn-xs">Disapprove</button>
+                                    <button data-cid="@item.ChefId" class="btn btn-danger btn-xs disapprove-btn-chef">Disapprove</button>
 
                                 }
                             </td>

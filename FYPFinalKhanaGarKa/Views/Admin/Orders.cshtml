@@ -4,7 +4,7 @@
     ViewData["Title"] = "Orders";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
-<div id="page-wrapper" style="height:100vh">
+<div id="page-wrapper" style="min-height:100px">
     <div class="container-fluid">
         <!-- Page Heading -->
         <div class="row">
@@ -55,13 +55,22 @@
                             @Html.DisplayNameFor(model => model.Received)
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.Chef)
+                            @Html.DisplayNameFor(model => model.ChefId)
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.Customer)
+                            @Html.DisplayNameFor(model => model.CustomerId)
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.DeliveryBoy)
+                            @Html.DisplayNameFor(model => model.DeliveryBoyId)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Confirmed)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Canceled)
+                        </th>
+                        <th>
+                            Delivery Day
                         </th>
                         <th>Action</th>
                     </tr>
@@ -69,69 +78,101 @@
                 <tbody>
                     @foreach (var item in Model)
                     {
-                        <tr>
-                            <td>@item.OrderId</td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.OrderDate)
-                            </td>
-                            <td>
-                                @if (item.OrderStatus == true)
-                                {
-                                    <span>Delivered</span>
-                                }
-                                else
-                                {
-                                    <span>Pending</span>
-                                }
-                            </td>
-                            <td>
-                                @if (item.OrderType == true)
-                                {
-                                    <span>Delivery</span>
-                                }
-                                else
-                                {
-                                    <span>Collection</span>
-                                }
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.SpReq)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.City)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Area)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Street)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.DeliveryCharges)
-                            </td>
-                            <td>
-                                @if (item.Received == true)
-                                {
-                                    <span>Received</span>
-                                }
-                                else
-                                {
-                                    <span>Not Recieved</span>
-                                }
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Chef.Area)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Customer.Area)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.DeliveryBoy.Area)
-                            </td>
-                            <td>
-                                <a class="btn btn-danger btn-xs" asp-action="Delete" asp-route-id="@item.OrderId">Delete</a>
-                            </td>
-                        </tr>
+                    <tr>
+                        <td>@item.OrderId</td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.OrderDate)
+                        </td>
+                        <td>
+                            @if (item.OrderStatus == true)
+                            {
+                                <span>Delivered</span>
+                            }
+                            else
+                            {
+                                <span>Pending</span>
+                            }
+                        </td>
+                        <td>
+                            @if (item.OrderType == true)
+                            {
+                                <span>Delivery</span>
+                            }
+                            else
+                            {
+                                <span>Collection</span>
+                            }
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SpReq)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.City)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Area)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Street)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DeliveryCharges)
+                        </td>
+                        <td>
+                            @if (item.Received == true)
+                            {
+                                <span>Received</span>
+                            }
+                            else
+                            {
+                                <span>Not Recieved</span>
+                            }
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ChefId)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CustomerId)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DeliveryBoyId)
+                        </td>
+                        <td>
+                            @if (item.Confirmed == true)
+                            {
+                                <span>Confirmed</span>
+                            }
+                            else
+                            {
+                                <span>Pending</span>
+                            }
+                        </td>
+                        <td>
+                            @if (item.Canceled == true)
+                            {
+                            <span>Cancelled</span>
+                            }
+                            else
+                            {
+                            <span>Pending</span>
+                            }
+                        </td>
+                        <td>
+                            @if (item.DeliveryDay == 1 && item.DeliveryTime != "")
+                            {
+                                <span>Today @item.DeliveryTime</span>
+
+                            }
+                            else if (item.DeliveryDay == 2 && item.DeliveryTime != "")
+                            {
+                                <span>Tomorrow @item.DeliveryTime</span>
+
+                            }
+                        </td>
+                        <td>
+                            <a class="btn btn-danger btn-xs" asp-action="Delete" asp-route-id="@item.OrderId">Delete</a>
+                        </td>
+                    </tr>
                     }
                 </tbody>
             </table>

@@ -67,7 +67,9 @@ namespace FYPFinalKhanaGarKa.Controllers
                 return Redirect("/admin/login");
             }
 
-            return View();
+            return View(db.Orders.Where(i => i.Canceled == false &&
+            (i.OrderStatus == false || i.Received == false)
+            ).ToList());
         }
 
         [HttpGet]
@@ -100,7 +102,7 @@ namespace FYPFinalKhanaGarKa.Controllers
                 {
                     return Redirect("/admin/login");
                 }
-            return View(db.Orders.ToList());
+            return View();
         }
 
         [HttpGet]
@@ -129,6 +131,9 @@ namespace FYPFinalKhanaGarKa.Controllers
                         db.SaveChanges();
 
                         tr.Commit();
+
+                        Utils.OrderEmail(d.Email, "Your request to join KhanaGarKa.com is approved. You can login now.");
+
                         return "OK";
                     }
                     catch
@@ -149,6 +154,61 @@ namespace FYPFinalKhanaGarKa.Controllers
                         db.SaveChanges();
 
                         tr.Commit();
+
+                        Utils.OrderEmail(c.Email, "Your request to join KhanaGarKa.com is approved. You can login now.");
+
+                        return "OK";
+                    }
+                    catch
+                    {
+                        tr.Rollback();
+                    }
+                }
+            }
+            return "";
+        }
+
+        [HttpPost]
+        public string Disapprove(int Id, string Role)
+        {
+            if (string.Equals(Role, "DBoy", StringComparison.OrdinalIgnoreCase))
+            {
+                DeliveryBoy d = db.DeliveryBoy.Where(i => i.DeliveryBoyId == Id).FirstOrDefault();
+                d.Approved = false;
+                using (var tr = db.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        db.DeliveryBoy.Update(d);
+                        db.SaveChanges();
+
+                        tr.Commit();
+
+                        Utils.OrderEmail(d.Email, "Your account is locked by the KhanaGarKa.com team.");
+
+                        return "OK";
+                    }
+                    catch
+                    {
+                        tr.Rollback();
+                    }
+                }
+            }
+            else if (string.Equals(Role, "Chef", StringComparison.OrdinalIgnoreCase))
+            {
+                Chef c = db.Chef.Where(i => i.ChefId == Id).FirstOrDefault();
+                c.Approved = false;
+                using (var tr = db.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        db.Chef.Update(c);
+                        db.SaveChanges();
+
+                        tr.Commit();
+
+                        Utils.OrderEmail(c.Email, "Your account is locked by the KhanaGarKa.com team.");
+
                         return "OK";
                     }
                     catch

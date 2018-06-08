@@ -1,53 +1,37 @@
 ﻿@model FYPFinalKhanaGarKa.Models.ViewModels.LoginViewModel
-
 @{
     Layout = null;
 }
-
-
-<link href="~/css/mainadmin.css" rel="stylesheet" />
-
-<div class="limite">
-    <div class="container-login100">
-        <div class="wrap-login100 p-t-85 p-b-20">
-            <form method="post" asp-action="login" asp-controller="admin" class="login100-form validate-form">
-                <span class="login100-form-title p-b-70">
-                    Welcome
-                </span>
-                <br />  <br />  <br />  <br />
-                                        <div asp-validation-summary="ModelOnly"></div>
-
-                <div class="wrap-input100 validate-input m-t-85 m-b-35" data-validate="Enter username">
-                    <input class="input100" asp-for="Email" type="text" placeholder="Email">
-                </div>
-
-                <div class="wrap-input100 validate-input m-b-50" data-validate="Enter password">
-                    <input class="input100" asp-for="Password" type="password" placeholder="Password">
-                </div>
-
-                <div class="wrap-input100 validate-input m-t-85 m-b-35" hidden>
-                    <input class="input100" asp-for="Role" type="text" placeholder="Role" value="Admin">
-                </div>
-                <br />  <br />  <br />
-                <div class="container-login100-form-btn">
-                    <button class="login100-form-btn" type="submit">Login</button>
-
-
-                </div>
-                <br />  <br />  <br />  <br />
-                <ul class="login-more p-t-190">
-                    <li class="m-b-8">
-                        <span class="txt1">
-                            Forgot
-                        </span>
-
-                        <a href="#" class="txt2">
-                            Password?
-                        </a>
-                    </li>
-                </ul>
-            </form>
-        </div>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Login-Admin</title>
+    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <style>
+        .login-page{
+            margin-top:200px;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-page col-sm-4 col-sm-push-4">
+        <h2 class="text-center">Welcome</h2>
+        <form action="/admin/login" method="post">
+            <div asp-validation-summary="ModelOnly"></div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" class="form-control" placeholder="Enter email" asp-for="Email">
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label for="pwd">Password:</label>
+                <input type="password" class="form-control" placeholder="Enter password" asp-for="Password">
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label>&nbsp;</label>
+                <input type="submit" class="btn btn-success pull-right form-control" value="Login">
+            </div>
+        </form>
     </div>
-</div>
-
+</body>
+</html>

@@ -147,9 +147,20 @@ namespace FYPFinalKhanaGarKa.Controllers
                             }
                             else
                             {
-                               // Utils.OrderEmail("khanagarka@gmail.com", "Order placed from customer ID: " + o.ChefId + " to chef ID: " + o.CustomerId+" and scheduled " + itemGroup.DeliveryDay + "  at " + itemGroup.DeliveryTime);
-                               // Utils.OrderEmail(db.Chef.Where(x => x.ChefId == o.ChefId).Select(x => x.Email).FirstOrDefault(),
-                               //     "You Have an order and customer want to receive order "+itemGroup.DeliveryDay+"  at "+itemGroup.DeliveryTime+" .Please, visit your account and confirm order.");
+                                if (itemGroup.DeliveryDay == 1)
+                                {
+                                    // Utils.OrderEmail("khanagarka@gmail.com", "Order placed from customer ID: " + o.ChefId + " to chef ID: " + o.CustomerId+" and scheduled <b>Today</b>  at <b>" + itemGroup.DeliveryTime +"</br>");
+                                    // Utils.OrderEmail(db.Chef.Where(x => x.ChefId == o.ChefId).Select(x => x.Email).FirstOrDefault(),
+                                    //     "You Have an order and customer want to receive order <b>Today</b>  at <b>"+itemGroup.DeliveryTime+"</b> .Please, visit your account and confirm order.");
+
+                                }
+                                if (itemGroup.DeliveryDay == 2)
+                                {
+                                    // Utils.OrderEmail("khanagarka@gmail.com", "Order placed from customer ID: " + o.ChefId + " to chef ID: " + o.CustomerId+" and scheduled <b>Tomorrow</b>  at <br>" + itemGroup.DeliveryTime + "</br>");
+                                    // Utils.OrderEmail(db.Chef.Where(x => x.ChefId == o.ChefId).Select(x => x.Email).FirstOrDefault(),
+                                    //     "You Have an order and customer want to receive order <b>Tomorrow</b>  at <br>"+itemGroup.DeliveryTime+"</br> .Please, visit your account and confirm order.");
+                                }
+
                             }
                         }
                         catch
