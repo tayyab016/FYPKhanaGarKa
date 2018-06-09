@@ -16,6 +16,7 @@ namespace FYPFinalKhanaGarKa.Models.ViewModels
         public bool Canceled { get; set; }
         public string Role { get; set; }
         public int DeliveryDay { get; set; }
+        public string SpRequest { get; set; }
 
         public string DeliveryTime { get; set; }
 

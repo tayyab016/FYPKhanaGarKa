@@ -189,7 +189,7 @@ namespace FYPFinalKhanaGarKa.Controllers
 
                             //GreetingsEmail(c.Email, c.FirstName, c.LastName);
 
-                            return RedirectToAction("Registration", "Home");
+                            return RedirectToAction("Registration", "Account");
                         }
 
                         catch
@@ -252,7 +252,7 @@ namespace FYPFinalKhanaGarKa.Controllers
 
                             //GreetingsEmail(d.Email, d.FirstName, d.LastName);
 
-                            return RedirectToAction("Registration", "Home");
+                            return RedirectToAction("Registration", "Account");
                         }
                         catch
                         {

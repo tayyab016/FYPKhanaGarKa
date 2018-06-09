@@ -193,6 +193,7 @@ namespace FYPFinalKhanaGarKa.Controllers
                             OrderDate = x.OrderDate,
                             OrderStatus = x.OrderStatus,
                             Received = x.Received,
+                            SpRequest = x.SpReq,
                             Confirmed =(bool) x.Confirmed,
                             Canceled = (bool) x.Canceled,
                             Total = x.OrderLine.Sum(i => i.Price)
@@ -208,6 +209,7 @@ namespace FYPFinalKhanaGarKa.Controllers
                             OrderDate = x.OrderDate,
                             OrderStatus = x.OrderStatus,
                             Received = x.Received,
+                            SpRequest = x.SpReq,
                             Confirmed = (bool)x.Confirmed,
                             Total = x.OrderLine.Sum(i => i.Price)
                         }).ToList();
@@ -222,6 +224,7 @@ namespace FYPFinalKhanaGarKa.Controllers
                             OrderDate = x.OrderDate,
                             OrderStatus = x.OrderStatus,
                             Received = x.Received,
+                            SpRequest = x.SpReq,
                             Total = x.OrderLine.Sum(i => i.Price)
                         }).ToList();
                     return View(vm);
